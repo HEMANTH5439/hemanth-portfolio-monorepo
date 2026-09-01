@@ -186,12 +186,24 @@ if (terminalInput) {
 function openEmbedModal(url, systemId) {
     const modal = document.getElementById('embed-modal');
     const iframe = document.getElementById('embed-iframe');
-    iframe.src = url;
+    
+    // Dynamically derive production Vercel dashboard URLs if hosted live vs localhost ports
+    let targetUrl = url;
+    if (window.location.hostname !== '127.0.0.1' && window.location.hostname !== 'localhost') {
+        if (systemId === 'llm-sla-telemetry') {
+            targetUrl = 'https://llm-sla-telemetry.vercel.app/';
+        } else if (systemId === 'security-blast-radius') {
+            targetUrl = 'https://security-blast-radius.vercel.app/';
+        }
+    }
+    
+    iframe.src = targetUrl;
     modal.classList.add('active');
     if (systemId) {
         window.location.hash = `preview/${systemId}`;
     }
 }
+
 
 function closeEmbedModal() {
     const modal = document.getElementById('embed-modal');
