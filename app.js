@@ -433,11 +433,12 @@ if (sliderWrapper && prevBtn && nextBtn) {
 function handleHashRouting() {
     const hash = window.location.hash;
     if (hash === '#preview/llm-sla-telemetry') {
-        openEmbedModal('http://127.0.0.1:8060/', 'llm-sla-telemetry');
+        openEmbedModal('https://llm-sla-telemetry.vercel.app/', 'llm-sla-telemetry');
     } else if (hash === '#preview/security-blast-radius') {
-        openEmbedModal('http://127.0.0.1:8065/', 'security-blast-radius');
+        openEmbedModal('https://security-blast-radius.vercel.app/', 'security-blast-radius');
     }
 }
+
 
 
 window.addEventListener('hashchange', handleHashRouting);
