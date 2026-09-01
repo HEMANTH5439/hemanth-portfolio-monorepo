@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hemanth Chellam | Data & AI Systems Engineer Portfolio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- 1. Interactive Canvas Network Background -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Background Orbs -->
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <a href="#" class="nav-brand">Hemanth Chellam</a>
+        
+        <!-- Live System Telemetry Status Pill -->
+        <div class="status-pill d-none d-md-flex">
+            <span class="pulse-dot"></span>
+            <span>Telemetry Status: 99.9% Nominal</span>
+        </div>
+
+        <!-- Accent Color Theme Selector -->
+        <div class="theme-picker" title="Switch Accent Color Theme">
+            <span class="color-dot dot-cyan" onclick="setAccentTheme('cyan')"></span>
+            <span class="color-dot dot-purple" onclick="setAccentTheme('purple')"></span>
+            <span class="color-dot dot-green" onclick="setAccentTheme('green')"></span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        
+        <div style="display: flex; gap: 0.8rem; align-items: center;">
+            <button id="btn-open-terminal" class="btn-terminal" title="Launch Interactive Terminal CLI"><i class="fas fa-terminal"></i> CLI</button>
+            <button onclick="openResumeModal()" class="btn-primary"><i class="fas fa-file-alt"></i> Resume</button>
+        </div>
+
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section id="about" class="hero">
+            <div class="hero-content">
+                <p class="hero-subtitle">⚡ Hello, I'm Hemanth Chellam</p>
+                <h1 class="hero-title">Data & AI Systems Engineer</h1>
+                <p class="hero-bio">
+                    Specializing in real-time telemetry pipelines, interactive Plotly dashboards, and high-throughput data infrastructure. I turn complex multi-variable datasets into intuitive, high-impact web apps.
+                </p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn-primary">View Projects <i class="fas fa-arrow-right"></i></a>
+                    <a href="https://github.com" target="_blank" class="btn-outline"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://www.linkedin.com/in/hemanth-chellam-b9285a8a/" target="_blank" class="btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
+
+
+
+            <!-- Hero Avatar Card (In-Frame Emotion Crossfade with Cyberpunk Halo) -->
+            <div class="hero-avatar-card">
+                <!-- Rotating Cyberpunk Halo Ring Outer Wrapper -->
+                <div class="avatar-halo-wrapper">
+                    <div class="halo-rotating-ring"></div>
+                    <!-- In-Frame Avatar Container -->
+                    <div class="avatar-popout-container">
+                        <div class="avatar-circular-base"></div>
+                        <img src="profile.jpg" alt="Hemanth Chellam Headshot Base" class="avatar-img-default">
+                        <img src="profile_hover.jpg" alt="Hemanth Chellam Popout Headshot" class="avatar-img-popout">
+                    </div>
+                </div>
+
+                <h3 style="font-family: var(--font-heading); font-weight: 700; margin-top: 1.2rem;">Hemanth Chellam</h3>
+
+
+
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Building High-Impact AI & Analytics</p>
+                
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <small style="color: var(--accent-green); font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Available for Full-Time & Advisory Roles</small>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Featured Projects Showcase Carousel -->
+        <section id="projects">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <p class="section-tag">Portfolio Showcase</p>
+                    <h2 class="section-title">Featured Projects</h2>
+                </div>
+                <!-- Carousel Nav Control Arrows -->
+                <div class="carousel-nav-controls">
+                    <button id="carousel-prev-btn" class="carousel-arrow-btn" title="Previous Projects"><i class="fas fa-chevron-left"></i></button>
+                    <button id="carousel-next-btn" class="carousel-arrow-btn" title="Next Projects"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Horizontal Projects Slider Container -->
+            <div class="projects-slider-wrapper">
+                <div id="projects-slider-track" class="projects-slider-track">
+
+                <!-- Project 1: LLM SLA Telemetry Dashboard -->
+                <div class="project-card">
+                    <div>
+                        <span class="project-badge badge-live"><i class="fas fa-circle-notch fa-spin me-1"></i> Live Project</span>
+                        <h3 class="project-title">⚡ Open-Source LLM Telemetry & SLA Intelligence</h3>
+                        <p class="project-desc">
+                            A real-time operational dashboard monitoring Latency (TTFT), Throughput (TPS), Token Pricing ($/1M), and Provider SLA Drift across 50+ models (Llama 3, DeepSeek, Claude, Gemini). Features 360° Polar Radar Scorecards and Pareto Frontier scatter charts.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag" data-tooltip="Plotly Dash: Used for reactive web layout & multi-chart callbacks">Plotly / Dash</span>
+                            <span class="tech-tag" data-tooltip="Python: Used for data aggregation, Polars transformation & analytics">Python</span>
+                            <span class="tech-tag" data-tooltip="Supabase: Used for zero-cost serverless PostgreSQL log retention">PostgreSQL (Supabase)</span>
+                            <span class="tech-tag" data-tooltip="Ollama: Used for zero cloud token cost local AI executive summaries">Ollama Local AI</span>
+                            <span class="tech-tag" data-tooltip="OpenRouter: Used for real-time model catalog & telemetry pricing API">OpenRouter API</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+                        <button onclick="openEmbedModal('http://127.0.0.1:8060/')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-desktop"></i> Live Embed Preview</button>
+                        <button onclick="openArchModal('llm')" class="btn-outline" style="padding: 0.6rem 1rem;" title="View System Architecture Blueprint"><i class="fas fa-sitemap"></i> Blueprint</button>
+                        <a href="http://127.0.0.1:8060/" target="_blank" class="btn-outline" style="padding: 0.6rem 1rem;" title="Open in New Tab"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+
+                <!-- Project 2: AI Algo Trader App -->
+                <div class="project-card">
+                    <div>
+                        <span class="project-badge badge-live"><i class="fas fa-chart-line me-1"></i> Quantitative System</span>
+                        <h3 class="project-title">📈 AI Algorithmic Trader Engine</h3>
+                        <p class="project-desc">
+                            Automated quantitative trading engine combining statistical arbitrage signals, sentiment intelligence NLP, real-time WebSocket order book feeds, and automated backtesting risk parameters (Sharpe, Drawdown, VaR).
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag" data-tooltip="Python: Core quant strategy Execution & Backtesting">Python</span>
+                            <span class="tech-tag" data-tooltip="Plotly Financial: Interactive Candlestick & Orderbook Visualization">Plotly / Financial</span>
+                            <span class="tech-tag" data-tooltip="FastAPI: Real-time low-latency WebSocket order Execution">FastAPI / WebSockets</span>
+                            <span class="tech-tag" data-tooltip="PostgreSQL: High-frequency tick storage & trade history">PostgreSQL</span>
+                            <span class="tech-tag" data-tooltip="Ollama AI: Market sentiment NLP analysis">Local AI Sentiment</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+                        <button onclick="openArchModal('trader')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-sitemap"></i> View Strategy Architecture</button>
+                        <a href="https://github.com" target="_blank" class="btn-outline" style="padding: 0.6rem 1rem;" title="View Source Code"><i class="fab fa-github"></i> Code</a>
+                    </div>
+                </div>
+
+                <!-- Project 3: The Way Back App -->
+                <div class="project-card">
+                    <div>
+                        <span class="project-badge badge-live"><i class="fas fa-history me-1"></i> Interactive Time-Machine</span>
+                        <h3 class="project-title">⏳ The Way Back App</h3>
+                        <p class="project-desc">
+                            A historical web archive analysis and temporal intelligence engine enabling users to explore past digital footprints, compare internet evolution trends, and query archived web snapshots with automated diff visualization.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag" data-tooltip="Wayback API: Public Internet Archive REST Integration">Wayback API</span>
+                            <span class="tech-tag" data-tooltip="Python: Asynchronous web crawler & DOM diff parser">Python Asyncio</span>
+                            <span class="tech-tag" data-tooltip="Plotly Dash: Interactive timeline & snapshot comparison UI">Plotly Dash</span>
+                            <span class="tech-tag" data-tooltip="DuckDB: Fast local archival dataset indexing">DuckDB Analytics</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+                        <button onclick="openArchModal('wayback')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-sitemap"></i> View Archive Architecture</button>
+                        <a href="https://github.com" target="_blank" class="btn-outline" style="padding: 0.6rem 1rem;" title="View Source Code"><i class="fab fa-github"></i> Code</a>
+                    </div>
+                </div>
+
+                <!-- Project 4: Open-Source Security & Dependency Blast-Radius Engine -->
+                <div class="project-card">
+                    <div>
+                        <span class="project-badge badge-live"><i class="fas fa-shield-virus me-1"></i> Security Intelligence</span>
+                        <h3 class="project-title">🛡️ Open-Source Security & Dependency Blast-Radius Engine</h3>
+                        <p class="project-desc">
+                            Graph intelligence engine mapping transitive CVE vulnerability propagation across package ecosystems (PyPI, npm, Crates.io). Simulates zero-day blast radius, computes CVSS 4.0 threat severity, and calculates automated remediation upgrade paths.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag" data-tooltip="NetworkX: Directed acyclic dependency graph topology modelling">NetworkX Graph</span>
+                            <span class="tech-tag" data-tooltip="Plotly 3D: Interactive graph & tree node blast-radius visualization">Plotly 3D Network</span>
+                            <span class="tech-tag" data-tooltip="Python: Async CVE ingestion & OSV.dev vulnerability lookup">Python Asyncio</span>
+                            <span class="tech-tag" data-tooltip="OSV.dev API: Real-time open-source vulnerability intelligence data">OSV.dev REST API</span>
+                            <span class="tech-tag" data-tooltip="PostgreSQL: Graph node cache & transitive vulnerability storage">PostgreSQL</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+                        <button onclick="openEmbedModal('http://127.0.0.1:8065/')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-desktop"></i> Live Embed Preview</button>
+                        <button onclick="openArchModal('security')" class="btn-outline" style="padding: 0.6rem 1rem;" title="View System Architecture Blueprint"><i class="fas fa-sitemap"></i> Blueprint</button>
+                        <a href="http://127.0.0.1:8065/" target="_blank" class="btn-outline" style="padding: 0.6rem 1rem;" title="Open in New Tab"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+
+                <!-- Project 5: Global Energy Grid & Carbon Tracker -->
+                <div class="project-card">
+                    <div>
+                        <span class="project-badge badge-upcoming"><i class="fas fa-clock me-1"></i> Featured System</span>
+                        <h3 class="project-title">⚡ Global Renewable Energy & Carbon Intensity Tracker</h3>
+                        <p class="project-desc">
+                            Geospatial real-time energy grid telemetry tracking marginal carbon intensity (gCO2eq/kWh), battery storage arbitrage efficiency, and renewable generation curtailment risks across US EIA and ENTSO-E power grids.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Plotly Mapbox</span>
+                            <span class="tech-tag">Polars</span>
+                            <span class="tech-tag">DuckDB</span>
+                            <span class="tech-tag">ENTSO-E / EIA API</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+                        <button class="btn-outline" style="flex: 1; opacity: 0.7; cursor: not-allowed;"><i class="fas fa-lock"></i> Architecture Blueprint</button>
+                    </div>
+                </div>
+
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Technical Skills Matrix -->
+        <section id="skills">
+            <div class="section-header">
+                <p class="section-tag">Competencies</p>
+                <h2 class="section-title">Technical Expertise</h2>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <h3 class="skill-title">Data & Engineering</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-check"></i> Python (Polars, Pandas, Asyncio)</li>
+                        <li><i class="fas fa-check"></i> SQL & Relational Databases (PostgreSQL)</li>
+                        <li><i class="fas fa-check"></i> Analytical DBs (DuckDB, Parquet)</li>
+                        <li><i class="fas fa-check"></i> REST & GraphQL API Integration</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="skill-title">Dashboards & Analytics</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-check"></i> Plotly / Dash (Interactive Web Apps)</li>
+                        <li><i class="fas fa-check"></i> Tableau & BI Storytelling</li>
+                        <li><i class="fas fa-check"></i> 360° Radar & Pareto Frontier Charts</li>
+                        <li><i class="fas fa-check"></i> User Experience & Data Storytelling</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-cloud"></i></div>
+                    <h3 class="skill-title">AI & Cloud Pipelines</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-check"></i> Local AI Offloading (Ollama / LLMs)</li>
+                        <li><i class="fas fa-check"></i> Supabase & Serverless DBs</li>
+                        <li><i class="fas fa-check"></i> Vercel Deployment & Serverless Functions</li>
+                        <li><i class="fas fa-check"></i> GitHub Actions CI/CD Data Pipelines</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" style="text-align: center; padding: 4rem 0;">
+            <div class="section-header">
+                <p class="section-tag">Connect</p>
+                <h2 class="section-title">Let's Build Together</h2>
+            </div>
+            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem auto;">
+                Interested in data engineering, telemetry dashboards, or AI infrastructure projects? Feel free to reach out or connect!
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button onclick="copyContact('chellamhemanth@gmail.com', 'Email address copied!')" class="btn-primary" title="Click to copy email"><i class="fas fa-envelope me-1"></i> chellamhemanth@gmail.com</button>
+                <a href="https://www.linkedin.com/in/hemanth-chellam-b9285a8a/" target="_blank" class="btn-outline"><i class="fab fa-linkedin me-1"></i> LinkedIn Profile</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- 2. Terminal CLI Modal -->
+    <div id="terminal-modal" class="terminal-modal">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span id="btn-close-terminal" class="terminal-dot dot-red" title="Close CLI Terminal"></span>
+                    <span class="terminal-dot dot-yellow"></span>
+                    <span class="terminal-dot dot-green"></span>
+                </div>
+                <div class="terminal-title">hemanth@hub:~ (bash)</div>
+                <div></div>
+            </div>
+            <div id="terminal-body" class="terminal-body">
+                <div>Type '<b style="color:#00d2ff">help</b>' to list available commands.</div>
+            </div>
+            <div class="terminal-input-line" style="padding: 0 1.2rem 1.2rem 1.2rem;">
+                <span class="terminal-prompt">hemanth@hub:~$</span>
+                <input type="text" id="terminal-input" class="terminal-input" placeholder="type help, about, projects, skills, metrics..." autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Live Embedded Dashboard Preview Modal -->
+    <div id="embed-modal" class="embed-modal">
+        <div class="embed-window">
+            <div class="embed-header">
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <span style="color: var(--accent-blue); font-weight: 700;"><i class="fas fa-desktop me-1"></i> Live Interactive Dashboard Embed</span>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">| Full System Preview</span>
+                </div>
+                <button onclick="closeEmbedModal()" class="btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;"><i class="fas fa-times"></i> Close Preview</button>
+            </div>
+            <iframe id="embed-iframe" class="embed-iframe" src=""></iframe>
+        </div>
+    </div>
+
+    <!-- 4. Architecture Blueprint Modal -->
+    <div id="arch-modal" class="embed-modal">
+
+        <div class="embed-window" style="max-width: 900px; height: auto; max-height: 85vh;">
+            <div class="embed-header">
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <span style="color: var(--accent-purple); font-weight: 700;"><i class="fas fa-sitemap me-1"></i> System Architecture Blueprint</span>
+                    <span id="arch-title" style="color: var(--text-muted); font-size: 0.9rem;">| End-to-End Data Telemetry Pipeline</span>
+                </div>
+                <button onclick="closeArchModal()" class="btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;"><i class="fas fa-times"></i> Close</button>
+            </div>
+            <div style="padding: 2rem; overflow-y: auto; color: var(--text-main);">
+                <div id="arch-flow-container" class="arch-flow">
+                    <div class="arch-node">
+                        <i class="fas fa-cloud-download-alt text-info"></i>
+                        <h4>1. Live API Ingestion</h4>
+                        <p>Fetches real-time model specs, pricing & base TTFT/TPS from OpenRouter Public REST API.</p>
+                    </div>
+                    <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="arch-node">
+                        <i class="fas fa-database text-warning"></i>
+                        <h4>2. Supabase PostgreSQL</h4>
+                        <p>Stores 7 to 90 day historical telemetry logs with server status codes & traffic queue flags.</p>
+                    </div>
+                    <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="arch-node">
+                        <i class="fas fa-chart-pie text-success"></i>
+                        <h4>3. Plotly / Dash UI</h4>
+                        <p>Renders 360° Polar Radar Scorecards, Pareto Frontier scatter plots & hourly congestion heatmaps.</p>
+                    </div>
+                    <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="arch-node">
+                        <i class="fas fa-robot text-purple"></i>
+                        <h4>4. Ollama Local AI</h4>
+                        <p>Runs offline local LLMs to generate executive telemetry summaries at zero cloud token cost.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 5. Interactive Resume Viewer Modal -->
+    <div id="resume-modal" class="embed-modal">
+        <div class="embed-window" style="max-width: 900px; height: 85vh;">
+            <div class="embed-header">
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <span style="color: var(--accent-blue); font-weight: 700;"><i class="fas fa-file-alt me-1"></i> Interactive Resume / CV Viewer</span>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">| Hemanth Chellam</span>
+                </div>
+                <button onclick="closeResumeModal()" class="btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;"><i class="fas fa-times"></i> Close Viewer</button>
+            </div>
+            <div style="padding: 2.5rem; overflow-y: auto; color: var(--text-main); font-family: var(--font-body);">
+                <div style="border-bottom: 2px solid var(--accent-blue); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                    <h2 style="font-family: var(--font-heading); font-size: 2rem;">Hemanth Chellam</h2>
+                    <p style="color: var(--accent-blue); font-weight: 600;">Data & AI Systems Engineer</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">chellamhemanth@gmail.com | linkedin.com/in/hemanth-chellam-b9285a8a/</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Professional Summary</h4>
+                    <p style="color: var(--text-muted);">
+                        Results-driven Data & AI Systems Engineer with proven experience designing real-time telemetry pipelines, interactive Plotly web dashboards, PostgreSQL schemas, and zero-cost local AI insights. Skilled in Python (Polars/Pandas), SQL, REST APIs, and Cloud Deployments.
+                    </p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Core Projects</h4>
+                    <ul style="color: var(--text-muted); padding-left: 1.2rem;">
+                        <li style="margin-bottom: 0.5rem;"><b style="color: var(--text-main);">Open-Source LLM Telemetry Dashboard</b>: Built real-time SLA tracking across 50+ models with 360° Radar Scorecards and local Ollama AI offloading.</li>
+                        <li><b style="color: var(--text-main);">Global Energy Grid & Carbon Tracker</b>: Modeled geospatial carbon intensity and grid battery storage efficiency.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Hemanth Chellam. Built with HTML, CSS, JavaScript & Plotly Dash.</p>
+    </footer>
+
+
+    <!-- Interactive Script -->
+    <script src="app.js"></script>
+</body>
+</html>

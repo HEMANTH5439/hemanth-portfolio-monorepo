@@ -1,0 +1,14 @@
+# .gitignore for Hemanth Chellam Portfolio Monorepo
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.env
+.idea/
+.vscode/
+.DS_Store
+.vercel
