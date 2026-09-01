@@ -187,7 +187,7 @@ function openEmbedModal(url, systemId) {
     const modal = document.getElementById('embed-modal');
     const iframe = document.getElementById('embed-iframe');
     
-    // Dynamically derive production Vercel dashboard URLs if hosted live vs localhost ports
+    // Determine target URL for local vs Vercel hosting
     let targetUrl = url;
     if (window.location.hostname !== '127.0.0.1' && window.location.hostname !== 'localhost') {
         if (systemId === 'llm-sla-telemetry') {
@@ -196,13 +196,19 @@ function openEmbedModal(url, systemId) {
             targetUrl = 'https://security-blast-radius.vercel.app/';
         }
     }
-    
-    iframe.src = targetUrl;
-    modal.classList.add('active');
+
+    if (iframe && modal) {
+        iframe.src = targetUrl;
+        modal.classList.add('active');
+    } else {
+        window.open(targetUrl, '_blank');
+    }
+
     if (systemId) {
         window.location.hash = `preview/${systemId}`;
     }
 }
+
 
 
 function closeEmbedModal() {
