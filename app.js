@@ -182,12 +182,15 @@ if (terminalInput) {
     });
 }
 
-// 3. Live Embed Modal Functions
-function openEmbedModal(url) {
+// 3. Live Embed Modal Functions with Unique URL Hash Router
+function openEmbedModal(url, systemId) {
     const modal = document.getElementById('embed-modal');
     const iframe = document.getElementById('embed-iframe');
     iframe.src = url;
     modal.classList.add('active');
+    if (systemId) {
+        window.location.hash = `preview/${systemId}`;
+    }
 }
 
 function closeEmbedModal() {
@@ -195,7 +198,11 @@ function closeEmbedModal() {
     const iframe = document.getElementById('embed-iframe');
     iframe.src = '';
     modal.classList.remove('active');
+    if (window.location.hash.startsWith('#preview/')) {
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
 }
+
 
 // 4. Live AI Sandbox Simulation Stream Function
 function runLiveAISandbox() {
@@ -402,6 +409,22 @@ if (sliderWrapper && prevBtn && nextBtn) {
         sliderWrapper.scrollBy({ left: 380, behavior: 'smooth' });
     });
 }
+
+
+// 9. Deep-Link URL Router for Dashboard Previews
+function handleHashRouting() {
+    const hash = window.location.hash;
+    if (hash === '#preview/llm-sla-telemetry') {
+        openEmbedModal('http://127.0.0.1:8060/', 'llm-sla-telemetry');
+    } else if (hash === '#preview/security-blast-radius') {
+        openEmbedModal('http://127.0.0.1:8065/', 'security-blast-radius');
+    }
+}
+
+
+window.addEventListener('hashchange', handleHashRouting);
+window.addEventListener('DOMContentLoaded', handleHashRouting);
+
 
 
 
