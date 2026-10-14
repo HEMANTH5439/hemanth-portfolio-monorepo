@@ -4,6 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hemanth Chellam | Data & AI Systems Engineer Portfolio</title>
+    <meta name="description" content="Senior Analytics & Data Engineer | Cloud Architect Portfolio - Hemanth Chellam. Specializing in Databricks Lakehouse, Spark Streaming, Real-Time Telemetry & Google Cloud Architecture.">
+    <meta name="keywords" content="Hemanth Chellam, Data Engineer, AI Systems Engineer, Databricks Lakehouse, Spark Streaming, Netflix, Google Cloud, Telemetry">
+    <meta name="author" content="Hemanth Chellam">
+    <meta name="theme-color" content="#0a0c10">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <!-- OpenGraph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Hemanth Chellam | Senior Data & AI Systems Engineer">
+    <meta property="og:description" content="Senior Analytics & Data Engineer with 9+ years of experience delivering Lakehouse pipelines, real-time telemetry, and enterprise AI solutions at scale for Google, Netflix, and Databricks.">
+    <meta property="og:image" content="profile.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hemanth Chellam | Senior Data & AI Systems Engineer">
+    <meta name="twitter:description" content="Senior Analytics & Data Engineer with 9+ years of experience delivering Lakehouse pipelines, real-time telemetry, and enterprise AI solutions.">
+    <meta name="twitter:image" content="profile.jpg">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +31,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
 
@@ -28,12 +48,6 @@
     <!-- Navigation Header -->
     <nav class="navbar">
         <a href="#" class="nav-brand">Hemanth Chellam</a>
-        
-        <!-- Live System Telemetry Status Pill -->
-        <div class="status-pill d-none d-md-flex">
-            <span class="pulse-dot"></span>
-            <span>Telemetry Status: 99.9% Nominal</span>
-        </div>
 
         <!-- Accent Color Theme Selector -->
         <div class="theme-picker" title="Switch Accent Color Theme">
@@ -44,13 +58,16 @@
 
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
         
         <div style="display: flex; gap: 0.8rem; align-items: center;">
+            <button onclick="toggleAIChat()" class="btn-ai-nav" title="Chat with Hemanth AI Assistant"><i class="fas fa-robot"></i> Ask AI</button>
             <button id="btn-open-terminal" class="btn-terminal" title="Launch Interactive Terminal CLI"><i class="fas fa-terminal"></i> CLI</button>
+            <button onclick="sharePortfolio()" class="btn-share-nav" title="Share Portfolio"><i class="fas fa-share-alt"></i> Share</button>
             <button onclick="openResumeModal()" class="btn-primary"><i class="fas fa-file-alt"></i> Resume</button>
         </div>
 
@@ -61,18 +78,19 @@
         <section id="about" class="hero">
             <div class="hero-content">
                 <p class="hero-subtitle">⚡ Hello, I'm Hemanth Chellam</p>
-                <h1 class="hero-title">Data & AI Systems Engineer</h1>
+                <h1 class="hero-title">Senior Data & AI Systems Engineer</h1>
                 <p class="hero-bio">
-                    Specializing in real-time telemetry pipelines, interactive Plotly dashboards, and high-throughput data infrastructure. I turn complex multi-variable datasets into intuitive, high-impact web apps.
+                    Senior Analytics & Data Engineer with <b>9+ years of experience</b> delivering high-throughput ETL pipelines, big data architectures, and AI solutions at scale for industry leaders including <b>Google</b>, <b>Microsoft</b>, <b>Netflix</b>, and <b>Databricks</b>.
                 </p>
                 <div class="hero-actions">
                     <a href="#projects" class="btn-primary">View Projects <i class="fas fa-arrow-right"></i></a>
-                    <a href="https://github.com" target="_blank" class="btn-outline"><i class="fab fa-github"></i> GitHub</a>
+                    <button onclick="toggleAIChat()" class="btn-outline" style="border-color: rgba(0, 210, 255, 0.4); color: var(--accent-blue);"><i class="fas fa-robot me-1"></i> Ask Hemanth AI</button>
+                    <button onclick="sharePortfolio()" class="btn-outline" style="border-color: rgba(0, 230, 118, 0.4); color: var(--accent-green);"><i class="fas fa-share-alt me-1"></i> Share</button>
+                    <a href="#experience" class="btn-outline"><i class="fas fa-briefcase"></i> Experience</a>
+                    <a href="https://github.com/HEMANTH5439" target="_blank" class="btn-outline"><i class="fab fa-github"></i> GitHub</a>
                     <a href="https://www.linkedin.com/in/hemanth-chellam-b9285a8a/" target="_blank" class="btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
                 </div>
             </div>
-
-
 
             <!-- Hero Avatar Card (In-Frame Emotion Crossfade with Cyberpunk Halo) -->
             <div class="hero-avatar-card">
@@ -88,41 +106,330 @@
                 </div>
 
                 <h3 style="font-family: var(--font-heading); font-weight: 700; margin-top: 1.2rem;">Hemanth Chellam</h3>
-
-
-
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Building High-Impact AI & Analytics</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Senior Data & AI Systems Engineer</p>
                 
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-                    <small style="color: var(--accent-green); font-weight: 600;"><i class="fas fa-check-circle me-1"></i> Available for Full-Time & Advisory Roles</small>
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green);"></span>
+                    <small style="color: var(--text-muted); font-size: 0.85rem;">Available for Full-Time & Advisory Roles</small>
                 </div>
             </div>
         </section>
 
-
-        <!-- Featured Projects Showcase Carousel -->
-        <section id="projects">
-            <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
-                <div>
-                    <p class="section-tag">Portfolio Showcase</p>
-                    <h2 class="section-title">Featured Projects</h2>
+        <!-- Enterprise Company Trust Bar (Credibility Showcase) -->
+        <div class="company-trust-bar">
+            <p class="trust-bar-label">PROVEN IMPACT & BIG DATA TELEMETRY AT SCALE FOR INDUSTRY LEADERS</p>
+            <div class="company-logos-track">
+                <div class="company-logo-item">
+                    <img src="assets/logos/google.svg" alt="Google Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>Google</h4>
+                        <p>GCP Cloud Data Pipelines</p>
+                    </div>
                 </div>
-                <!-- Carousel Nav Control Arrows -->
-                <div class="carousel-nav-controls">
-                    <button id="carousel-prev-btn" class="carousel-arrow-btn" title="Previous Projects"><i class="fas fa-chevron-left"></i></button>
-                    <button id="carousel-next-btn" class="carousel-arrow-btn" title="Next Projects"><i class="fas fa-chevron-right"></i></button>
+                <div class="company-logo-item">
+                    <img src="assets/logos/netflix.svg" alt="Netflix Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>Netflix</h4>
+                        <p>Squid Game Analytics & LLMs</p>
+                    </div>
+                </div>
+                <div class="company-logo-item">
+                    <img src="assets/logos/microsoft.svg" alt="Microsoft Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>Microsoft / Xbox</h4>
+                        <p>Call of Duty Telemetry Layer</p>
+                    </div>
+                </div>
+                <div class="company-logo-item">
+                    <img src="assets/logos/databricks.svg" alt="Databricks Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>Databricks</h4>
+                        <p>Lakehouse & Streaming Spark</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Impact Metrics Strip -->
+        <div class="metrics-impact-strip">
+            <div class="metric-card">
+                <div class="metric-value">9+</div>
+                <div class="metric-label">Years Enterprise Architecture</div>
+                <div class="metric-sub">Google • Microsoft • Netflix • Databricks</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">10B+</div>
+                <div class="metric-label">Peak Events Streamed Daily</div>
+                <div class="metric-sub">Squid Game & Call of Duty Telemetry</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">4</div>
+                <div class="metric-label">Tier-1 Tech Leaders</div>
+                <div class="metric-sub">Enterprise Scale & Production Systems</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">2x</div>
+                <div class="metric-label">GCP Certified Professional</div>
+                <div class="metric-sub">Cloud Architect & Data Engineer</div>
+            </div>
+        </div>
+
+        <!-- Career & Enterprise Experience Section -->
+        <section id="experience">
+            <div class="section-header">
+                <p class="section-tag">Career History</p>
+                <h2 class="section-title">Enterprise Experience</h2>
+                <div style="margin-top: 0.8rem;">
+                    <button id="btn-toggle-timeline" onclick="toggleAllTimelineCards()" class="btn-outline" style="font-size: 0.82rem; padding: 0.35rem 0.95rem; border-radius: 20px; border-color: rgba(255,255,255,0.15);" title="Expand or collapse all roles">
+                        <i class="fas fa-expand-alt me-1"></i> Expand All Roles
+                    </button>
                 </div>
             </div>
 
-            <!-- Horizontal Projects Slider Container -->
-            <div class="projects-slider-wrapper">
-                <div id="projects-slider-track" class="projects-slider-track">
+            <div class="experience-timeline">
 
-                <!-- Project 1: LLM SLA Telemetry Dashboard -->
-                <div class="project-card">
+                <!-- 1. Koantek / Databricks (Expanded by default) -->
+                <div class="timeline-card expanded">
+                    <div class="timeline-node-icon">
+                        <img src="assets/logos/databricks.svg" alt="Databricks Logo">
+                    </div>
+                    <div class="timeline-header" onclick="toggleTimelineCard(this)">
+                        <div>
+                            <div class="timeline-role">Senior Data Engineer</div>
+                            <span class="timeline-company">Koantek (Databricks Contract)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <span class="timeline-date">Jan 2026 – Jul 2026 | Dallas, TX</span>
+                            <span class="timeline-toggle-btn"><span class="toggle-text"></span> <i class="fas fa-chevron-down"></i></span>
+                        </div>
+                    </div>
+                    <ul class="timeline-bullets">
+                        <li>Designed programmatic ad signal ingestion using <b>Spark Structured Streaming on Databricks Lakehouse</b>, slashing pipeline latency from 8 hours to under 15 minutes.</li>
+                        <li>Developed foundational <b>dbt data models</b> tracking Ad Inventory Fill Rates, identifying bottlenecks with a projected 12% increase in global ad yield.</li>
+                        <li>Executed cost optimization audits migrating Spark workloads to Photon-enabled clusters, achieving a <b>30% reduction in DBU consumption</b>.</li>
+                        <li>Implemented a data observability framework using <b>Unity Catalog and Delta Live Tables</b>, cutting upstream-downstream discrepancies by 65%.</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Netflix (Expanded by default) -->
+                <div class="timeline-card expanded">
+                    <div class="timeline-node-icon">
+                        <img src="assets/logos/netflix.svg" alt="Netflix Logo">
+                    </div>
+                    <div class="timeline-header" onclick="toggleTimelineCard(this)">
+                        <div>
+                            <div class="timeline-role">Senior Analytics Engineer</div>
+                            <span class="timeline-company">Netflix</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <span class="timeline-date">May 2024 – Dec 2025 | Los Angeles, CA</span>
+                            <span class="timeline-toggle-btn"><span class="toggle-text"></span> <i class="fas fa-chevron-down"></i></span>
+                        </div>
+                    </div>
+                    <ul class="timeline-bullets">
+                        <li>Led telemetry and product analytics for <b>Squid Game Mobile/Cloud</b>, delivering actionable insights that directly shaped monetization, retention, and live-ops strategy.</li>
+                        <li>Engineered scalable cloud data models, GitHub-versioned CI/CD workflows, and robust real-time/batch data processing pipelines on AWS.</li>
+                        <li>Partnered with data science to evaluate <b>LLM-driven insight pipelines</b>, integrating natural language query frameworks into core analytics workflows.</li>
+                        <li>Built and maintained interactive Tableau & Looker executive dashboards and implemented ML churn prediction models to maximize long-term player retention.</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Microsoft / Activision (Collapsed by default) -->
+                <div class="timeline-card">
+                    <div class="timeline-node-icon">
+                        <img src="assets/logos/microsoft.svg" alt="Microsoft Logo">
+                    </div>
+                    <div class="timeline-header" onclick="toggleTimelineCard(this)">
+                        <div>
+                            <div class="timeline-role">Senior Data Engineer</div>
+                            <span class="timeline-company">Microsoft (Activision / Xbox Division)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <span class="timeline-date">Feb 2022 – May 2024 | Santa Monica, CA</span>
+                            <span class="timeline-toggle-btn"><span class="toggle-text"></span> <i class="fas fa-chevron-down"></i></span>
+                        </div>
+                    </div>
+                    <ul class="timeline-bullets">
+                        <li>Led cross-functional analytics for <b>Call of Duty</b> franchise engagement, defining global player metrics and architecting semantic telemetry layers.</li>
+                        <li>Utilized SQL across Spark, Databricks, and BigQuery for petabyte-scale gaming data analysis, orchestrating complex ETL pipelines via <b>Python Airflow DAGs</b>.</li>
+                        <li>Developed strategic ML datasets, predictive analytics models, and visual executive narratives to guide multi-million dollar live-service decisions.</li>
+                    </ul>
+                </div>
+
+                <!-- 4. Google (Collapsed by default) -->
+                <div class="timeline-card">
+                    <div class="timeline-node-icon">
+                        <img src="assets/logos/google.svg" alt="Google Logo">
+                    </div>
+                    <div class="timeline-header" onclick="toggleTimelineCard(this)">
+                        <div>
+                            <div class="timeline-role">GCP Data Engineer / Analyst</div>
+                            <span class="timeline-company">Google (via Virtusa / Iconma)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <span class="timeline-date">Aug 2018 – Feb 2022 | Sunnyvale, CA</span>
+                            <span class="timeline-toggle-btn"><span class="toggle-text"></span> <i class="fas fa-chevron-down"></i></span>
+                        </div>
+                    </div>
+                    <ul class="timeline-bullets">
+                        <li>Built and maintained enterprise ETL data pipelines on <b>GCP Dataflow, Pub/Sub, BigQuery, and Hadoop</b> for top US Telco cloud accounts.</li>
+                        <li>Automated voice and chatbot analytics workflows using <b>Dialogflow</b> and deployed Slowly Changing Dimensions (SCD Type 4) historical tracking.</li>
+                        <li>Standardized production code repositories and improved telemetry KPI reporting, increasing cross-functional productivity by <b>70%</b>.</li>
+                    </ul>
+                </div>
+
+                <!-- 5. State Auto Insurance (Collapsed by default) -->
+                <div class="timeline-card">
+                    <div class="timeline-node-icon">
+                        <img src="assets/logos/stateauto.svg" alt="State Auto Insurance Logo">
+                    </div>
+                    <div class="timeline-header" onclick="toggleTimelineCard(this)">
+                        <div>
+                            <div class="timeline-role">Data Analyst (Intern)</div>
+                            <span class="timeline-company">State Auto Insurance</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <span class="timeline-date">Jan 2018 – May 2018 | Columbus, OH</span>
+                            <span class="timeline-toggle-btn"><span class="toggle-text"></span> <i class="fas fa-chevron-down"></i></span>
+                        </div>
+                    </div>
+                    <ul class="timeline-bullets">
+                        <li>Analyzed insurance agent network datasets and identified key performance indicators influencing national policy sales performance.</li>
+                        <li>Mined and modeled data using <b>SQL Server, Python, Tableau, and SAS</b>.</li>
+                    </ul>
+                </div>
+
+                <!-- 6. HCL Technologies Limited (Collapsed by default) -->
+                <div class="timeline-card">
+                    <div class="timeline-node-icon">
+                        <img src="assets/logos/hcl.svg" alt="HCL Technologies Logo">
+                    </div>
+                    <div class="timeline-header" onclick="toggleTimelineCard(this)">
+                        <div>
+                            <div class="timeline-role">Business Analyst</div>
+                            <span class="timeline-company">HCL Technologies Limited</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <span class="timeline-date">Jun 2015 – Mar 2017 | Bangalore, India</span>
+                            <span class="timeline-toggle-btn"><span class="toggle-text"></span> <i class="fas fa-chevron-down"></i></span>
+                        </div>
+                    </div>
+                    <ul class="timeline-bullets">
+                        <li>Collected, cleaned, and engineered data models for structured and unstructured enterprise datasets across key digital initiatives.</li>
+                        <li>Extracted and interpreted transactional data using <b>Tableau, SAS, SQL, and Excel</b> to transform raw metrics into actionable executive business intelligence.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Featured Projects Showcase (Option A: 2x2 Responsive Grid) -->
+        <section id="projects">
+            <div class="section-header">
+                <p class="section-tag">Portfolio Showcase</p>
+                <h2 class="section-title">Featured Systems & Live Apps</h2>
+            </div>
+
+            <!-- Interactive Category Filter Chips -->
+            <div class="project-filters">
+                <button class="filter-btn active" onclick="filterProjects('all')">All Systems (4)</button>
+                <button class="filter-btn" onclick="filterProjects('telemetry')"><i class="fas fa-satellite-dish"></i> Real-Time Telemetry & Data</button>
+                <button class="filter-btn" onclick="filterProjects('ai')"><i class="fas fa-brain"></i> Generative AI & LLMs</button>
+                <button class="filter-btn" onclick="filterProjects('fintech')"><i class="fas fa-chart-line"></i> FinTech & Security</button>
+            </div>
+
+            <div class="projects-grid">
+
+                <!-- Project 1: Algo Trader AI App -->
+                <div class="project-card card-algo-trader" data-category="ai fintech">
                     <div>
-                        <span class="project-badge badge-live"><i class="fas fa-circle-notch fa-spin me-1"></i> Live Project</span>
+                        <div class="project-card-header">
+                            <span class="project-badge badge-live"><i class="fas fa-robot me-1"></i> Autonomous Quant Engine</span>
+                            <a href="https://github.com/HEMANTH5439/chills-yeah-ai-trader" target="_blank" class="project-repo-link" title="View Source on GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                        <h3 class="project-title"><img src="assets/algo-trader-icon.svg" alt="Algo Trader AI App Logo" class="project-title-logo" width="20" height="20" style="width: 20px; height: 20px; max-width: 20px; max-height: 20px; vertical-align: -2px; border-radius: 4px; display: inline-block; margin-right: 0.35rem; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"> Algo Trader AI App</h3>
+                        
+                        <div class="project-metrics-strip">
+                            <span class="metric-pill"><i class="fas fa-bolt text-info"></i> WebSockets Active</span>
+                            <span class="metric-pill"><i class="fas fa-brain text-purple"></i> Gemini AI Audits</span>
+                            <span class="metric-pill"><i class="fas fa-chart-line text-success"></i> Momentum Scoring</span>
+                        </div>
+
+                        <p class="project-desc">
+                            Autonomous cloud-hosted algorithmic trading engine combining multi-sector technical momentum scoring, Google Gemini AI sentiment and conviction audits, dynamic SPY/QQQ macro regime switching, Alpaca API execution, and real-time WebSocket circuit breakers.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag" data-tooltip="Python: Core quantitative strategy execution, momentum math & backtester">Python</span>
+                            <span class="tech-tag" data-tooltip="FastAPI: Asynchronous high-performance REST and WebSocket server">FastAPI</span>
+                            <span class="tech-tag" data-tooltip="Google Gemini AI: Batch market sentiment analysis and trade conviction scoring">Google Gemini AI</span>
+                            <span class="tech-tag" data-tooltip="Alpaca API: Commission-free sub-second order execution and portfolio tracking">Alpaca Trading API</span>
+                            <span class="tech-tag" data-tooltip="React & Vite: Responsive frosted-glass cyborg trading cockpit dashboard">React / Vite</span>
+                            <span class="tech-tag" data-tooltip="WebSockets: Sub-second price streaming and instant circuit breakers">WebSockets</span>
+                            <span class="tech-tag" data-tooltip="Supabase: Cloud database for trade history, regimes, and user preferences">Supabase</span>
+                        </div>
+                    </div>
+                    <div class="project-card-actions">
+                        <button onclick="openEmbedModal('https://algotraderai.onrender.com/#overview', 'algo-trader')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-play-circle me-1"></i> Live Interactive Preview</button>
+                        <button onclick="openArchModal('trader')" class="btn-outline" style="padding: 0.6rem 1rem;" title="View Strategy Blueprint"><i class="fas fa-sitemap me-1"></i> Blueprint</button>
+                        <a href="https://algotraderai.onrender.com/#overview" target="_blank" class="btn-outline btn-icon" title="Open Full Screen in New Tab"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 2: The Way Back App -->
+                <div class="project-card card-way-back" data-category="ai fullstack">
+                    <div>
+                        <div class="project-card-header">
+                            <span class="project-badge badge-live"><i class="fas fa-dove me-1"></i> Spiritual Sanctuary</span>
+                            <a href="https://github.com/HEMANTH5439/the-way-back" target="_blank" class="project-repo-link" title="View Source on GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                        <h3 class="project-title"><img src="assets/the-way-back-icon.svg" alt="The Way Back App Logo" class="project-title-logo" width="20" height="20" style="width: 20px; height: 20px; max-width: 20px; max-height: 20px; vertical-align: -2px; border-radius: 4px; display: inline-block; margin-right: 0.35rem; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"> The Way Back App</h3>
+                        
+                        <div class="project-metrics-strip">
+                            <span class="metric-pill"><i class="fas fa-user-shield text-info"></i> 100% Client Privacy</span>
+                            <span class="metric-pill"><i class="fas fa-book text-warning"></i> Scripture Mastery</span>
+                            <span class="metric-pill"><i class="fas fa-dove text-purple"></i> GenAI Guidance</span>
+                        </div>
+
+                        <p class="project-desc">
+                            A spiritual sanctuary platform engineered with a client-side privacy-first architecture for repentance, daily reflection journaling, and faith-based scripture mastery powered by Google Generative AI guidance.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag" data-tooltip="Next.js 16: Modern React App Router framework with SSR and streaming">Next.js 16</span>
+                            <span class="tech-tag" data-tooltip="React 19 & TypeScript: Modern component architecture and strict type safety">React 19 / TypeScript</span>
+                            <span class="tech-tag" data-tooltip="Google Generative AI: Scripture contemplation, devotionals & spiritual reflections">Google Generative AI</span>
+                            <span class="tech-tag" data-tooltip="Material UI & Tailwind: Elegant theme styling with responsive typography">MUI / Tailwind</span>
+                            <span class="tech-tag" data-tooltip="Client-Side Privacy: 100% on-device localStorage for journal entries and notes">Client-Side Privacy</span>
+                            <span class="tech-tag" data-tooltip="Vercel & Supabase: Edge hosting, telemetry analytics & optional cloud backup">Vercel / Supabase</span>
+                        </div>
+                    </div>
+                    <div class="project-card-actions">
+                        <button onclick="openEmbedModal('https://thewayback.vercel.app/', 'the-way-back')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-play-circle me-1"></i> Live Interactive Preview</button>
+                        <button onclick="openArchModal('wayback')" class="btn-outline" style="padding: 0.6rem 1rem;" title="View Sanctuary Blueprint"><i class="fas fa-sitemap me-1"></i> Blueprint</button>
+                        <a href="https://thewayback.vercel.app/" target="_blank" class="btn-outline btn-icon" title="Open Full Screen in New Tab"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 3: LLM SLA Telemetry Dashboard -->
+                <div class="project-card card-llm-sla" data-category="telemetry ai">
+                    <div>
+                        <div class="project-card-header">
+                            <span class="project-badge badge-live"><i class="fas fa-circle-notch fa-spin me-1"></i> Live System</span>
+                            <a href="./dashboards/llm-telemetry.html" target="_blank" class="project-repo-link" title="Open Dedicated Dashboard Page">
+                                <i class="fas fa-chart-pie"></i>
+                            </a>
+                        </div>
                         <h3 class="project-title">⚡ Open-Source LLM Telemetry & SLA Intelligence</h3>
+                        
+                        <div class="project-metrics-strip">
+                            <span class="metric-pill"><i class="fas fa-microchip text-info"></i> 50+ Models Monitored</span>
+                            <span class="metric-pill"><i class="fas fa-stopwatch text-success"></i> 185ms Min TTFT</span>
+                            <span class="metric-pill"><i class="fas fa-shield-alt text-purple"></i> 99.9% Nominal SLA</span>
+                        </div>
+
                         <p class="project-desc">
                             A real-time operational dashboard monitoring Latency (TTFT), Throughput (TPS), Token Pricing ($/1M), and Provider SLA Drift across 50+ models (Llama 3, DeepSeek, Claude, Gemini). Features 360° Polar Radar Scorecards and Pareto Frontier scatter charts.
                         </p>
@@ -134,63 +441,30 @@
                             <span class="tech-tag" data-tooltip="OpenRouter: Used for real-time model catalog & telemetry pricing API">OpenRouter API</span>
                         </div>
                     </div>
-
-                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
-                        <button onclick="openEmbedModal('http://127.0.0.1:8060/', 'llm-sla-telemetry')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-desktop"></i> Live Embed Preview</button>
-                        <button onclick="openArchModal('llm')" class="btn-outline" style="padding: 0.6rem 1rem;" title="View System Architecture Blueprint"><i class="fas fa-sitemap"></i> Blueprint</button>
-                        <button onclick="openEmbedModal('http://127.0.0.1:8060/', 'llm-sla-telemetry')" class="btn-outline" style="padding: 0.6rem 1rem;" title="Expand Full Screen Dashboard"><i class="fas fa-expand-alt"></i></button>
-                    </div>
-                </div>
-
-
-                <!-- Project 2: AI Algo Trader App -->
-                <div class="project-card">
-                    <div>
-                        <span class="project-badge badge-live"><i class="fas fa-chart-line me-1"></i> Quantitative System</span>
-                        <h3 class="project-title">📈 AI Algorithmic Trader Engine</h3>
-                        <p class="project-desc">
-                            Automated quantitative trading engine combining statistical arbitrage signals, sentiment intelligence NLP, real-time WebSocket order book feeds, and automated backtesting risk parameters (Sharpe, Drawdown, VaR).
-                        </p>
-                        <div class="tech-tags">
-                            <span class="tech-tag" data-tooltip="Python: Core quant strategy Execution & Backtesting">Python</span>
-                            <span class="tech-tag" data-tooltip="Plotly Financial: Interactive Candlestick & Orderbook Visualization">Plotly / Financial</span>
-                            <span class="tech-tag" data-tooltip="FastAPI: Real-time low-latency WebSocket order Execution">FastAPI / WebSockets</span>
-                            <span class="tech-tag" data-tooltip="PostgreSQL: High-frequency tick storage & trade history">PostgreSQL</span>
-                            <span class="tech-tag" data-tooltip="Ollama AI: Market sentiment NLP analysis">Local AI Sentiment</span>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
-                        <button onclick="openArchModal('trader')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-sitemap"></i> View Strategy Architecture</button>
-                        <a href="https://github.com/HEMANTH5439/hemanth-portfolio-monorepo" target="_blank" class="btn-outline" style="padding: 0.6rem 1rem;" title="View Source Code"><i class="fab fa-github"></i> Code</a>
-                    </div>
-                </div>
-
-                <!-- Project 3: The Way Back App -->
-                <div class="project-card">
-                    <div>
-                        <span class="project-badge badge-live"><i class="fas fa-history me-1"></i> Interactive Time-Machine</span>
-                        <h3 class="project-title">⏳ The Way Back App</h3>
-                        <p class="project-desc">
-                            A historical web archive analysis and temporal intelligence engine enabling users to explore past digital footprints, compare internet evolution trends, and query archived web snapshots with automated diff visualization.
-                        </p>
-                        <div class="tech-tags">
-                            <span class="tech-tag" data-tooltip="Wayback API: Public Internet Archive REST Integration">Wayback API</span>
-                            <span class="tech-tag" data-tooltip="Python: Asynchronous web crawler & DOM diff parser">Python Asyncio</span>
-                            <span class="tech-tag" data-tooltip="Plotly Dash: Interactive timeline & snapshot comparison UI">Plotly Dash</span>
-                            <span class="tech-tag" data-tooltip="DuckDB: Fast local archival dataset indexing">DuckDB Analytics</span>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
-                        <button onclick="openArchModal('wayback')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-sitemap"></i> View Archive Architecture</button>
-                        <a href="https://github.com/HEMANTH5439/hemanth-portfolio-monorepo" target="_blank" class="btn-outline" style="padding: 0.6rem 1rem;" title="View Source Code"><i class="fab fa-github"></i> Code</a>
+                    <div class="project-card-actions">
+                        <button onclick="openEmbedModal('./dashboards/llm-telemetry.html', 'llm-sla-telemetry')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-play-circle me-1"></i> Live Interactive Preview</button>
+                        <button onclick="openArchModal('llm')" class="btn-outline" style="padding: 0.6rem 1rem;" title="View System Architecture Blueprint"><i class="fas fa-sitemap me-1"></i> Blueprint</button>
+                        <a href="./dashboards/llm-telemetry.html" target="_blank" class="btn-outline btn-icon" title="Open Full Screen in New Tab"><i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
 
                 <!-- Project 4: Open-Source Security & Dependency Blast-Radius Engine -->
-                <div class="project-card">
+                <div class="project-card card-security" data-category="telemetry fintech">
                     <div>
-                        <span class="project-badge badge-live"><i class="fas fa-shield-virus me-1"></i> Security Intelligence</span>
+                        <div class="project-card-header">
+                            <span class="project-badge badge-live"><i class="fas fa-shield-virus me-1"></i> Security Intelligence</span>
+                            <a href="./dashboards/security-blast.html" target="_blank" class="project-repo-link" title="Open Dedicated Dashboard Page">
+                                <i class="fas fa-project-diagram"></i>
+                            </a>
+                        </div>
                         <h3 class="project-title">🛡️ Open-Source Security & Dependency Blast-Radius Engine</h3>
+                        
+                        <div class="project-metrics-strip">
+                            <span class="metric-pill"><i class="fas fa-project-diagram text-info"></i> Directed DAG Graph</span>
+                            <span class="metric-pill"><i class="fas fa-bug text-warning"></i> CVSS 4.0 Threat Matrix</span>
+                            <span class="metric-pill"><i class="fas fa-database text-success"></i> OSV.dev CVE Feeds</span>
+                        </div>
+
                         <p class="project-desc">
                             Graph intelligence engine mapping transitive CVE vulnerability propagation across package ecosystems (PyPI, npm, Crates.io). Simulates zero-day blast radius, computes CVSS 4.0 threat severity, and calculates automated remediation upgrade paths.
                         </p>
@@ -202,43 +476,15 @@
                             <span class="tech-tag" data-tooltip="PostgreSQL: Graph node cache & transitive vulnerability storage">PostgreSQL</span>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
-                        <button onclick="openEmbedModal('http://127.0.0.1:8065/', 'security-blast-radius')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-desktop"></i> Live Embed Preview</button>
-                        <button onclick="openArchModal('security')" class="btn-outline" style="padding: 0.6rem 1rem;" title="View System Architecture Blueprint"><i class="fas fa-sitemap"></i> Blueprint</button>
-                        <button onclick="openEmbedModal('http://127.0.0.1:8065/', 'security-blast-radius')" class="btn-outline" style="padding: 0.6rem 1rem;" title="Expand Full Screen Dashboard"><i class="fas fa-expand-alt"></i></button>
+                    <div class="project-card-actions">
+                        <button onclick="openEmbedModal('./dashboards/security-blast.html', 'security-blast-radius')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-play-circle me-1"></i> Live Interactive Preview</button>
+                        <button onclick="openArchModal('security')" class="btn-outline" style="padding: 0.6rem 1rem;" title="View System Architecture Blueprint"><i class="fas fa-sitemap me-1"></i> Blueprint</button>
+                        <a href="./dashboards/security-blast.html" target="_blank" class="btn-outline btn-icon" title="Open Full Screen in New Tab"><i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
 
-
-
-
-
-
-                <!-- Project 5: Global Energy Grid & Carbon Tracker -->
-                <div class="project-card">
-                    <div>
-                        <span class="project-badge badge-upcoming"><i class="fas fa-clock me-1"></i> Featured System</span>
-                        <h3 class="project-title">⚡ Global Renewable Energy & Carbon Intensity Tracker</h3>
-                        <p class="project-desc">
-                            Geospatial real-time energy grid telemetry tracking marginal carbon intensity (gCO2eq/kWh), battery storage arbitrage efficiency, and renewable generation curtailment risks across US EIA and ENTSO-E power grids.
-                        </p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">Plotly Mapbox</span>
-                            <span class="tech-tag">Polars</span>
-                            <span class="tech-tag">DuckDB</span>
-                            <span class="tech-tag">ENTSO-E / EIA API</span>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
-                        <button class="btn-outline" style="flex: 1; opacity: 0.7; cursor: not-allowed;"><i class="fas fa-lock"></i> Architecture Blueprint</button>
-                    </div>
-                </div>
-
-
-                </div>
             </div>
         </section>
-
 
         <!-- Technical Skills Matrix -->
         <section id="skills">
@@ -254,8 +500,8 @@
                     <ul class="skill-list">
                         <li><i class="fas fa-check"></i> Python (Polars, Pandas, Asyncio)</li>
                         <li><i class="fas fa-check"></i> SQL & Relational Databases (PostgreSQL)</li>
-                        <li><i class="fas fa-check"></i> Analytical DBs (DuckDB, Parquet)</li>
-                        <li><i class="fas fa-check"></i> REST & GraphQL API Integration</li>
+                        <li><i class="fas fa-check"></i> Analytical DBs (DuckDB, Parquet, Delta)</li>
+                        <li><i class="fas fa-check"></i> Spark & Databricks Lakehouse</li>
                     </ul>
                 </div>
 
@@ -264,21 +510,68 @@
                     <h3 class="skill-title">Dashboards & Analytics</h3>
                     <ul class="skill-list">
                         <li><i class="fas fa-check"></i> Plotly / Dash (Interactive Web Apps)</li>
-                        <li><i class="fas fa-check"></i> Tableau & BI Storytelling</li>
+                        <li><i class="fas fa-check"></i> Tableau & Looker BI Architectures</li>
                         <li><i class="fas fa-check"></i> 360° Radar & Pareto Frontier Charts</li>
-                        <li><i class="fas fa-check"></i> User Experience & Data Storytelling</li>
+                        <li><i class="fas fa-check"></i> Telemetry & Event Analytics Pipelines</li>
                     </ul>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon"><i class="fas fa-cloud"></i></div>
-                    <h3 class="skill-title">AI & Cloud Pipelines</h3>
+                    <h3 class="skill-title">AI & Cloud Infrastructure</h3>
                     <ul class="skill-list">
-                        <li><i class="fas fa-check"></i> Local AI Offloading (Ollama / LLMs)</li>
-                        <li><i class="fas fa-check"></i> Supabase & Serverless DBs</li>
-                        <li><i class="fas fa-check"></i> Vercel Deployment & Serverless Functions</li>
-                        <li><i class="fas fa-check"></i> GitHub Actions CI/CD Data Pipelines</li>
+                        <li><i class="fas fa-check"></i> Local & Cloud LLMs (Ollama / Gemini)</li>
+                        <li><i class="fas fa-check"></i> GCP & AWS Big Data Cloud Services</li>
+                        <li><i class="fas fa-check"></i> Docker, FastAPIs & WebSockets</li>
+                        <li><i class="fas fa-check"></i> GitHub Actions CI/CD & Airflow DAGs</li>
                     </ul>
+                </div>
+            </div>
+
+            <!-- Credentials & Academic Education Split Grid -->
+            <div class="credentials-grid">
+                <!-- 1. Verified Certifications Card (All 4 Credentials) -->
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-award text-warning"></i></div>
+                    <h3 class="skill-title">Verified Certifications</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-certificate text-info"></i> <b>Google Cloud Certified:</b> Professional Cloud Architect</li>
+                        <li><i class="fas fa-certificate text-success"></i> <b>Google Cloud Certified:</b> Professional Data Engineer</li>
+                        <li><i class="fas fa-certificate text-primary"></i> <b>Google Cloud Certified:</b> Associate Cloud Engineer</li>
+                        <li><i class="fas fa-certificate text-purple"></i> <b>Tableau Desktop Specialist:</b> Data Analytics</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Academic Education Card (All 3 Degrees) -->
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fas fa-graduation-cap text-purple"></i></div>
+                    <h3 class="skill-title">Academic Education</h3>
+                    <div class="edu-list">
+                        <div class="edu-item">
+                            <div class="edu-degree">
+                                <i class="fas fa-university text-info"></i> MS in Information Systems & Technology
+                            </div>
+                            <div class="edu-school">
+                                <i class="fas fa-map-marker-alt" style="font-size: 0.75rem;"></i> Claremont Graduate University, California
+                            </div>
+                        </div>
+                        <div class="edu-item">
+                            <div class="edu-degree">
+                                <i class="fas fa-university text-success"></i> Master of Business Administration (MBA)
+                            </div>
+                            <div class="edu-school">
+                                <i class="fas fa-map-marker-alt" style="font-size: 0.75rem;"></i> Alliance University
+                            </div>
+                        </div>
+                        <div class="edu-item">
+                            <div class="edu-degree">
+                                <i class="fas fa-university text-warning"></i> B.E. in Mechanical Engineering
+                            </div>
+                            <div class="edu-school">
+                                <i class="fas fa-map-marker-alt" style="font-size: 0.75rem;"></i> BMS College of Engineering, India
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -295,6 +588,7 @@
             <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <button onclick="copyContact('chellamhemanth@gmail.com', 'Email address copied!')" class="btn-primary" title="Click to copy email"><i class="fas fa-envelope me-1"></i> chellamhemanth@gmail.com</button>
                 <a href="https://www.linkedin.com/in/hemanth-chellam-b9285a8a/" target="_blank" class="btn-outline"><i class="fab fa-linkedin me-1"></i> LinkedIn Profile</a>
+                <button onclick="sharePortfolio()" class="btn-outline" style="border-color: rgba(0, 210, 255, 0.4); color: var(--accent-blue);"><i class="fas fa-share-alt me-1"></i> Share Portfolio</button>
             </div>
         </section>
     </div>
@@ -327,9 +621,12 @@
             <div class="embed-header">
                 <div style="display: flex; align-items: center; gap: 0.8rem;">
                     <span style="color: var(--accent-blue); font-weight: 700;"><i class="fas fa-desktop me-1"></i> Live Interactive Dashboard Embed</span>
-                    <span style="color: var(--text-muted); font-size: 0.9rem;">| Full System Preview</span>
+                    <span id="embed-title" style="color: var(--text-muted); font-size: 0.9rem;">| Full System Preview</span>
                 </div>
-                <button onclick="closeEmbedModal()" class="btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;"><i class="fas fa-times"></i> Close Preview</button>
+                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                    <a id="embed-external-link" href="#" target="_blank" class="btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.9rem; text-decoration: none;" title="Open in New Tab"><i class="fas fa-external-link-alt me-1"></i> Open Tab</a>
+                    <button onclick="closeEmbedModal()" class="btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;"><i class="fas fa-times"></i> Close Preview</button>
+                </div>
             </div>
             <iframe id="embed-iframe" class="embed-iframe" src=""></iframe>
         </div>
@@ -372,6 +669,14 @@
                         <p>Runs offline local LLMs to generate executive telemetry summaries at zero cloud token cost.</p>
                     </div>
                 </div>
+
+                <!-- Interactive Pipeline Simulation Bar -->
+                <div class="arch-simulation-bar">
+                    <button id="btn-run-simulation" onclick="runPipelineSimulation()" class="btn-primary" style="font-size: 0.88rem; padding: 0.45rem 1.1rem;">
+                        <i class="fas fa-play me-1"></i> Simulate Pipeline Run
+                    </button>
+                    <span id="simulation-status-text" style="color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-mono);"><i class="fas fa-info-circle me-1 text-info"></i> Click to inject live synthetic event payload through pipeline nodes</span>
+                </div>
             </div>
         </div>
     </div>
@@ -379,37 +684,239 @@
 
     <!-- 5. Interactive Resume Viewer Modal -->
     <div id="resume-modal" class="embed-modal">
-        <div class="embed-window" style="max-width: 900px; height: 85vh;">
+        <div class="embed-window" style="max-width: 920px; height: 88vh;">
             <div class="embed-header">
                 <div style="display: flex; align-items: center; gap: 0.8rem;">
                     <span style="color: var(--accent-blue); font-weight: 700;"><i class="fas fa-file-alt me-1"></i> Interactive Resume / CV Viewer</span>
                     <span style="color: var(--text-muted); font-size: 0.9rem;">| Hemanth Chellam</span>
                 </div>
-                <button onclick="closeResumeModal()" class="btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;"><i class="fas fa-times"></i> Close Viewer</button>
-            </div>
-            <div style="padding: 2.5rem; overflow-y: auto; color: var(--text-main); font-family: var(--font-body);">
-                <div style="border-bottom: 2px solid var(--accent-blue); padding-bottom: 1rem; margin-bottom: 1.5rem;">
-                    <h2 style="font-family: var(--font-heading); font-size: 2rem;">Hemanth Chellam</h2>
-                    <p style="color: var(--accent-blue); font-weight: 600;">Data & AI Systems Engineer</p>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">chellamhemanth@gmail.com | linkedin.com/in/hemanth-chellam-b9285a8a/</p>
+                <div style="display: flex; gap: 0.6rem; align-items: center;">
+                    <button onclick="printResume()" class="btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.85rem; color: var(--accent-blue); border-color: var(--accent-blue);" title="Print or Save as Clean ATS PDF"><i class="fas fa-print me-1"></i> Print / PDF</button>
+                    <a href="mailto:chellamhemanth@gmail.com" class="btn-primary" style="padding: 0.35rem 0.9rem; font-size: 0.85rem;"><i class="fas fa-envelope me-1"></i> Contact</a>
+                    <button onclick="closeResumeModal()" class="btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.85rem;"><i class="fas fa-times"></i> Close</button>
                 </div>
-                <div style="margin-bottom: 1.5rem;">
-                    <h4 style="color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Professional Summary</h4>
-                    <p style="color: var(--text-muted);">
-                        Results-driven Data & AI Systems Engineer with proven experience designing real-time telemetry pipelines, interactive Plotly web dashboards, PostgreSQL schemas, and zero-cost local AI insights. Skilled in Python (Polars/Pandas), SQL, REST APIs, and Cloud Deployments.
+            </div>
+            <div class="resume-modal-body" style="padding: 2.2rem; overflow-y: auto; color: var(--text-main); font-family: var(--font-body); line-height: 1.6;">
+                
+                <!-- Resume Header -->
+                <div style="border-bottom: 2px solid var(--accent-blue); padding-bottom: 1.2rem; margin-bottom: 1.5rem;">
+                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 0.2rem;">Hemanth Chellam</h2>
+                    <p style="color: var(--accent-blue); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem;">Senior Analytics & Data Engineer | Cloud Architect</p>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <span><i class="fas fa-map-marker-alt text-info me-1"></i> United States</span> • 
+                        <span><i class="fas fa-phone text-success me-1"></i> (408) 896-8641</span> • 
+                        <span><i class="fas fa-envelope text-warning me-1"></i> chellamhemanth@gmail.com</span> • 
+                        <a href="https://linkedin.com/in/hemanth-chellam-b9285a8a/" target="_blank" style="color: var(--accent-blue); text-decoration: none;">linkedin.com/in/hemanth-chellam</a> • 
+                        <a href="https://github.com/HEMANTH5439" target="_blank" style="color: var(--accent-blue); text-decoration: none;">github.com/HEMANTH5439</a>
                     </p>
                 </div>
-                <div style="margin-bottom: 1.5rem;">
-                    <h4 style="color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Core Projects</h4>
-                    <ul style="color: var(--text-muted); padding-left: 1.2rem;">
-                        <li style="margin-bottom: 0.5rem;"><b style="color: var(--text-main);">Open-Source LLM Telemetry Dashboard</b>: Built real-time SLA tracking across 50+ models with 360° Radar Scorecards and local Ollama AI offloading.</li>
-                        <li><b style="color: var(--text-main);">Global Energy Grid & Carbon Tracker</b>: Modeled geospatial carbon intensity and grid battery storage efficiency.</li>
-                    </ul>
+
+                <!-- Professional Profile -->
+                <div style="margin-bottom: 1.8rem;">
+                    <h4 style="color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.95rem; margin-bottom: 0.5rem; font-weight: 700;">Professional Profile</h4>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">
+                        Senior Analytics & Data Engineer with <b>9+ years of experience</b> delivering high-impact ETL pipelines, big data architectures, and enterprise business intelligence solutions across gaming, chatbots, sales, and operations at industry leaders including <b>Google</b>, <b>Microsoft</b>, and <b>Netflix</b>. Certified Google Cloud Data Engineer and Architect, specializing in high-performance cloud/local AI implementations, Spark streaming, Databricks Lakehouse architectures, server deployments, and interactive web application development.
+                    </p>
                 </div>
+
+                <!-- Technical Competencies -->
+                <div style="margin-bottom: 1.8rem;">
+                    <h4 style="color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.95rem; margin-bottom: 0.8rem; font-weight: 700;">Technical Competencies</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem;">
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px;">
+                            <b style="color: var(--accent-blue);">Cloud & Big Data:</b> <span style="color: var(--text-muted); font-size: 0.88rem;">AWS, GCP, Databricks, BigQuery, Spark Structured Streaming, Redshift, Snowflake</span>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px;">
+                            <b style="color: var(--accent-blue);">AI & App Dev:</b> <span style="color: var(--text-muted); font-size: 0.88rem;">Local & Cloud AI, LLM Pipelines, Python, FastAPI, React, WebSockets</span>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px;">
+                            <b style="color: var(--accent-blue);">Infrastructure & MLOps:</b> <span style="color: var(--text-muted); font-size: 0.88rem;">Docker, CI/CD, Vercel, Render, Airflow DAGs, Unity Catalog</span>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: 8px;">
+                            <b style="color: var(--accent-blue);">Data Modeling & BI:</b> <span style="color: var(--text-muted); font-size: 0.88rem;">dbt, Delta Live Tables, Tableau, Looker, SQL, PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Experience -->
+                <div style="margin-bottom: 1.8rem;">
+                    <h4 style="color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.95rem; margin-bottom: 1rem; font-weight: 700;">Professional Experience</h4>
+
+                    <!-- Koantek -->
+                    <div style="margin-bottom: 1.4rem;">
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <b style="color: var(--text-main); font-size: 1.05rem;">Koantek (Databricks Contract) | <span style="color: var(--accent-blue);">Senior Data Engineer</span></b>
+                            <span style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">Jan 2026 – Jul 2026 | Dallas, TX</span>
+                        </div>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; font-size: 0.9rem; margin-top: 0.4rem;">
+                            <li>Designed programmatic ad signal ingestion using Spark Structured Streaming on Databricks Lakehouse, targeting latency reduction from 8 hours to under 15 minutes.</li>
+                            <li>Developed foundational dbt data models tracking Ad Inventory Fill Rates, identifying primary bottlenecks with a projected 12% increase in global ad yield.</li>
+                            <li>Architected streamlined feature engineering pipelines in Databricks supporting A/B testing for ad-insertion algorithms, reducing setup time by 40%.</li>
+                            <li>Executed cost optimization audits migrating Spark workloads to Photon-enabled clusters, achieving a 30% reduction in DBU consumption.</li>
+                            <li>Implemented a data observability framework using Unity Catalog and Delta Live Tables, cutting discrepancies by 65%.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Netflix -->
+                    <div style="margin-bottom: 1.4rem;">
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <b style="color: var(--text-main); font-size: 1.05rem;">Netflix | <span style="color: var(--accent-blue);">Senior Analytics Engineer</span></b>
+                            <span style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">May 2024 – Dec 2025 | Los Angeles, CA</span>
+                        </div>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; font-size: 0.9rem; margin-top: 0.4rem;">
+                            <li>Led analytics for <b>Squid Game Mobile/Cloud</b>, delivering actionable insights that shaped product strategy, monetization, and engagement decisions.</li>
+                            <li>Engineered scalable databases, analytical models, version-controlled GitHub workflows, and robust real-time/batch processing pipelines on AWS.</li>
+                            <li>Partnered with data science to evaluate LLM-driven insights pipelines, integrating natural language query frameworks into core analytics workflows.</li>
+                            <li>Built and maintained interactive Tableau & Looker dashboards, and implemented ML churn prediction models to optimize player retention.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Microsoft -->
+                    <div style="margin-bottom: 1.4rem;">
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <b style="color: var(--text-main); font-size: 1.05rem;">Microsoft (Activision / Xbox Division) | <span style="color: var(--accent-blue);">Senior Data Engineer</span></b>
+                            <span style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">Feb 2022 – May 2024 | Santa Monica, CA</span>
+                        </div>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; font-size: 0.9rem; margin-top: 0.4rem;">
+                            <li>Led cross-functional analytics for <b>Call of Duty</b> engagement, defining metrics and building best-in-class telemetry and semantic layers.</li>
+                            <li>Utilized SQL (Spark, Databricks, BigQuery) for big data analysis and orchestrated complex ETL pipelines via Python Airflow DAGs.</li>
+                            <li>Developed strategic ML datasets, predictive analytics models, and visual narrative dashboards to guide executive decision-making.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Google -->
+                    <div style="margin-bottom: 1.4rem;">
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <b style="color: var(--text-main); font-size: 1.05rem;">Google (via Virtusa / Iconma) | <span style="color: var(--accent-blue);">GCP Data Engineer / Analyst</span></b>
+                            <span style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">Aug 2018 – Feb 2022 | Sunnyvale, CA</span>
+                        </div>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; font-size: 0.9rem; margin-top: 0.4rem;">
+                            <li>Built and maintained ETL data pipelines on GCP Dataflow, Pub/Sub, BigQuery, and Hadoop for top US Telco cloud customers.</li>
+                            <li>Automated voice and chatbot analytics workflows (Dialogflow) and deployed Slowly Changing Dimensions (SCD Type 4) historical tracking.</li>
+                            <li>Improved visualization metrics and KPIs, increasing business productivity by 70% while creating standardized code repositories.</li>
+                        </ul>
+                    </div>
+
+                    <!-- State Auto -->
+                    <div style="margin-bottom: 1.4rem;">
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <b style="color: var(--text-main); font-size: 1.05rem;">State Auto Insurance | <span style="color: var(--accent-blue);">Data Analyst (Intern)</span></b>
+                            <span style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">Jan 2018 – May 2018 | Columbus, OH</span>
+                        </div>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; font-size: 0.9rem; margin-top: 0.4rem;">
+                            <li>Analyzed insurance agent network datasets and identified key performance indicators and factors affecting sales performance.</li>
+                            <li>Mined and modeled data using SQL Server, Python, Tableau, and SAS.</li>
+                        </ul>
+                    </div>
+
+                    <!-- HCL Technologies -->
+                    <div style="margin-bottom: 1.4rem;">
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <b style="color: var(--text-main); font-size: 1.05rem;">HCL Technologies Limited | <span style="color: var(--accent-blue);">Business Analyst</span></b>
+                            <span style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">Jun 2015 – Mar 2017 | Bangalore, India</span>
+                        </div>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; font-size: 0.9rem; margin-top: 0.4rem;">
+                            <li>Collected, cleaned, and provided modeling and statistical analysis of structured and unstructured data for major enterprise client initiatives.</li>
+                            <li>Extracted, interpreted, and analyzed data using Tableau, SAS, SQL, and Excel to transform raw data into actionable insights.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Education & Certifications -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                    <div>
+                        <h4 style="color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.95rem; margin-bottom: 0.8rem; font-weight: 700;">Education</h4>
+                        <div style="margin-bottom: 0.8rem;">
+                            <b style="color: var(--text-main);">MS in Information Systems & Technology</b><br>
+                            <span style="color: var(--accent-blue); font-size: 0.88rem;">Claremont Graduate University, CA</span>
+                        </div>
+                        <div style="margin-bottom: 0.8rem;">
+                            <b style="color: var(--text-main);">MBA</b><br>
+                            <span style="color: var(--accent-blue); font-size: 0.88rem;">Alliance University</span>
+                        </div>
+                        <div>
+                            <b style="color: var(--text-main);">B.E. Mechanical Engineering</b><br>
+                            <span style="color: var(--accent-blue); font-size: 0.88rem;">BMS College of Engineering, India</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.95rem; margin-bottom: 0.8rem; font-weight: 700;">Verified Certifications</h4>
+                        <ul style="color: var(--text-muted); padding-left: 1.2rem; font-size: 0.9rem;">
+                            <li style="margin-bottom: 0.4rem;"><b style="color: var(--text-main);">Google Cloud Certified Professional Cloud Architect</b></li>
+                            <li style="margin-bottom: 0.4rem;"><b style="color: var(--text-main);">Google Cloud Certified Professional Data Engineer</b></li>
+                            <li style="margin-bottom: 0.4rem;"><b style="color: var(--text-main);">Google Cloud Certified Associate Cloud Engineer</b></li>
+                            <li><b style="color: var(--text-main);">Tableau Desktop Specialist</b></li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
+
+    <!-- Floating "Hemanth AI" Chat Widget (Unified Hybrid Engine) -->
+    <div id="hemanth-ai-widget" class="ai-widget-wrapper">
+        <!-- Floating Launcher Pill/Button -->
+        <button id="hemanth-ai-launcher" class="ai-launcher-btn" onclick="toggleAIChat()" title="Chat with Hemanth AI Assistant">
+            <span class="ai-pulse-ring"></span>
+            <span class="ai-avatar-icon"><i class="fas fa-robot"></i></span>
+            <span class="ai-launcher-label">Ask Hemanth AI</span>
+            <span class="ai-status-pill"><span class="ai-dot-green"></span> Live</span>
+        </button>
+
+        <!-- Conversational Chat Drawer Window -->
+        <div id="hemanth-ai-drawer" class="ai-chat-drawer" style="display: none;">
+            <!-- Chat Header -->
+            <div class="ai-drawer-header">
+                <div class="ai-drawer-title-group">
+                    <div class="ai-drawer-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <div class="ai-drawer-title">Hemanth AI Assistant</div>
+                        <div class="ai-drawer-status"><span class="ai-dot-green"></span> Online • Powered by Gemini AI</div>
+                    </div>
+                </div>
+                <div class="ai-drawer-actions">
+                    <button class="ai-btn-action" onclick="sharePortfolio()" title="Share Portfolio"><i class="fas fa-share-alt"></i></button>
+                    <button class="ai-btn-action" onclick="openTerminalFromChat()" title="Open CLI Terminal Mode"><i class="fas fa-terminal"></i></button>
+                    <button class="ai-btn-action" onclick="toggleAIChat()" title="Close Chat"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+
+            <!-- Quick Topics Bar -->
+            <div class="ai-topics-bar">
+                <span class="ai-topic-pill" onclick="sendQuickPrompt('Netflix Telemetry')">⚡ Netflix Telemetry</span>
+                <span class="ai-topic-pill" onclick="sendQuickPrompt('Databricks Lakehouse')">🧱 Databricks</span>
+                <span class="ai-topic-pill" onclick="sendQuickPrompt('Call of Duty MSFT')">🎮 Call of Duty</span>
+                <span class="ai-topic-pill" onclick="sendQuickPrompt('Google Cloud Dataflow')">☁️ Google Cloud</span>
+                <span class="ai-topic-pill" onclick="sendQuickPrompt('Certifications')">🏆 Certifications</span>
+                <span class="ai-topic-pill" onclick="sendQuickPrompt('Open to hire?')">💼 Open to Hire?</span>
+            </div>
+
+            <!-- Messages Stream Area -->
+            <div id="ai-chat-messages" class="ai-messages-container">
+                <div class="ai-bubble ai-bubble-bot">
+                    <div class="ai-bubble-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="ai-bubble-text">
+                        <p style="margin: 0 0 0.5rem 0;">👋 Welcome! I'm <b>Hemanth's AI Assistant</b>.</p>
+                        <p style="margin: 0;">Ask me anything about his real-time telemetry systems at <b>Netflix</b> & <b>Microsoft</b>, Lakehouse engineering at <b>Databricks</b>, cloud architecture, or hiring availability!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Bar -->
+            <form id="ai-chat-form" onsubmit="handleAIChatSubmit(event)" class="ai-input-form">
+                <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Ask about experience, telemetry, tech stack..." autocomplete="off">
+                <button type="submit" id="ai-chat-send-btn" class="ai-chat-send-btn" title="Send Question"><i class="fas fa-paper-plane"></i></button>
+            </form>
+
+            <div class="ai-drawer-footer">
+                <span>Hemanth AI Assistant • Unified Engine • Type <code>ask &lt;query&gt;</code> in <a href="javascript:void(0)" onclick="openTerminalFromChat()" style="color: var(--accent-blue); text-decoration: none;">CLI</a></span>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>

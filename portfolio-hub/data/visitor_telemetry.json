@@ -1,0 +1,201 @@
+[
+  {
+    "id": 1,
+    "event_type": "page_view",
+    "session_id": "sess_rec_91a0",
+    "path": "/",
+    "referrer": "https://www.linkedin.com/in/hemanth-chellam-b9285a8a/",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "resolution": "1920x1080"
+    },
+    "created_at": "2026-10-14T00:15:22Z"
+  },
+  {
+    "id": 2,
+    "event_type": "project_click",
+    "session_id": "sess_rec_91a0",
+    "path": "/#projects",
+    "referrer": "https://www.linkedin.com/",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "project": "The Way Back App",
+      "action": "open_preview"
+    },
+    "created_at": "2026-10-14T00:16:05Z"
+  },
+  {
+    "id": 3,
+    "event_type": "ai_query",
+    "session_id": "sess_rec_91a0",
+    "path": "/",
+    "referrer": "https://www.linkedin.com/",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "topic": "Spark Streaming on Databricks Lakehouse"
+    },
+    "created_at": "2026-10-14T00:17:40Z"
+  },
+  {
+    "id": 4,
+    "event_type": "resume_view",
+    "session_id": "sess_rec_91a0",
+    "path": "/resume",
+    "referrer": "https://www.linkedin.com/",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-14T00:18:15Z"
+  },
+  {
+    "id": 5,
+    "event_type": "page_view",
+    "session_id": "sess_mob_44b1",
+    "path": "/",
+    "referrer": "https://github.com/HEMANTH5439",
+    "device_type": "mobile",
+    "browser": "Safari Mobile",
+    "meta": {
+      "resolution": "390x844"
+    },
+    "created_at": "2026-10-14T00:45:10Z"
+  },
+  {
+    "id": 6,
+    "event_type": "share_click",
+    "session_id": "sess_mob_44b1",
+    "path": "/",
+    "referrer": "https://github.com/HEMANTH5439",
+    "device_type": "mobile",
+    "browser": "Safari Mobile",
+    "meta": {
+      "method": "navigator.share"
+    },
+    "created_at": "2026-10-14T00:46:02Z"
+  },
+  {
+    "id": 7,
+    "event_type": "project_click",
+    "session_id": "sess_mob_44b1",
+    "path": "/#projects",
+    "referrer": "https://github.com/HEMANTH5439",
+    "device_type": "mobile",
+    "browser": "Safari Mobile",
+    "meta": {
+      "project": "Algo Trader AI App",
+      "action": "open_preview"
+    },
+    "created_at": "2026-10-14T00:47:18Z"
+  },
+  {
+    "id": 8,
+    "event_type": "page_view",
+    "session_id": "sess_rec_77c2",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Firefox",
+    "meta": {
+      "resolution": "2560x1440"
+    },
+    "created_at": "2026-10-14T01:05:40Z"
+  },
+  {
+    "id": 9,
+    "event_type": "terminal_cmd",
+    "session_id": "sess_rec_77c2",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Firefox",
+    "meta": {
+      "command": "experience"
+    },
+    "created_at": "2026-10-14T01:06:12Z"
+  },
+  {
+    "id": 10,
+    "event_type": "project_click",
+    "session_id": "sess_rec_77c2",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Firefox",
+    "meta": {
+      "project": "LLM SLA Telemetry Intelligence",
+      "action": "open_dashboard"
+    },
+    "created_at": "2026-10-14T01:07:33Z"
+  },
+  {
+    "id": 11,
+    "event_type": "ai_query",
+    "session_id": "sess_rec_77c2",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Firefox",
+    "meta": {
+      "topic": "Netflix Squid Game telemetry"
+    },
+    "created_at": "2026-10-14T01:09:50Z"
+  },
+  {
+    "id": 12,
+    "event_type": "page_view",
+    "session_id": "sess_tab_33d9",
+    "path": "/",
+    "referrer": "https://www.google.com/",
+    "device_type": "tablet",
+    "browser": "Chrome",
+    "meta": {
+      "resolution": "810x1080"
+    },
+    "created_at": "2026-10-14T01:30:11Z"
+  },
+  {
+    "id": 13,
+    "event_type": "project_click",
+    "session_id": "sess_tab_33d9",
+    "path": "/#projects",
+    "referrer": "https://www.google.com/",
+    "device_type": "tablet",
+    "browser": "Chrome",
+    "meta": {
+      "project": "Security Blast-Radius Engine",
+      "action": "open_dashboard"
+    },
+    "created_at": "2026-10-14T01:31:05Z"
+  },
+  {
+    "id": 14,
+    "event_type": "resume_view",
+    "session_id": "sess_tab_33d9",
+    "path": "/resume",
+    "referrer": "https://www.google.com/",
+    "device_type": "tablet",
+    "browser": "Chrome",
+    "meta": {
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-14T01:32:45Z"
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "test_sess_99",
+    "path": "/",
+    "referrer": "https://linkedin.com",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "test": true
+    },
+    "created_at": "2026-10-14T07:25:13.597475+00:00",
+    "id": 15
+  }
+]

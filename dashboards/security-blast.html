@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ Security & Dependency Blast-Radius Engine | Hemanth Chellam</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Plotly.js CDN -->
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0a0c10;
+            --card-bg: #11141a;
+            --card-border: #21262d;
+            --accent-cyan: #00d2ff;
+            --accent-purple: #9d4edd;
+            --accent-green: #00e676;
+            --accent-yellow: #ffd166;
+            --accent-red: #ff5f56;
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            padding: 1.5rem 2rem 3rem 2rem;
+            line-height: 1.5;
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Outfit', sans-serif; }
+        .header-section {
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .header-title-wrap h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .header-title-wrap p {
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn {
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background: var(--accent-cyan);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+        .kpi-card:hover { transform: translateY(-2px); border-color: rgba(0, 210, 255, 0.3); }
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .kpi-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .kpi-val {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 0.2rem;
+        }
+        .kpi-sub { font-size: 0.8rem; color: var(--text-muted); }
+        
+        .filter-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) { .filter-card { grid-template-columns: 1fr; } }
+        .filter-group label {
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .checkbox-pills {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .pill-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .pill-btn.active {
+            background: rgba(0, 210, 255, 0.2);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+        .slider-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .slider-wrap input[type=range] {
+            flex: 1;
+            accent-color: var(--accent-cyan);
+            cursor: pointer;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 1024px) { .charts-grid { grid-template-columns: 1fr; } }
+        .chart-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .chart-header {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chart-header h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .chart-body { height: 460px; width: 100%; position: relative; }
+
+        .table-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .table-controls {
+            padding: 1rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .search-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            outline: none;
+            width: 260px;
+        }
+        .search-input:focus { border-color: var(--accent-cyan); }
+        .table-wrapper { overflow-x: auto; max-height: 400px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            text-align: left;
+        }
+        th {
+            background: #161b22;
+            color: var(--accent-cyan);
+            padding: 0.8rem 1rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #1a1e24;
+            color: #f0f6fc;
+        }
+        tr:hover td { background: rgba(255, 255, 255, 0.02); }
+        .badge-critical {
+            background: rgba(255, 95, 86, 0.2);
+            color: var(--accent-red);
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        .badge-fix {
+            font-family: 'Fira Code', monospace;
+            background: rgba(0, 230, 118, 0.15);
+            color: var(--accent-green);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 1.5rem;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: #161b22;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            max-width: 750px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+        .modal-card h2 { color: var(--accent-cyan); margin-bottom: 1rem; font-size: 1.4rem; }
+        .modal-card h3 { color: var(--accent-yellow); margin: 1.2rem 0 0.5rem 0; font-size: 1.1rem; }
+        .modal-card p, .modal-card li { color: #d0d7de; font-size: 0.95rem; margin-bottom: 0.6rem; }
+        .scenario-box {
+            background: #0d1117;
+            border-left: 4px solid var(--accent-green);
+            padding: 1rem 1.2rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+        .close-modal {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+        .close-modal:hover { color: #fff; }
+
+        /* Tooltip simple */
+        .info-icon {
+            color: var(--accent-cyan);
+            cursor: pointer;
+            margin-left: 0.4rem;
+            transition: color 0.2s;
+        }
+        .info-icon:hover { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header-section">
+        <div class="header-title-wrap">
+            <h1><i class="fas fa-shield-virus" style="color: var(--accent-red)"></i> Open-Source Security & Dependency Blast-Radius Engine</h1>
+            <p>
+                Real-time graph intelligence mapping transitive CVE vulnerability propagation and zero-day blast radius across package ecosystems.
+                <i class="fas fa-info-circle info-icon" title="Click 'Why Was This Built?' to view full enterprise scenarios"></i>
+            </p>
+        </div>
+        <button onclick="toggleModal(true)" class="btn">
+            <i class="fas fa-info-circle"></i> Why Was This Engine Built? (System Briefing)
+        </button>
+    </div>
+
+    <!-- KPI Scorecards -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-header">
+                <span class="kpi-label">TOTAL CVE VULNERABILITIES</span>
+                <i class="fas fa-info-circle info-icon" title="Active CVE threats tracked across package ecosystems"></i>
+            </div>
+            <div id="kpi-total" class="kpi-val" style="color: var(--accent-red);">45 CVEs</div>
+            <div class="kpi-sub">Across PyPI, npm & Crates.io</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-header">
+                <span class="kpi-label">CRITICAL IMPACT (CVSS &ge; 9.0)</span>
+                <i class="fas fa-info-circle info-icon" title="Zero-day Remote Code Execution (RCE) requiring hotfixing"></i>
+            </div>
+            <div id="kpi-critical" class="kpi-val" style="color: var(--accent-yellow);">12 Critical</div>
+            <div class="kpi-sub">Immediate patching required</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-header">
+                <span class="kpi-label">MAX BLAST RADIUS</span>
+                <i class="fas fa-info-circle info-icon" title="Downstream microservices exposed through a single compromised package"></i>
+            </div>
+            <div id="kpi-blast" class="kpi-val" style="color: var(--accent-cyan);">172 Services</div>
+            <div class="kpi-sub">Transitive propagation reach</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-header">
+                <span class="kpi-label">MEDIAN TRANSITIVE DEPTH</span>
+                <i class="fas fa-info-circle info-icon" title="Layers of indirect sub-dependencies before infection"></i>
+            </div>
+            <div class="kpi-val" style="color: var(--accent-green);">Depth 2.4</div>
+            <div class="kpi-sub">Indirect dependency chain</div>
+        </div>
+    </div>
+
+    <!-- Filter Controls -->
+    <div class="filter-card">
+        <div class="filter-group">
+            <label><i class="fas fa-cubes"></i> Filter Ecosystems:</label>
+            <div class="checkbox-pills">
+                <span class="pill-btn active" data-eco="PyPI" onclick="toggleEco(this)">PyPI (Python)</span>
+                <span class="pill-btn active" data-eco="npm" onclick="toggleEco(this)">npm (Node.js)</span>
+                <span class="pill-btn active" data-eco="Crates.io" onclick="toggleEco(this)">Crates.io (Rust)</span>
+            </div>
+        </div>
+        <div class="filter-group">
+            <label><i class="fas fa-sliders-h"></i> Min CVSS Severity Threshold: <b id="cvss-val" style="color:#fff">4.0</b></label>
+            <div class="slider-wrap">
+                <input type="range" id="cvss-slider" min="4.0" max="9.8" step="0.2" value="4.0" oninput="updateCVSS(this.value)">
+                <span style="font-family:'Fira Code'; font-size:0.85rem; color:var(--text-muted)">4.0 &rarr; 9.8</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="charts-grid">
+        <!-- 3D Network DAG Topology -->
+        <div class="chart-box">
+            <div class="chart-header">
+                <h3 style="color: var(--accent-cyan)"><i class="fas fa-project-diagram"></i> 3D Transitive Dependency Blast Topology</h3>
+                <i class="fas fa-info-circle info-icon" title="3D DAG mapping: X/Y network position, Z CVSS threat score, Sphere size = Blast Radius reach"></i>
+            </div>
+            <div id="chart-3d" class="chart-body"></div>
+        </div>
+
+        <!-- 2D CVSS vs Blast Radius -->
+        <div class="chart-box">
+            <div class="chart-header">
+                <h3 style="color: var(--accent-yellow)"><i class="fas fa-fire"></i> CVSS Severity vs. Blast Radius Reach</h3>
+                <i class="fas fa-info-circle info-icon" title="Top-right quadrant indicates high-priority emergency patching targets"></i>
+            </div>
+            <div id="chart-scatter" class="chart-body"></div>
+        </div>
+    </div>
+
+    <!-- Active Transitive Vulnerability Audit Table -->
+    <div class="table-card">
+        <div class="table-controls">
+            <h3 style="font-size:1.05rem; font-weight:700; color:var(--accent-green); display:flex; align-items:center; gap:0.5rem;">
+                <i class="fas fa-clipboard-check"></i> Active Transitive Vulnerability Audit Table
+            </h3>
+            <input type="text" id="table-search" class="search-input" placeholder="🔍 Search package, CVE, or depth..." oninput="renderTable()">
+        </div>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Package</th>
+                        <th>Ecosystem</th>
+                        <th>Assigned CVE</th>
+                        <th>CVSS Severity</th>
+                        <th>Transitive Depth</th>
+                        <th>Blast Radius (Services)</th>
+                        <th>Recommended Fix</th>
+                    </tr>
+                </thead>
+                <tbody id="vuln-tbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- System Briefing Modal -->
+    <div id="briefing-modal" class="modal-overlay" onclick="if(event.target === this) toggleModal(false)">
+        <div class="modal-card">
+            <button class="close-modal" onclick="toggleModal(false)">&times;</button>
+            <h2><i class="fas fa-shield-alt text-info"></i> System Intelligence Briefing: Why Was This Built?</h2>
+            
+            <h3>🎯 1. Why Was This Engine Built?</h3>
+            <p>
+                Modern software engineering relies heavily on open-source package managers. When developers import a top-level library (e.g. <code>FastAPI</code> or <code>Requests</code>), it transitively pulls in dozens of indirect sub-dependencies. When a zero-day vulnerability (CVE) strikes deep at <b>Depth 3 or 4</b>, standard flat text vulnerability scanners fail to calculate <b>how far the threat propagates</b> across internal production microservices.
+            </p>
+
+            <h3>💡 2. How Is It Useful for Data & Security Engineers?</h3>
+            <ul>
+                <li><b>Transitive Topology Mapping:</b> Transforms flat lockfiles into 3D Directed Acyclic Graphs (DAGs) to isolate exact propagation pathways.</li>
+                <li><b>Blast-Radius Quantification:</b> Directly calculates how many downstream microservices, APIs, and pipelines are vulnerable.</li>
+                <li><b>Automated Version Upgrades:</b> Suggests the exact minimum safe patch version to eliminate guessing.</li>
+            </ul>
+
+            <div class="scenario-box">
+                <h4 style="color:var(--accent-green); margin-bottom:0.4rem; font-weight:700;">🏢 Real-World Enterprise Incident Scenario</h4>
+                <p style="margin-bottom:0.4rem;">
+                    <b>The Incident:</b> A critical Remote Code Execution vulnerability (<code>CVSS 9.8</code>) is published in a deep logging library used across a financial data platform with 120 production services.
+                </p>
+                <p style="margin-bottom:0;">
+                    <b>⚡ With This Engine:</b> Security teams isolate that <code>Depth 3</code> node in the 3D topology, immediately see that it affects exactly <b>38 critical production services</b>, and execute automated version bumps in under <b>15 minutes</b> instead of days of manual audit.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock dataset matching app.py
+        const packages = ["fastapi", "requests", "pydantic", "urllib3", "cryptography", "jinja2", "pyjwt", "gunicorn", "sqlalchemy", "numpy"];
+        const cveIds = ["CVE-2026-3841", "CVE-2026-1940", "CVE-2025-9941", "CVE-2026-0032", "CVE-2025-7719"];
+        const ecosystems = ["PyPI", "npm", "Crates.io"];
+
+        // Seeded deterministic data generation
+        const dataset = [];
+        for (let i = 0; i < 45; i++) {
+            const pkg = packages[i % packages.length];
+            const eco = ecosystems[i % ecosystems.length];
+            const cve = cveIds[i % cveIds.length];
+            const cvss = +(4.0 + ((i * 13) % 58) / 10).toFixed(1);
+            const depth = (i % 4) + 1;
+            const blast = depth * (12 + ((i * 7) % 32));
+            const fix = `${(i % 3) + 1}.${(i % 9)}.${(i % 8) + 1}`;
+
+            dataset.push({
+                id: i + 1,
+                package: pkg,
+                ecosystem: eco,
+                cve: cve,
+                cvss: cvss,
+                depth: `Depth ${depth}`,
+                depthNum: depth,
+                blastRadius: blast,
+                fix: `>=${fix}`
+            });
+        }
+
+        let selectedEcosystems = ["PyPI", "npm", "Crates.io"];
+        let minCVSS = 4.0;
+
+        function toggleEco(el) {
+            const eco = el.getAttribute('data-eco');
+            if (selectedEcosystems.includes(eco)) {
+                if (selectedEcosystems.length > 1) {
+                    selectedEcosystems = selectedEcosystems.filter(e => e !== eco);
+                    el.classList.remove('active');
+                }
+            } else {
+                selectedEcosystems.push(eco);
+                el.classList.add('active');
+            }
+            renderAll();
+        }
+
+        function updateCVSS(val) {
+            minCVSS = parseFloat(val);
+            document.getElementById('cvss-val').innerText = minCVSS.toFixed(1);
+            renderAll();
+        }
+
+        function toggleModal(open) {
+            document.getElementById('briefing-modal').classList.toggle('active', open);
+        }
+
+        function getFilteredData() {
+            return dataset.filter(d => selectedEcosystems.includes(d.ecosystem) && d.cvss >= minCVSS);
+        }
+
+        function renderKPIs(filtered) {
+            document.getElementById('kpi-total').innerText = `${filtered.length} CVEs`;
+            const criticalCount = filtered.filter(d => d.cvss >= 9.0).length;
+            document.getElementById('kpi-critical').innerText = `${criticalCount} Critical`;
+            const maxBlast = filtered.length > 0 ? Math.max(...filtered.map(d => d.blastRadius)) : 0;
+            document.getElementById('kpi-blast').innerText = `${maxBlast} Services`;
+        }
+
+        function render3DChart(filtered) {
+            const n = filtered.length;
+            const x = [], y = [], z = [], text = [], size = [], color = [];
+
+            filtered.forEach((d, i) => {
+                const angle = (2 * Math.PI * i) / (n || 1);
+                const radius = 1 + (d.blastRadius / 50.0);
+                x.push(Math.sin(angle) * radius);
+                y.push(Math.cos(angle) * radius);
+                z.push(d.cvss);
+                text.push(`<b>${d.package}</b> (${d.ecosystem})<br>CVE: ${d.cve}<br>CVSS: ${d.cvss}<br>Blast Radius: ${d.blastRadius} services`);
+                size.push(Math.max(8, d.blastRadius / 4));
+                color.push(d.cvss);
+            });
+
+            const trace = {
+                x: x, y: y, z: z,
+                mode: 'markers',
+                marker: {
+                    size: size,
+                    color: color,
+                    colorscale: 'Viridis',
+                    opacity: 0.85,
+                    colorbar: { title: 'CVSS' }
+                },
+                text: text,
+                hoverinfo: 'text',
+                type: 'scatter3d'
+            };
+
+            const layout = {
+                paper_bgcolor: '#11141a',
+                plot_bgcolor: '#11141a',
+                font: { color: '#f0f6fc', family: 'Inter' },
+                margin: { l: 0, r: 0, b: 0, t: 0 },
+                scene: {
+                    xaxis: { title: 'Network Node X', showgrid: true, gridcolor: '#21262d' },
+                    yaxis: { title: 'Network Node Y', showgrid: true, gridcolor: '#21262d' },
+                    zaxis: { title: 'CVSS Severity', showgrid: true, gridcolor: '#21262d' },
+                    bgcolor: '#11141a'
+                }
+            };
+
+            Plotly.newPlot('chart-3d', [trace], layout, { responsive: true, displayModeBar: false });
+        }
+
+        function renderScatterChart(filtered) {
+            const trace = {
+                x: filtered.map(d => d.cvss),
+                y: filtered.map(d => d.blastRadius),
+                mode: 'markers',
+                text: filtered.map(d => `${d.package} (${d.cve})`),
+                marker: {
+                    size: 14,
+                    color: filtered.map(d => d.cvss),
+                    colorscale: 'Reds',
+                    showscale: true,
+                    colorbar: { title: 'Threat' }
+                },
+                hovertemplate: '<b>%{text}</b><br>CVSS: %{x}<br>Blast Radius: %{y} services<extra></extra>',
+                type: 'scatter'
+            };
+
+            const layout = {
+                paper_bgcolor: '#11141a',
+                plot_bgcolor: '#11141a',
+                font: { color: '#f0f6fc', family: 'Inter' },
+                xaxis: { title: 'CVSS Threat Score', gridcolor: '#21262d' },
+                yaxis: { title: 'Blast Radius (Affected Dependents)', gridcolor: '#21262d' },
+                margin: { l: 50, r: 20, t: 30, b: 50 }
+            };
+
+            Plotly.newPlot('chart-scatter', [trace], layout, { responsive: true, displayModeBar: false });
+        }
+
+        function renderTable() {
+            const search = document.getElementById('table-search').value.toLowerCase();
+            const filtered = getFilteredData().filter(d => 
+                d.package.toLowerCase().includes(search) ||
+                d.cve.toLowerCase().includes(search) ||
+                d.ecosystem.toLowerCase().includes(search) ||
+                d.depth.toLowerCase().includes(search)
+            );
+
+            const tbody = document.getElementById('vuln-tbody');
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:2rem;">No matching vulnerabilities found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(d => `
+                <tr>
+                    <td><b>${d.package}</b></td>
+                    <td>${d.ecosystem}</td>
+                    <td><span style="font-family:'Fira Code'; font-size:0.85rem">${d.cve}</span></td>
+                    <td>
+                        <span class="${d.cvss >= 9.0 ? 'badge-critical' : ''}">
+                            ${d.cvss >= 9.0 ? '<i class="fas fa-exclamation-triangle"></i> ' : ''}${d.cvss}
+                        </span>
+                    </td>
+                    <td>${d.depth}</td>
+                    <td><b style="color:var(--accent-cyan)">${d.blastRadius}</b> services</td>
+                    <td><span class="badge-fix">${d.fix}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAll() {
+            const filtered = getFilteredData();
+            renderKPIs(filtered);
+            render3DChart(filtered);
+            renderScatterChart(filtered);
+            renderTable();
+        }
+
+        // Initial render
+        window.addEventListener('DOMContentLoaded', renderAll);
+    </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- State Auto Insurance Official SA Monogram Emblem -->
+  <g transform="translate(0, 15)">
+    <!-- Main S-ribbon that flows forward into the apex of the A -->
+    <path fill="#0072CE" d="M 65 2 C 60 2, 57 4, 53 8 L 35 41 C 32 46, 27 49, 21 49 L 4 49 L 1 66 L 37 66 C 42 66, 45 62, 48 57 L 62 30 C 65 24, 70 20, 77 20 L 98 20 C 99 15, 99 6, 98 2 Z"/>
+    <!-- Right leg and crossbar of the A -->
+    <path fill="#0072CE" d="M 79 26 L 96 26 L 88 66 L 72 66 L 75 51 L 58 51 L 63 39 L 76 39 Z"/>
+  </g>
+</svg>
