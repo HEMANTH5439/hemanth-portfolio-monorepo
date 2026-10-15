@@ -197,5 +197,310 @@
     },
     "created_at": "2026-10-14T07:25:13.597475+00:00",
     "id": 15
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv7sn8q3_25ovx3",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "1512x827"
+    },
+    "created_at": "2026-10-14T07:33:59.403Z",
+    "id": 16
+  },
+  {
+    "event_type": "share_click",
+    "session_id": "sess_mv7sn8q3_25ovx3",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "action": "share_initiated"
+    },
+    "created_at": "2026-10-14T07:34:03.428Z",
+    "id": 17
+  },
+  {
+    "event_type": "share_click",
+    "session_id": "sess_mv7sn8q3_25ovx3",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "action": "share_initiated"
+    },
+    "created_at": "2026-10-14T07:34:06.286Z",
+    "id": 18
+  },
+  {
+    "event_type": "share_click",
+    "session_id": "sess_mv7sn8q3_25ovx3",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "method": "clipboard_fallback",
+      "status": "success"
+    },
+    "created_at": "2026-10-14T07:34:06.291Z",
+    "id": 19
+  },
+  {
+    "event_type": "terminal_cmd",
+    "session_id": "sess_mv7sn8q3_25ovx3",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "command": "admin"
+    },
+    "created_at": "2026-10-14T07:34:16.422Z",
+    "id": 20
+  },
+  {
+    "event_type": "terminal_cmd",
+    "session_id": "sess_mv7sn8q3_25ovx3",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "command": "7788"
+    },
+    "created_at": "2026-10-14T07:34:24.458Z",
+    "id": 21
+  },
+  {
+    "event_type": "terminal_cmd",
+    "session_id": "sess_mv7sn8q3_25ovx3",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "command": "admin"
+    },
+    "created_at": "2026-10-14T07:34:31.737Z",
+    "id": 22
+  },
+  {
+    "event_type": "share_click",
+    "session_id": "sess_mv7sn8q3_25ovx3",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "action": "share_initiated"
+    },
+    "created_at": "2026-10-14T07:44:05.808Z",
+    "id": 23
+  },
+  {
+    "event_type": "share_click",
+    "session_id": "sess_mv7sn8q3_25ovx3",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "method": "navigator.share",
+      "status": "success"
+    },
+    "created_at": "2026-10-14T07:44:10.039Z",
+    "id": 24
+  },
+  {
+    "event_type": "share_click",
+    "session_id": "sess_mv7sn8q3_25ovx3",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "action": "share_initiated"
+    },
+    "created_at": "2026-10-14T07:44:19.709Z",
+    "id": 25
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "1512x827"
+    },
+    "created_at": "2026-10-15T04:57:18.067Z",
+    "id": 26
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "1512x827"
+    },
+    "created_at": "2026-10-15T05:06:30.553Z",
+    "id": 27
+  },
+  {
+    "event_type": "share_click",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "share_initiated"
+    },
+    "created_at": "2026-10-15T05:07:20.985Z",
+    "id": 28
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "1512x827"
+    },
+    "created_at": "2026-10-15T05:14:38.128Z",
+    "id": 29
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/#projects",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "1512x827"
+    },
+    "created_at": "2026-10-15T05:22:11.552Z",
+    "id": 30
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "1512x827"
+    },
+    "created_at": "2026-10-15T05:22:21.397Z",
+    "id": 31
+  },
+  {
+    "event_type": "ai_query",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "query_length": 27,
+      "source": "ai_chat_widget",
+      "topic": "who is the president of USA"
+    },
+    "created_at": "2026-10-15T05:22:44.194Z",
+    "id": 32
+  },
+  {
+    "event_type": "ai_query",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "query_length": 9,
+      "source": "ai_chat_widget",
+      "topic": "tell me!!"
+    },
+    "created_at": "2026-10-15T05:23:00.469Z",
+    "id": 33
+  },
+  {
+    "event_type": "ai_query",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "query_length": 31,
+      "source": "ai_chat_widget",
+      "topic": "tell me who is president of USA"
+    },
+    "created_at": "2026-10-15T05:23:20.644Z",
+    "id": 34
+  },
+  {
+    "event_type": "ai_query",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "query_length": 79,
+      "source": "ai_chat_widget",
+      "topic": "will hemanth be a good fit for a chief role? Is he willing t"
+    },
+    "created_at": "2026-10-15T05:23:59.667Z",
+    "id": 35
+  },
+  {
+    "event_type": "ai_query",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "query_length": 54,
+      "source": "ai_chat_widget",
+      "topic": "will hemanth be a good fit for a cook role in seattle?"
+    },
+    "created_at": "2026-10-15T05:24:49.386Z",
+    "id": 36
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "1512x827"
+    },
+    "created_at": "2026-10-15T05:39:59.837Z",
+    "id": 37
   }
 ]

@@ -31,7 +31,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
 
@@ -47,13 +47,15 @@
 
     <!-- Navigation Header -->
     <nav class="navbar">
-        <a href="#" class="nav-brand">Hemanth Chellam</a>
+        <div class="nav-left">
+            <a href="#" class="nav-brand">Hemanth Chellam</a>
 
-        <!-- Accent Color Theme Selector -->
-        <div class="theme-picker" title="Switch Accent Color Theme">
-            <span class="color-dot dot-cyan" onclick="setAccentTheme('cyan')"></span>
-            <span class="color-dot dot-purple" onclick="setAccentTheme('purple')"></span>
-            <span class="color-dot dot-green" onclick="setAccentTheme('green')"></span>
+            <!-- Accent Color Theme Selector -->
+            <div class="theme-picker" title="Switch Accent Color Theme">
+                <span class="color-dot dot-cyan" onclick="setAccentTheme('cyan')"></span>
+                <span class="color-dot dot-purple" onclick="setAccentTheme('purple')"></span>
+                <span class="color-dot dot-green" onclick="setAccentTheme('green')"></span>
+            </div>
         </div>
 
         <ul class="nav-links">
@@ -64,14 +66,76 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
         
-        <div style="display: flex; gap: 0.8rem; align-items: center;">
-            <button onclick="toggleAIChat()" class="btn-ai-nav" title="Chat with Hemanth AI Assistant"><i class="fas fa-robot"></i> Ask AI</button>
-            <button id="btn-open-terminal" class="btn-terminal" title="Launch Interactive Terminal CLI"><i class="fas fa-terminal"></i> CLI</button>
-            <button onclick="sharePortfolio()" class="btn-share-nav" title="Share Portfolio"><i class="fas fa-share-alt"></i> Share</button>
-            <button onclick="openResumeModal()" class="btn-primary"><i class="fas fa-file-alt"></i> Resume</button>
+        <div class="nav-actions">
+            <button id="btn-open-terminal" class="btn-terminal" title="Launch Interactive Terminal CLI"><i class="fas fa-terminal"></i> <span class="nav-btn-text">CLI</span></button>
+            <button onclick="sharePortfolio()" class="btn-share-nav" title="Share Portfolio"><i class="fas fa-share-alt"></i> <span class="nav-btn-text">Share</span></button>
+            <button onclick="openResumeModal()" class="btn-primary" title="View Resume"><i class="fas fa-file-alt"></i> <span class="nav-btn-text">Resume</span></button>
+            <button id="btn-hamburger" class="btn-hamburger" onclick="toggleMobileDrawer()" aria-label="Open Navigation Menu" title="Open Menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
 
     </nav>
+
+    <!-- Mobile Navigation Drawer & Backdrop -->
+    <div id="drawer-backdrop" class="drawer-backdrop" onclick="closeMobileDrawer()"></div>
+    <aside id="mobile-drawer" class="mobile-drawer" aria-label="Mobile Navigation Drawer">
+        <div class="drawer-header">
+            <span class="drawer-title">Navigation</span>
+            <button class="btn-drawer-close" onclick="closeMobileDrawer()" aria-label="Close Navigation Menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="drawer-content">
+            <!-- Mobile Section Links -->
+            <div class="drawer-section">
+                <span class="drawer-section-title">Sections</span>
+                <ul class="drawer-nav-links">
+                    <li><a href="#about" onclick="closeMobileDrawer()"><i class="fas fa-user-astronaut"></i> <span>About</span></a></li>
+                    <li><a href="#experience" onclick="closeMobileDrawer()"><i class="fas fa-briefcase"></i> <span>Experience</span></a></li>
+                    <li><a href="#projects" onclick="closeMobileDrawer()"><i class="fas fa-code-branch"></i> <span>Projects</span></a></li>
+                    <li><a href="#skills" onclick="closeMobileDrawer()"><i class="fas fa-cubes"></i> <span>Skills & Architecture</span></a></li>
+                    <li><a href="#contact" onclick="closeMobileDrawer()"><i class="fas fa-paper-plane"></i> <span>Contact</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Mobile Theme Switcher (Prominent & Accessible) -->
+            <div class="drawer-section">
+                <span class="drawer-section-title">Accent Theme</span>
+                <div class="drawer-theme-picker">
+                    <button class="drawer-theme-pill theme-cyan" onclick="setAccentTheme('cyan'); closeMobileDrawer();">
+                        <span class="theme-dot dot-cyan"></span> Cyan
+                    </button>
+                    <button class="drawer-theme-pill theme-purple" onclick="setAccentTheme('purple'); closeMobileDrawer();">
+                        <span class="theme-dot dot-purple"></span> Purple
+                    </button>
+                    <button class="drawer-theme-pill theme-green" onclick="setAccentTheme('green'); closeMobileDrawer();">
+                        <span class="theme-dot dot-green"></span> Green
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Quick Actions -->
+            <div class="drawer-section">
+                <span class="drawer-section-title">Quick Actions</span>
+                <div class="drawer-actions">
+                    <button onclick="closeMobileDrawer(); openResumeModal();" class="drawer-btn btn-drawer-resume">
+                        <i class="fas fa-file-alt"></i> View Full Resume
+                    </button>
+                    <button onclick="closeMobileDrawer(); openTerminal();" class="drawer-btn btn-drawer-terminal">
+                        <i class="fas fa-terminal"></i> Interactive CLI
+                    </button>
+                    <button onclick="closeMobileDrawer(); sharePortfolio();" class="drawer-btn btn-drawer-share">
+                        <i class="fas fa-share-alt"></i> Share Portfolio
+                    </button>
+                    <button onclick="closeMobileDrawer(); toggleAIChat(true);" class="drawer-btn btn-drawer-ai">
+                        <i class="fas fa-robot"></i> Chat with AI Assistant
+                    </button>
+                </div>
+            </div>
+        </div>
+    </aside>
 
     <div class="container">
         <!-- Hero Section -->
@@ -79,6 +143,18 @@
             <div class="hero-content">
                 <p class="hero-subtitle">⚡ Hello, I'm Hemanth Chellam</p>
                 <h1 class="hero-title">Senior Data & AI Systems Engineer</h1>
+                
+                <!-- Live Operational Telemetry Pill -->
+                <div class="hero-telemetry-badge" onclick="showLiveTelemetryModal()" title="Tap to Inspect Real-Time Telemetry & SLA Metrics">
+                    <span class="telemetry-live-dot"></span>
+                    <span class="telemetry-live-text">SYSTEM NOMINAL</span>
+                    <span class="telemetry-live-sep">•</span>
+                    <span class="telemetry-live-stat">99.99% LAKEHOUSE SLA</span>
+                    <span class="telemetry-live-sep">•</span>
+                    <span class="telemetry-live-stat">2.4M OPS/SEC</span>
+                    <i class="fas fa-chevron-right telemetry-chevron"></i>
+                </div>
+
                 <p class="hero-bio">
                     Senior Analytics & Data Engineer with <b>9+ years of experience</b> delivering high-throughput ETL pipelines, big data architectures, and AI solutions at scale for industry leaders including <b>Google</b>, <b>Microsoft</b>, <b>Netflix</b>, and <b>Databricks</b>.
                 </p>
@@ -115,10 +191,11 @@
             </div>
         </section>
 
-        <!-- Enterprise Company Trust Bar (Credibility Showcase) -->
+        <!-- Enterprise Company Trust Bar (Credibility Showcase with Infinite Marquee) -->
         <div class="company-trust-bar">
             <p class="trust-bar-label">PROVEN IMPACT & BIG DATA TELEMETRY AT SCALE FOR INDUSTRY LEADERS</p>
             <div class="company-logos-track">
+                <!-- Primary Set -->
                 <div class="company-logo-item">
                     <img src="assets/logos/google.svg" alt="Google Logo" class="company-logo-img">
                     <div class="company-details">
@@ -145,6 +222,63 @@
                     <div class="company-details">
                         <h4>Databricks</h4>
                         <p>Lakehouse & Streaming Spark</p>
+                    </div>
+                </div>
+                <div class="company-logo-item">
+                    <img src="assets/logos/stateauto.svg" alt="State Auto Insurance Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>State Auto</h4>
+                        <p>Enterprise Telemetry & Risk</p>
+                    </div>
+                </div>
+                <div class="company-logo-item">
+                    <img src="assets/logos/hcl.svg" alt="HCL Technologies Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>HCL Tech</h4>
+                        <p>Multi-Region Cloud Analytics</p>
+                    </div>
+                </div>
+                <!-- Duplicate Set for Seamless Infinite Marquee on Mobile -->
+                <div class="company-logo-item marquee-duplicate" aria-hidden="true">
+                    <img src="assets/logos/google.svg" alt="Google Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>Google</h4>
+                        <p>GCP Cloud Data Pipelines</p>
+                    </div>
+                </div>
+                <div class="company-logo-item marquee-duplicate" aria-hidden="true">
+                    <img src="assets/logos/netflix.svg" alt="Netflix Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>Netflix</h4>
+                        <p>Squid Game Analytics & LLMs</p>
+                    </div>
+                </div>
+                <div class="company-logo-item marquee-duplicate" aria-hidden="true">
+                    <img src="assets/logos/microsoft.svg" alt="Microsoft Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>Microsoft / Xbox</h4>
+                        <p>Call of Duty Telemetry Layer</p>
+                    </div>
+                </div>
+                <div class="company-logo-item marquee-duplicate" aria-hidden="true">
+                    <img src="assets/logos/databricks.svg" alt="Databricks Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>Databricks</h4>
+                        <p>Lakehouse & Streaming Spark</p>
+                    </div>
+                </div>
+                <div class="company-logo-item marquee-duplicate" aria-hidden="true">
+                    <img src="assets/logos/stateauto.svg" alt="State Auto Insurance Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>State Auto</h4>
+                        <p>Enterprise Telemetry & Risk</p>
+                    </div>
+                </div>
+                <div class="company-logo-item marquee-duplicate" aria-hidden="true">
+                    <img src="assets/logos/hcl.svg" alt="HCL Technologies Logo" class="company-logo-img">
+                    <div class="company-details">
+                        <h4>HCL Tech</h4>
+                        <p>Multi-Region Cloud Analytics</p>
                     </div>
                 </div>
             </div>
@@ -608,9 +742,60 @@
             <div id="terminal-body" class="terminal-body">
                 <div>Type '<b style="color:#00d2ff">help</b>' to list available commands.</div>
             </div>
+            <!-- Quick Command Palette for Mobile/Desktop -->
+            <div class="terminal-quick-bar">
+                <span class="terminal-quick-label"><i class="fas fa-bolt"></i> Quick:</span>
+                <button type="button" class="terminal-chip" onclick="executeTerminalCommand('help')">help</button>
+                <button type="button" class="terminal-chip" onclick="executeTerminalCommand('stats')">stats</button>
+                <button type="button" class="terminal-chip" onclick="executeTerminalCommand('experience')">experience</button>
+                <button type="button" class="terminal-chip" onclick="executeTerminalCommand('projects')">projects</button>
+                <button type="button" class="terminal-chip" onclick="executeTerminalCommand('skills')">skills</button>
+                <button type="button" class="terminal-chip" onclick="executeTerminalCommand('metrics 1919')">metrics 1919</button>
+                <button type="button" class="terminal-chip" onclick="executeTerminalCommand('clear')">clear</button>
+            </div>
             <div class="terminal-input-line" style="padding: 0 1.2rem 1.2rem 1.2rem;">
                 <span class="terminal-prompt">hemanth@hub:~$</span>
                 <input type="text" id="terminal-input" class="terminal-input" placeholder="type help, about, projects, skills, metrics..." autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <!-- Real-Time Telemetry & SLA Modal -->
+    <div id="telemetry-health-modal" class="embed-modal">
+        <div class="embed-window" style="max-width: 680px; height: auto; max-height: 85vh;">
+            <div class="embed-header">
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <span style="color: var(--accent-green); font-weight: 700;"><i class="fas fa-heartbeat me-1"></i> Live Production Telemetry</span>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">| System Status</span>
+                </div>
+                <button onclick="closeLiveTelemetryModal()" class="btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;"><i class="fas fa-times"></i> Close</button>
+            </div>
+            <div style="padding: 1.8rem; overflow-y: auto;">
+                <div class="health-grid">
+                    <div class="health-card">
+                        <div class="health-card-header"><i class="fas fa-database text-info"></i> Lakehouse Availability</div>
+                        <div class="health-card-metric" style="color: #00d2ff;">99.994%</div>
+                        <div class="health-card-desc">Continuous Medallion Delta Lake pipeline partition health</div>
+                    </div>
+                    <div class="health-card">
+                        <div class="health-card-header"><i class="fas fa-bolt text-warning"></i> Event Throughput</div>
+                        <div class="health-card-metric" style="color: #ffd166;">2.4M /sec</div>
+                        <div class="health-card-desc">Kafka & Spark Structured Streaming peak message rate</div>
+                    </div>
+                    <div class="health-card">
+                        <div class="health-card-header"><i class="fas fa-tachometer-alt text-success"></i> Stream P99 Latency</div>
+                        <div class="health-card-metric" style="color: #00e676;">12.4 ms</div>
+                        <div class="health-card-desc">Sub-second telemetry ingestion & sliding window aggregation</div>
+                    </div>
+                    <div class="health-card">
+                        <div class="health-card-header"><i class="fas fa-shield-alt text-purple"></i> Portfolio Visitor Events</div>
+                        <div id="health-visitor-count" class="health-card-metric" style="color: #c77dff;">Live Tracking</div>
+                        <div class="health-card-desc">Real-time visitor telemetry captured in local/Supabase vault</div>
+                    </div>
+                </div>
+                <div style="margin-top: 1.4rem; padding: 1rem; background: rgba(0, 210, 255, 0.06); border: 1px solid rgba(0, 210, 255, 0.25); border-radius: 10px; font-size: 0.86rem; color: var(--text-main);">
+                    <i class="fas fa-info-circle text-info"></i> <b>Architectural Note:</b> Telemetry architectures designed for Netflix (Squid Game metrics), Microsoft (Call of Duty real-time streams), and Databricks Lakehouse pipelines adhere to strict zero-downtime, sub-second failover protocols.
+                </div>
             </div>
         </div>
     </div>
@@ -645,25 +830,29 @@
             </div>
             <div style="padding: 2rem; overflow-y: auto; color: var(--text-main);">
                 <div id="arch-flow-container" class="arch-flow">
-                    <div class="arch-node">
+                    <div class="arch-node" onclick="inspectArchNode(this)" title="Tap to inspect architecture specs">
+                        <span class="arch-node-badge">INSPECT</span>
                         <i class="fas fa-cloud-download-alt text-info"></i>
                         <h4>1. Live API Ingestion</h4>
                         <p>Fetches real-time model specs, pricing & base TTFT/TPS from OpenRouter Public REST API.</p>
                     </div>
                     <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="arch-node">
+                    <div class="arch-node" onclick="inspectArchNode(this)" title="Tap to inspect architecture specs">
+                        <span class="arch-node-badge">INSPECT</span>
                         <i class="fas fa-database text-warning"></i>
                         <h4>2. Supabase PostgreSQL</h4>
                         <p>Stores 7 to 90 day historical telemetry logs with server status codes & traffic queue flags.</p>
                     </div>
                     <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="arch-node">
+                    <div class="arch-node" onclick="inspectArchNode(this)" title="Tap to inspect architecture specs">
+                        <span class="arch-node-badge">INSPECT</span>
                         <i class="fas fa-chart-pie text-success"></i>
                         <h4>3. Plotly / Dash UI</h4>
                         <p>Renders 360° Polar Radar Scorecards, Pareto Frontier scatter plots & hourly congestion heatmaps.</p>
                     </div>
                     <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="arch-node">
+                    <div class="arch-node" onclick="inspectArchNode(this)" title="Tap to inspect architecture specs">
+                        <span class="arch-node-badge">INSPECT</span>
                         <i class="fas fa-robot text-purple"></i>
                         <h4>4. Ollama Local AI</h4>
                         <p>Runs offline local LLMs to generate executive telemetry summaries at zero cloud token cost.</p>
@@ -855,6 +1044,22 @@
     </div>
 
 
+    <!-- Mobile Dynamic Thumb Island (Bottom Floating Bar on <= 768px) -->
+    <div id="mobile-thumb-island" class="mobile-thumb-island">
+        <button type="button" onclick="toggleAIChat()" class="thumb-pill-btn thumb-ai" title="Chat with AI Assistant">
+            <i class="fas fa-robot"></i> <span>Ask AI</span>
+        </button>
+        <button type="button" onclick="openTerminal()" class="thumb-pill-btn thumb-cli" title="Launch Terminal CLI">
+            <i class="fas fa-terminal"></i> <span>CLI</span>
+        </button>
+        <button type="button" onclick="openResumeModal()" class="thumb-pill-btn thumb-resume" title="View Full Resume">
+            <i class="fas fa-file-alt"></i> <span>Resume</span>
+        </button>
+        <button type="button" onclick="scrollToTop()" class="thumb-pill-btn thumb-top" title="Scroll to Top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
     <!-- Floating "Hemanth AI" Chat Widget (Unified Hybrid Engine) -->
     <div id="hemanth-ai-widget" class="ai-widget-wrapper">
         <!-- Floating Launcher Pill/Button -->
@@ -906,6 +1111,15 @@
                 </div>
             </div>
 
+            <!-- Mobile 1-Tap Executive Prompt Chips -->
+            <div class="ai-prompt-chips">
+                <button type="button" class="ai-chip-btn" onclick="sendQuickPrompt('Why hire Hemanth as a Senior Data & AI Engineer?')">💡 Why hire Hemanth?</button>
+                <button type="button" class="ai-chip-btn" onclick="sendQuickPrompt('Explain Databricks Lakehouse vs Snowflake architecture')">⚡ Databricks vs Snowflake</button>
+                <button type="button" class="ai-chip-btn" onclick="sendQuickPrompt('How did you build the LLM SLA Telemetry dashboard?')">🛠️ LLM SLA Dashboard</button>
+                <button type="button" class="ai-chip-btn" onclick="sendQuickPrompt('Summarize Call of Duty and Netflix real-time telemetry systems')">🎮 Real-Time Telemetry</button>
+                <button type="button" class="ai-chip-btn" onclick="sendQuickPrompt('Summarize career in 3 executive bullet points')">📊 3-Bullet Summary</button>
+            </div>
+
             <!-- Input Bar -->
             <form id="ai-chat-form" onsubmit="handleAIChatSubmit(event)" class="ai-input-form">
                 <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Ask about experience, telemetry, tech stack..." autocomplete="off">
@@ -925,6 +1139,6 @@
 
 
     <!-- Interactive Script -->
-    <script src="app.js"></script>
+    <script src="app.js?v=5"></script>
 </body>
 </html>
