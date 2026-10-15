@@ -149,7 +149,6 @@ function closeMobileDrawer() {
 window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeMobileDrawer();
-        closeLiveTelemetryModal();
         if (terminalModal) terminalModal.classList.remove('active');
         const embedModal = document.getElementById('embed-modal');
         if (embedModal) embedModal.classList.remove('active');
@@ -1168,34 +1167,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// 6. Mobile Innovation Handlers (Live Telemetry, Thumb Island, Arch Inspection)
-async function showLiveTelemetryModal() {
-    const modal = document.getElementById('telemetry-health-modal');
-    if (!modal) return;
-    modal.classList.add('active');
-    trackTelemetryEvent('telemetry_badge_tap', { source: 'hero_badge' });
-
-    const visitorCountEl = document.getElementById('health-visitor-count');
-    try {
-        const res = await fetch('/api/telemetry?pin=1919');
-        if (res.ok) {
-            const data = await res.json();
-            const total = data?.metrics?.total_events || data?.summary?.total_events || 30;
-            const unique = data?.metrics?.unique_sessions || data?.summary?.unique_sessions || 9;
-            if (visitorCountEl) {
-                visitorCountEl.innerText = `${total} Events (${unique} Sessions)`;
-            }
-        }
-    } catch (_) {
-        if (visitorCountEl) visitorCountEl.innerText = 'Active (Supabase Vault)';
-    }
-}
-
-function closeLiveTelemetryModal() {
-    const modal = document.getElementById('telemetry-health-modal');
-    if (modal) modal.classList.remove('active');
-}
-
+// 6. Mobile Innovation Handlers (Arch Inspection, Scroll Utils)
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
