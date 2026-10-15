@@ -537,16 +537,16 @@ async function executeTerminalCommand(rawCmd) {
     if (cmd === 'share') {
         sharePortfolio();
         response.innerHTML = `<span style="color:#00e676">🔗 Triggered native share sheet / copied portfolio link to clipboard.</span>`;
-    } else if (cmd === 'admin' || cmd === 'telemetry') {
+    } else if (cmd === 'admin' || cmd === 'telemetry' || cmd === 'metrics') {
         response.innerHTML = `
 <div style="border-left: 3px solid #ffb703; padding-left: 0.8rem; margin: 0.4rem 0;">
   <b style="color:#ffb703">[ADMIN SECURITY LOCK] Private Telemetry Vault</b><br>
   <span style="color:var(--text-muted)">Visitor impressions, unique sessions, AI queries &amp; usage logs are strictly restricted to Hemanth Chellam.</span><br>
   <span style="color:#e0e0e0">Usage: </span><b style="color:#00d2ff">admin &lt;pin&gt;</b> or <b style="color:#00d2ff">metrics &lt;pin&gt;</b>
 </div>`;
-    } else if (cmd.startsWith('admin ') || cmd.startsWith('telemetry ') || cmd.startsWith('metrics ') || cmd === 'metrics 1919') {
+    } else if (cmd.startsWith('admin ') || cmd.startsWith('telemetry ') || cmd.startsWith('metrics ')) {
         const parts = rawCmd.split(/\s+/);
-        const pin = parts[1] || '1919';
+        const pin = parts[1] || '';
         response.innerHTML = `<span style="color:#00d2ff">⏳ Authenticating with Telemetry Vault...</span>`;
         terminalBody.appendChild(response);
         terminalBody.scrollTop = terminalBody.scrollHeight;

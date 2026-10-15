@@ -32,7 +32,7 @@ load_env()
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 ENV_GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "")
-ADMIN_SECRET_PIN = os.environ.get("ADMIN_SECRET_PIN", "1919")
+ADMIN_SECRET_PIN = os.environ.get("ADMIN_SECRET_PIN", "1818")
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
 SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
 

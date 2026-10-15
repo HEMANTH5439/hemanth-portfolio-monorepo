@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
   const supabaseUrl = (process.env.SUPABASE_URL || '').replace(/\/$/, '');
   const supabaseKey = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-  const adminPin = process.env.ADMIN_SECRET_PIN || '1919';
+  const adminPin = process.env.ADMIN_SECRET_PIN || '1818';
 
   // 1. Ingestion Endpoint: POST /api/telemetry
   if (req.method === 'POST') {
