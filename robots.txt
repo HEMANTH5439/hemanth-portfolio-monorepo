@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hemanth-chellam.vercel.app/sitemap.xml

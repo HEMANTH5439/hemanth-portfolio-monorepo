@@ -202,7 +202,9 @@ const commands = {
   - <b style="color:#00d2ff">education</b>: View academic degrees & universities<br>
   - <b style="color:#00d2ff">share</b>: Share portfolio via native share or copy link<br>
   - <b style="color:#00d2ff">ask &lt;query&gt;</b>: Query Hemanth's AI Assistant on career & architecture<br>
+  - <b style="color:#00d2ff">rickroll</b>: Synthesize 8-bit Rick Astley audio easter egg<br>
   - <b style="color:#00d2ff">music</b>: Stream synthesized 8-bit audio telemetry<br>
+  - <b style="color:#00d2ff">stop</b>: Stop active audio synthesis<br>
   - <b style="color:#00d2ff">contact</b>: View direct email, phone, and LinkedIn<br>
   - <b style="color:#00d2ff">clear</b>: Clear terminal screen`,
     

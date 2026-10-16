@@ -9,20 +9,89 @@
     <meta name="author" content="Hemanth Chellam">
     <meta name="theme-color" content="#0a0c10">
 
+    <!-- Canonical & Verification -->
+    <link rel="canonical" href="https://hemanth-chellam.vercel.app/">
+    <meta name="google-site-verification" content="google26239be5d5479138">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
     <!-- OpenGraph / Social Sharing -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hemanth-chellam.vercel.app/">
     <meta property="og:title" content="Hemanth Chellam | Senior Data & AI Systems Engineer">
     <meta property="og:description" content="Senior Analytics & Data Engineer with 9+ years of experience delivering Lakehouse pipelines, real-time telemetry, and enterprise AI solutions at scale for Google, Netflix, and Databricks.">
     <meta property="og:image" content="profile.jpg">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://hemanth-chellam.vercel.app/">
     <meta name="twitter:title" content="Hemanth Chellam | Senior Data & AI Systems Engineer">
     <meta name="twitter:description" content="Senior Analytics & Data Engineer with 9+ years of experience delivering Lakehouse pipelines, real-time telemetry, and enterprise AI solutions.">
     <meta name="twitter:image" content="profile.jpg">
+
+    <!-- Structured Data (JSON-LD): Google Knowledge Graph & Person Entity -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://hemanth-chellam.vercel.app/#person",
+          "name": "Hemanth Chellam",
+          "givenName": "Hemanth",
+          "familyName": "Chellam",
+          "url": "https://hemanth-chellam.vercel.app/",
+          "image": "https://hemanth-chellam.vercel.app/profile.jpg",
+          "jobTitle": "Senior Analytics & Data Engineer",
+          "description": "Senior Analytics & Data Engineer specializing in Lakehouse architectures, real-time telemetry, and enterprise AI implementations across Google, Netflix, Databricks, and Microsoft.",
+          "email": "chellamhemanth@gmail.com",
+          "telephone": "+1-408-896-8641",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US"
+          },
+          "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "Northeastern University"
+          },
+          "worksFor": [
+            { "@type": "Organization", "name": "Databricks" },
+            { "@type": "Organization", "name": "Netflix" },
+            { "@type": "Organization", "name": "Microsoft" },
+            { "@type": "Organization", "name": "Google" }
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/in/hemanth-chellam-b9285a8a/",
+            "https://github.com/HEMANTH5439"
+          ],
+          "knowsAbout": [
+            "Databricks Lakehouse",
+            "Apache Spark Structured Streaming",
+            "Google Cloud Platform (GCP)",
+            "AWS Lakehouse",
+            "BigQuery",
+            "Snowflake",
+            "dbt (data build tool)",
+            "Python",
+            "Enterprise AI & LLM Pipelines",
+            "Real-time Telemetry Systems"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://hemanth-chellam.vercel.app/#website",
+          "url": "https://hemanth-chellam.vercel.app/",
+          "name": "Hemanth Chellam Portfolio",
+          "description": "Official engineering portfolio of Hemanth Chellam - Senior Data & AI Systems Engineer.",
+          "publisher": {
+            "@id": "https://hemanth-chellam.vercel.app/#person"
+          }
+        }
+      ]
+    }
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -743,11 +812,12 @@
                 <button type="button" class="terminal-chip" onclick="executeTerminalCommand('projects')">projects</button>
                 <button type="button" class="terminal-chip" onclick="executeTerminalCommand('skills')">skills</button>
                 <button type="button" class="terminal-chip" onclick="executeTerminalCommand('certifications')">certifications</button>
+                <button type="button" class="terminal-chip" onclick="executeTerminalCommand('rickroll')">rickroll 🎵</button>
                 <button type="button" class="terminal-chip" onclick="executeTerminalCommand('clear')">clear</button>
             </div>
             <div class="terminal-input-line" style="padding: 0 1.2rem 1.2rem 1.2rem;">
                 <span class="terminal-prompt">hemanth@hub:~$</span>
-                <input type="text" id="terminal-input" class="terminal-input" placeholder="type help, about, projects, skills, certifications..." autocomplete="off">
+                <input type="text" id="terminal-input" class="terminal-input" placeholder="type help, about, projects, rickroll, clear..." autocomplete="off">
             </div>
         </div>
     </div>
@@ -1068,6 +1138,6 @@
 
 
     <!-- Interactive Script -->
-    <script src="app.js?v=15"></script>
+    <script src="app.js?v=16"></script>
 </body>
 </html>
