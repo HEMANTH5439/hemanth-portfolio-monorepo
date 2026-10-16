@@ -720,5 +720,396 @@
     },
     "created_at": "2026-10-16T07:20:35.148Z",
     "id": 53
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "2560x958"
+    },
+    "created_at": "2026-10-16T15:41:37.594Z",
+    "id": 54
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "2560x958"
+    },
+    "created_at": "2026-10-16T15:45:02.482Z",
+    "id": 55
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "open_modal",
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-16T15:49:01.227Z",
+    "id": 56
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x574"
+    },
+    "created_at": "2026-10-16T15:50:59.394Z",
+    "id": 57
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T15:53:55.644Z",
+    "id": 58
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "open_modal",
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-16T15:54:00.922Z",
+    "id": 59
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T15:54:23.287Z",
+    "id": 60
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "2560x958"
+    },
+    "created_at": "2026-10-16T15:54:31.952Z",
+    "id": 61
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "2560x958"
+    },
+    "created_at": "2026-10-16T15:54:33.098Z",
+    "id": 62
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T15:54:36.917Z",
+    "id": 63
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T15:54:37.800Z",
+    "id": 64
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T16:00:35.123Z",
+    "id": 65
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "desktop",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "2560x958"
+    },
+    "created_at": "2026-10-16T16:01:23.974Z",
+    "id": 66
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T16:04:47.702Z",
+    "id": 67
+  },
+  {
+    "event_type": "terminal_cmd",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "command": "rickroll"
+    },
+    "created_at": "2026-10-16T16:04:55.628Z",
+    "id": 68
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "open_modal",
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-16T16:05:20.538Z",
+    "id": 69
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T16:10:21.263Z",
+    "id": 70
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "open_modal",
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-16T16:11:23.008Z",
+    "id": 71
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "ats_download",
+      "format": "clean_ats_txt"
+    },
+    "created_at": "2026-10-16T16:11:28.797Z",
+    "id": 72
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "print_pdf_download",
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-16T16:11:34.055Z",
+    "id": 73
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T16:16:57.358Z",
+    "id": 74
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "open_modal",
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-16T16:16:58.778Z",
+    "id": 75
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "print_pdf_download",
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-16T16:17:01.286Z",
+    "id": 76
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "ats_download",
+      "format": "clean_ats_txt"
+    },
+    "created_at": "2026-10-16T16:17:32.973Z",
+    "id": 77
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "print_pdf_download",
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-16T16:17:55.652Z",
+    "id": 78
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T16:19:56.874Z",
+    "id": 79
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T16:20:02.462Z",
+    "id": 80
+  },
+  {
+    "event_type": "resume_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "action": "open_modal",
+      "file": "Hemanth_Chellam_Senior_Data_Engineer.pdf"
+    },
+    "created_at": "2026-10-16T16:20:08.800Z",
+    "id": 81
   }
 ]

@@ -202,6 +202,7 @@ const commands = {
   - <b style="color:#00d2ff">education</b>: View academic degrees & universities<br>
   - <b style="color:#00d2ff">share</b>: Share portfolio via native share or copy link<br>
   - <b style="color:#00d2ff">ask &lt;query&gt;</b>: Query Hemanth's AI Assistant on career & architecture<br>
+  - <b style="color:#00d2ff">music</b>: Stream synthesized 8-bit audio telemetry<br>
   - <b style="color:#00d2ff">contact</b>: View direct email, phone, and LinkedIn<br>
   - <b style="color:#00d2ff">clear</b>: Clear terminal screen`,
     
@@ -600,9 +601,24 @@ async function executeTerminalCommand(rawCmd) {
         }
         terminalBody.scrollTop = terminalBody.scrollHeight;
         return;
-    } else if (cmd.startsWith('ask ') || cmd.startsWith('query ')) {
-        const queryStr = rawCmd.replace(/^(ask|query)\s+/i, '');
-        answerAIQuery(queryStr, response);
+    } else if (cmd === 'rickroll' || cmd === 'music' || cmd === 'nevergonnagiveyouup' || cmd === 'song') {
+        playRickRollSynth();
+        response.innerHTML = `
+<div style="background: rgba(0, 0, 0, 0.45); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid #00d2ff; margin: 0.5rem 0;">
+  <span style="color:#00d2ff; font-weight:700;">🎵 [SYSTEM STREAM: HIGH-THROUGHPUT AUDIO SYNTH]</span><br>
+  <span style="color:#00e676">▶ Now Synthesizing: Rick Astley — Never Gonna Give You Up (1987)</span><br>
+  <pre style="color:#c77dff; margin: 0.4rem 0; font-size: 0.76rem; line-height: 1.2;">
+   ┌──────────────────────────────────────────────┐
+   │ ♫ █ ▄ █ ▄ ▄ █ ▌ 0:42 / 3:32   [8-BIT SYNTH]  │
+   │ "Never gonna give you up,                    │
+   │  Never gonna let you down..."                │
+   └──────────────────────────────────────────────┘
+  </pre>
+  <span style="color:var(--text-muted); font-size: 0.82rem;">Latency: <b>0.12ms</b> • Synthesized live via HTML5 Web Audio API. Type '<b style="color:#00d2ff">stop</b>' to halt audio.</span>
+</div>`;
+    } else if (cmd === 'stop') {
+        stopRickRollSynth();
+        response.innerHTML = `<span style="color:#ffb703">⏹ Audio stream halted.</span>`;
     } else if (commands[cmd]) {
         response.innerHTML = commands[cmd];
     } else if (cmd === '') {
@@ -859,6 +875,97 @@ function printResume() {
     window.print();
 }
 
+// 1-Click ATS Clean Resume Downloader (Greenhouse/Lever/Workday Optimized)
+function downloadATSResume() {
+    trackTelemetryEvent('resume_view', { action: 'ats_download', format: 'clean_ats_txt' });
+    if (typeof playMicroTone === 'function') playMicroTone('command');
+
+    const atsText = `HEMANTH CHELLAM
+Senior Analytics & Data Engineer | Cloud Architect
+Location: United States | Phone: (408) 896-8641 | Email: chellamhemanth@gmail.com
+LinkedIn: https://linkedin.com/in/hemanth-chellam-b9285a8a/
+GitHub: https://github.com/HEMANTH5439
+Portfolio: https://hemanth-chellam.vercel.app
+
+================================================================================
+PROFESSIONAL SUMMARY
+================================================================================
+Senior Analytics & Data Engineer with 9+ years of experience delivering high-impact 
+ETL pipelines, big data architectures, and enterprise AI solutions at scale for 
+Google, Microsoft, Netflix, and Databricks. Certified Google Cloud Professional 
+Data Engineer and Cloud Architect, specializing in Spark Structured Streaming, 
+Databricks Lakehouse, dbt modeling, real-time telemetry, and LLM evaluation.
+
+================================================================================
+CORE TECHNICAL COMPETENCIES
+================================================================================
+• Big Data & Streaming: Apache Spark, Spark Streaming, Databricks Lakehouse, Delta Lake, Photon, Unity Catalog, Apache Kafka, Apache Airflow
+• Cloud Infrastructure: Google Cloud Platform (BigQuery, Dataflow, Pub/Sub, Cloud Storage, Looker), AWS (S3, EMR, Athena, Redshift, Lambda), Microsoft Azure
+• Data Modeling & Transformations: SQL, dbt, Slowly Changing Dimensions (SCD), Star/Snowflake Schema, Data Observability
+• Programming & AI: Python (PySpark, FastAPI, Asyncio, Pandas, NumPy), SQL, R, Google Gemini API, OpenRouter REST API, Ollama Local LLMs, LangChain
+• BI & Visualization: Tableau Desktop/Server, Plotly Dash, Looker Studio, PowerBI
+
+================================================================================
+PROFESSIONAL EXPERIENCE
+================================================================================
+KOANTEK (Databricks Contract) | Senior Data Engineer
+Jan 2026 – Jul 2026 | Dallas, TX
+• Designed programmatic ad signal ingestion using Spark Structured Streaming on Databricks Lakehouse, slashing pipeline latency from 8 hours to under 15 minutes.
+• Developed foundational dbt data models tracking Ad Inventory Fill Rates, identifying yield bottlenecks with a projected 12% increase in global ad yield.
+• Executed cost optimization audits migrating Spark workloads to Photon-enabled clusters, achieving a 30% reduction in Databricks Unit (DBU) consumption.
+• Implemented data observability framework using Unity Catalog and Delta Live Tables, cutting upstream-downstream discrepancies by 65%.
+
+NETFLIX | Senior Analytics Engineer
+May 2024 – Dec 2025 | Los Angeles, CA
+• Led telemetry and product analytics for Squid Game Mobile/Cloud, delivering actionable insights that directly shaped monetization, retention, and live-ops strategy.
+• Engineered scalable cloud data models, GitHub-versioned CI/CD workflows, and robust real-time/batch data processing pipelines on AWS.
+• Partnered with data science to evaluate LLM-driven insight pipelines, integrating natural language query frameworks into core analytics workflows.
+• Built and maintained interactive Tableau & Looker executive dashboards and implemented ML churn prediction models to maximize long-term player retention.
+
+MICROSOFT (Activision / Xbox Division) | Senior Data Engineer
+Feb 2022 – May 2024 | Santa Monica, CA
+• Led cross-functional analytics for Call of Duty franchise engagement, defining global player metrics and architecting semantic telemetry layers.
+• Utilized SQL across Spark, Databricks, and BigQuery for petabyte-scale gaming data analysis, orchestrating complex ETL pipelines via Python Airflow DAGs.
+• Developed strategic ML datasets, predictive analytics models, and visual executive narratives to guide multi-million dollar live-service decisions.
+
+GOOGLE (via Virtusa / Iconma) | GCP Data Engineer / Analyst
+Aug 2018 – Feb 2022 | Sunnyvale, CA
+• Built and maintained enterprise ETL data pipelines on GCP Dataflow, Pub/Sub, BigQuery, and Hadoop for top US Telco cloud accounts.
+• Automated voice and chatbot analytics workflows using Dialogflow and deployed Slowly Changing Dimensions (SCD Type 4) historical tracking.
+• Standardized production code repositories and improved telemetry KPI reporting, increasing cross-functional productivity by 70%.
+
+STATE AUTO INSURANCE | Data Analyst (Intern)
+Jan 2018 – May 2018 | Columbus, OH
+• Analyzed insurance agent network datasets and identified key performance indicators influencing national policy sales performance.
+• Mined and modeled data using SQL Server, Python, Tableau, and SAS.
+
+HCL TECHNOLOGIES LIMITED | Business Analyst
+Jun 2015 – Mar 2017 | Bangalore, India
+• Collected, cleaned, and engineered data models for structured and unstructured enterprise datasets across key digital initiatives.
+• Extracted and interpreted transactional data using Tableau, SAS, SQL, and Excel to transform raw metrics into actionable executive business intelligence.
+
+================================================================================
+EDUCATION & CERTIFICATIONS
+================================================================================
+• Master of Science in Information Technology and Management | University of Texas at Dallas
+• Bachelor of Technology in Electronics and Communication | Sathyabama University
+• Google Cloud Certified Professional Data Engineer (GCP)
+• Google Cloud Certified Professional Cloud Architect (GCP)
+• Tableau Desktop Certified Specialist
+`;
+
+    const blob = new Blob([atsText], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Hemanth_Chellam_Senior_Data_Engineer_ATS_Resume.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast("✅ Downloaded Clean ATS Resume Summary (.txt)", 3000);
+}
+
 // Project Category Filtering
 function filterProjects(cat) {
     const buttons = document.querySelectorAll('.filter-btn');
@@ -882,22 +989,29 @@ function filterProjects(cat) {
     });
 }
 
-// Architecture Pipeline Simulation Function
+// Architecture Pipeline Simulation Function (Interactive Burst Telemetry)
 function runPipelineSimulation() {
     const nodes = document.querySelectorAll('#arch-flow-container .arch-node');
     const statusText = document.getElementById('simulation-status-text');
     const btn = document.getElementById('btn-run-simulation');
 
+    const metricRate = document.getElementById('sim-metric-rate');
+    const metricLatency = document.getElementById('sim-metric-latency');
+    const metricDbu = document.getElementById('sim-metric-dbu');
+    const metricSla = document.getElementById('sim-metric-sla');
+
     if (!nodes || nodes.length === 0) return;
 
+    if (typeof playMicroTone === 'function') playMicroTone('command');
+
     btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Running Payload...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Running Burst Payload...';
 
     const steps = [
-        "Ingesting synthetic high-throughput event payload...",
-        "Validating telemetry schema & applying circuit breakers...",
-        "Executing AI inference & sentiment conviction audit...",
-        "Dispatched sub-second execution. Latency: 14ms (p99) ✅"
+        { text: "Ingesting synthetic streaming event stream from REST API...", rate: "18,400", latency: "6", dbu: "SPARK 3.5" },
+        { text: "Validating schema, writing to Postgres Delta lakehouse...", rate: "36,800", latency: "11", dbu: "PHOTON ON" },
+        { text: "Computing 360° radar telemetry & Pareto frontier aggregates...", rate: "48,200", latency: "18", dbu: "MAX CLUSTER" },
+        { text: "Dispatched sub-second executive AI summaries. 100% SLA ✅", rate: "52,400", latency: "14", dbu: "COMMITTED" }
     ];
 
     let currentStep = 0;
@@ -909,18 +1023,26 @@ function runPipelineSimulation() {
         }
         if (currentStep < nodes.length) {
             nodes[currentStep].classList.add('node-active-pulse');
+            if (typeof playMicroTone === 'function') playMicroTone('tick');
+
+            const currentData = steps[currentStep];
             if (statusText) {
-                statusText.innerHTML = `<span style="color:var(--accent-blue)">[Step ${currentStep + 1}/${nodes.length}]</span> ${steps[currentStep] || 'Processing node...'}`;
+                statusText.innerHTML = `<span style="color:var(--accent-blue)">[Step ${currentStep + 1}/${nodes.length}]</span> ${currentData.text}`;
             }
+            if (metricRate) metricRate.innerHTML = `${currentData.rate} <small style="font-size:0.68rem; color:var(--text-muted)">ev/s</small>`;
+            if (metricLatency) metricLatency.innerHTML = `${currentData.latency} <small style="font-size:0.68rem; color:var(--text-muted)">ms</small>`;
+            if (metricDbu) metricDbu.innerText = currentData.dbu;
+
             currentStep++;
         } else {
             clearInterval(interval);
             setTimeout(() => {
                 nodes.forEach(n => n.classList.remove('node-active-pulse'));
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-play me-1"></i> Simulate Pipeline Run';
+                btn.innerHTML = '<i class="fas fa-bolt me-1"></i> Simulate Traffic Burst';
+                if (typeof playMicroTone === 'function') playMicroTone('enable');
                 if (statusText) {
-                    statusText.innerHTML = '<span style="color:var(--accent-green)"><i class="fas fa-check-circle me-1"></i> Pipeline run complete! All nodes operational (100% SLA).</span>';
+                    statusText.innerHTML = '<span style="color:var(--accent-green)"><i class="fas fa-check-circle me-1"></i> Traffic burst complete! 52,400 ev/sec committed at 14ms p99 latency (100% SLA).</span>';
                 }
             }, 800);
         }
@@ -1166,16 +1288,38 @@ function handleHashRouting() {
         openEmbedModal('', 'algo-trader');
     } else if (hash === '#preview/the-way-back') {
         openEmbedModal('', 'the-way-back');
+    } else if (hash && !hash.startsWith('#preview')) {
+        // Strip section hash (#projects, #experience, etc.) so URL stays clean
+        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+        window.scrollTo({ top: 0, behavior: 'instant' });
     }
 }
 
+// Clean Section Navigation: Smooth scroll without mutating URL address bar with #section
+function initCleanSectionNavigation() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetHash = this.getAttribute('href');
+            if (!targetHash || targetHash === '#' || targetHash.startsWith('#preview')) return;
 
+            const targetEl = document.querySelector(targetHash);
+            if (targetEl) {
+                e.preventDefault();
+                targetEl.scrollIntoView({ behavior: 'smooth' });
 
-
+                // Ensure URL remains cleanly at root without #projects or #experience
+                if (window.location.hash) {
+                    history.replaceState(null, document.title, window.location.pathname + window.location.search);
+                }
+            }
+        });
+    });
+}
 
 window.addEventListener('hashchange', handleHashRouting);
 window.addEventListener('DOMContentLoaded', () => {
     handleHashRouting();
+    initCleanSectionNavigation();
 
     // Log initial visitor page view
     trackTelemetryEvent('page_view', {
@@ -1311,64 +1455,278 @@ function initScrollReveals() {
     revealElements.forEach(el => observer.observe(el));
 }
 
-// 4. 3D Project Card Tilt & Dynamic Glare (Desktop only)
-function initProjectCard3DTilt() {
-    // Only enable on desktop with true hover pointer
-    if (!window.matchMedia('(hover: hover) and (min-width: 992px)').matches) return;
-
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        // Create glare element if not present
-        let glare = card.querySelector('.card-glare');
-        if (!glare) {
-            glare = document.createElement('div');
-            glare.className = 'card-glare';
-            card.appendChild(glare);
-        }
-
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = ((y - centerY) / centerY) * -7;
-            const rotateY = ((x - centerX) / centerX) * 7;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-6px)`;
-
-            // Position glare
-            const percentX = (x / rect.width) * 100;
-            const percentY = (y / rect.height) * 100;
-            glare.style.opacity = '1';
-            glare.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(255, 255, 255, 0.18), transparent 60%)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
-            if (glare) {
-                glare.style.opacity = '0';
-            }
-        });
-    });
-}
-
 // Global invocation when DOM is loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         initHeroTitleCycler();
         initMetricCounters();
         initScrollReveals();
-        initProjectCard3DTilt();
+        initSoundFX();
     });
 } else {
     initHeroTitleCycler();
     initMetricCounters();
     initScrollReveals();
-    initProjectCard3DTilt();
+    initSoundFX();
 }
+
+/* ==========================================================
+   Zero-Payload Web Audio API Micro-Synthesizer Engine
+   ========================================================== */
+let audioCtx = null;
+let soundFXEnabled = false;
+
+function initSoundFX() {
+    // Restore preference if user previously opted in
+    soundFXEnabled = localStorage.getItem('hemanth_sound_fx') === 'true';
+    updateSoundUI();
+
+    // Attach subtle acoustic feedback to key interactive controls
+    document.addEventListener('click', (e) => {
+        if (!soundFXEnabled) return;
+        const target = e.target.closest('button, .filter-btn, .timeline-header, .theme-dot, .ai-chip-btn');
+        if (target) {
+            // Avoid double sound on sound toggle itself
+            if (target.id === 'btn-sound-toggle' || target.classList.contains('btn-drawer-audio')) return;
+            playMicroTone('click');
+        }
+    });
+
+    // Keystroke sound in terminal CLI
+    const termInput = document.getElementById('terminal-input');
+    if (termInput) {
+        termInput.addEventListener('keydown', (e) => {
+            if (!soundFXEnabled) return;
+            if (e.key === 'Enter') {
+                playMicroTone('command');
+            } else if (e.key.length === 1) {
+                playMicroTone('tick');
+            }
+        });
+    }
+}
+
+function getAudioContext() {
+    if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+            audioCtx = new AudioContextClass();
+        }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+    return audioCtx;
+}
+
+function toggleAudioFX() {
+    const ctx = getAudioContext();
+    soundFXEnabled = !soundFXEnabled;
+    localStorage.setItem('hemanth_sound_fx', soundFXEnabled ? 'true' : 'false');
+    updateSoundUI();
+
+    if (soundFXEnabled) {
+        playMicroTone('enable');
+        showToast("🔊 Audio FX Enabled (Linear/Raycast Synth)", 2500);
+    } else {
+        showToast("🔈 Audio FX Muted", 2000);
+    }
+}
+
+function updateSoundUI() {
+    const btn = document.getElementById('btn-sound-toggle');
+    const drawerIcon = document.getElementById('drawer-sound-icon');
+    const drawerLabel = document.getElementById('drawer-sound-label');
+    const drawerBtn = document.querySelector('.btn-drawer-audio');
+
+    if (soundFXEnabled) {
+        if (btn) {
+            btn.classList.add('active');
+            btn.innerHTML = '<i class="fas fa-volume-up"></i> <span class="nav-btn-text">Audio</span>';
+            btn.title = "Audio FX Enabled (Click to Mute)";
+        }
+        if (drawerIcon) drawerIcon.className = 'fas fa-volume-up';
+        if (drawerLabel) drawerLabel.innerText = 'Audio Effects (On)';
+        if (drawerBtn) drawerBtn.classList.add('active');
+    } else {
+        if (btn) {
+            btn.classList.remove('active');
+            btn.innerHTML = '<i class="fas fa-volume-mute"></i> <span class="nav-btn-text">Audio</span>';
+            btn.title = "Audio FX Muted (Click to Enable)";
+        }
+        if (drawerIcon) drawerIcon.className = 'fas fa-volume-mute';
+        if (drawerLabel) drawerLabel.innerText = 'Audio Effects (Off)';
+        if (drawerBtn) drawerBtn.classList.remove('active');
+    }
+}
+
+function playMicroTone(type) {
+    if (!soundFXEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        if (type === 'click') {
+            // Soft modern UI blip (Linear style)
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(650, now);
+            osc.frequency.exponentialRampToValueAtTime(320, now + 0.035);
+            gain.gain.setValueAtTime(0.045, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035);
+            osc.start(now);
+            osc.stop(now + 0.035);
+        } else if (type === 'open') {
+            // Futuristic modal activation sweep
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.065);
+            gain.gain.setValueAtTime(0.05, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.065);
+            osc.start(now);
+            osc.stop(now + 0.065);
+        } else if (type === 'close') {
+            // Subtle dismiss tone
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(540, now);
+            osc.frequency.exponentialRampToValueAtTime(260, now + 0.045);
+            gain.gain.setValueAtTime(0.04, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
+            osc.start(now);
+            osc.stop(now + 0.045);
+        } else if (type === 'enable') {
+            // Ascending major chord activation
+            const osc2 = ctx.createOscillator();
+            const gain2 = ctx.createGain();
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+
+            osc.type = 'sine';
+            osc2.type = 'sine';
+            osc.frequency.setValueAtTime(523.25, now); // C5
+            osc2.frequency.setValueAtTime(659.25, now + 0.05); // E5
+            gain.gain.setValueAtTime(0.06, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+            gain2.gain.setValueAtTime(0.06, now + 0.05);
+            gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.15);
+
+            osc.start(now);
+            osc.stop(now + 0.12);
+            osc2.start(now + 0.05);
+            osc2.stop(now + 0.15);
+        } else if (type === 'tick') {
+            // Mechanical terminal keystroke tick
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(900, now);
+            gain.gain.setValueAtTime(0.02, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.015);
+            osc.start(now);
+            osc.stop(now + 0.015);
+        } else if (type === 'command') {
+            // Terminal execute success chime
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(700, now);
+            osc.frequency.exponentialRampToValueAtTime(1050, now + 0.05);
+            gain.gain.setValueAtTime(0.05, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+            osc.start(now);
+            osc.stop(now + 0.05);
+        }
+    } catch (e) {
+        console.warn('Audio tone error:', e);
+    }
+}
+
+// 8-bit Web Audio Synthesizer: "Never Gonna Give You Up"
+let rickrollTimeouts = [];
+
+function stopRickRollSynth() {
+    rickrollTimeouts.forEach(t => clearTimeout(t));
+    rickrollTimeouts = [];
+}
+
+function playRickRollSynth() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    stopRickRollSynth();
+
+    // Ensure audio is enabled and UI reflects active sound
+    soundFXEnabled = true;
+    localStorage.setItem('hemanth_sound_fx', 'true');
+    updateSoundUI();
+
+    // Notes: [Frequency, Duration in sec, Note Name]
+    // Famous signature riff: "Never gonna give you up, never gonna let you down..."
+    const notes = [
+        // Intro hook
+        { f: 392.00, d: 0.16 }, // G4
+        { f: 440.00, d: 0.16 }, // A4
+        { f: 523.25, d: 0.22 }, // C5
+        { f: 440.00, d: 0.16 }, // A4
+        { f: 659.25, d: 0.36 }, // E5
+        { f: 659.25, d: 0.30 }, // E5
+        { f: 587.33, d: 0.44 }, // D5 (Never gonna give you up)
+
+        { f: 392.00, d: 0.16 }, // G4
+        { f: 440.00, d: 0.16 }, // A4
+        { f: 523.25, d: 0.22 }, // C5
+        { f: 440.00, d: 0.16 }, // A4
+        { f: 587.33, d: 0.36 }, // D5
+        { f: 587.33, d: 0.30 }, // D5
+        { f: 523.25, d: 0.22 }, // C5
+        { f: 493.88, d: 0.22 }, // B4
+        { f: 440.00, d: 0.44 }, // A4 (Never gonna let you down)
+
+        { f: 392.00, d: 0.16 }, // G4
+        { f: 440.00, d: 0.16 }, // A4
+        { f: 523.25, d: 0.22 }, // C5
+        { f: 440.00, d: 0.16 }, // A4
+        { f: 523.25, d: 0.30 }, // C5
+        { f: 587.33, d: 0.22 }, // D5
+        { f: 493.88, d: 0.32 }, // B4
+        { f: 440.00, d: 0.24 }, // A4
+        { f: 392.00, d: 0.30 }, // G4
+        { f: 392.00, d: 0.20 }, // G4
+        { f: 587.33, d: 0.32 }, // D5
+        { f: 523.25, d: 0.55 }, // C5 (Never gonna run around and desert you)
+    ];
+
+    let delay = 0;
+    notes.forEach((n) => {
+        const timeout = setTimeout(() => {
+            try {
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                // Warm chiptune synth wave
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(n.f, now);
+
+                // Attack and Decay envelope
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + n.d - 0.02);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + n.d);
+            } catch (err) {
+                console.warn(err);
+            }
+        }, delay * 1000);
+
+        rickrollTimeouts.push(timeout);
+        delay += n.d + 0.035;
+    });
+}
+
 
 
 

@@ -31,7 +31,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css?v=13">
+    <link rel="stylesheet" href="styles.css?v=21">
 </head>
 <body>
 
@@ -67,6 +67,7 @@
         </ul>
         
         <div class="nav-actions">
+            <button id="btn-sound-toggle" onclick="toggleAudioFX()" class="btn-sound-nav" title="Toggle Sound FX (Web Audio Synth)" aria-label="Toggle Sound Effects"><i class="fas fa-volume-mute"></i> <span class="nav-btn-text">Audio</span></button>
             <button id="btn-open-terminal" class="btn-terminal" title="Launch Interactive Terminal CLI"><i class="fas fa-terminal"></i> <span class="nav-btn-text">CLI</span></button>
             <button onclick="sharePortfolio()" class="btn-share-nav" title="Share Portfolio"><i class="fas fa-share-alt"></i> <span class="nav-btn-text">Share</span></button>
             <button onclick="openResumeModal()" class="btn-primary" title="View Resume"><i class="fas fa-file-alt"></i> <span class="nav-btn-text">Resume</span></button>
@@ -129,6 +130,9 @@
                     <button onclick="closeMobileDrawer(); sharePortfolio();" class="drawer-btn btn-drawer-share">
                         <i class="fas fa-share-alt"></i> Share Portfolio
                     </button>
+                    <button onclick="toggleAudioFX();" class="drawer-btn btn-drawer-audio">
+                        <i id="drawer-sound-icon" class="fas fa-volume-mute"></i> <span id="drawer-sound-label">Audio Effects (Off)</span>
+                    </button>
                     <button onclick="closeMobileDrawer(); toggleAIChat(true);" class="drawer-btn btn-drawer-ai">
                         <i class="fas fa-robot"></i> Chat with AI Assistant
                     </button>
@@ -148,9 +152,8 @@
                     Senior Analytics & Data Engineer with <b>9+ years of experience</b> delivering high-throughput ETL pipelines, big data architectures, and AI solutions at scale for industry leaders including <b>Google</b>, <b>Microsoft</b>, <b>Netflix</b>, and <b>Databricks</b>.
                 </p>
                 <div class="hero-actions">
-                    <a href="#projects" class="btn-primary">View Projects <i class="fas fa-arrow-right"></i></a>
+                    <a href="#projects" class="btn-primary hero-btn-projects">View Projects</a>
                     <button onclick="toggleAIChat()" class="btn-outline" style="border-color: rgba(0, 210, 255, 0.4); color: var(--accent-blue);"><i class="fas fa-robot me-1"></i> Ask Hemanth AI</button>
-                    <button onclick="sharePortfolio()" class="btn-outline" style="border-color: rgba(0, 230, 118, 0.4); color: var(--accent-green);"><i class="fas fa-share-alt me-1"></i> Share</button>
                     <a href="#experience" class="btn-outline"><i class="fas fa-briefcase"></i> Experience</a>
                     <a href="https://github.com/HEMANTH5439" target="_blank" class="btn-outline"><i class="fab fa-github"></i> GitHub</a>
                     <a href="https://www.linkedin.com/in/hemanth-chellam-b9285a8a/" target="_blank" class="btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
@@ -808,13 +811,6 @@
                     </div>
                 </div>
 
-                <!-- Interactive Pipeline Simulation Bar -->
-                <div class="arch-simulation-bar">
-                    <button id="btn-run-simulation" onclick="runPipelineSimulation()" class="btn-primary" style="font-size: 0.88rem; padding: 0.45rem 1.1rem;">
-                        <i class="fas fa-play me-1"></i> Simulate Pipeline Run
-                    </button>
-                    <span id="simulation-status-text" style="color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-mono);"><i class="fas fa-info-circle me-1 text-info"></i> Click to inject live synthetic event payload through pipeline nodes</span>
-                </div>
             </div>
         </div>
     </div>
@@ -823,19 +819,20 @@
     <!-- 5. Interactive Resume Viewer Modal -->
     <div id="resume-modal" class="embed-modal">
         <div class="embed-window" style="max-width: 920px; height: 88vh;">
-            <div class="embed-header">
-                <div style="display: flex; align-items: center; gap: 0.8rem;">
-                    <span style="color: var(--accent-blue); font-weight: 700;"><i class="fas fa-file-alt me-1"></i> Interactive Resume / CV Viewer</span>
-                    <span style="color: var(--text-muted); font-size: 0.9rem;">| Hemanth Chellam</span>
+            <div class="embed-header resume-modal-header">
+                <div class="resume-header-title-wrap">
+                    <span class="resume-header-title"><i class="fas fa-file-alt me-1"></i> Resume / CV</span>
+                    <span class="resume-header-sub">| Hemanth Chellam</span>
                 </div>
-                <div style="display: flex; gap: 0.6rem; align-items: center;">
-                    <button onclick="printResume()" class="btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.85rem; color: var(--accent-blue); border-color: var(--accent-blue);" title="Print or Save as Clean ATS PDF"><i class="fas fa-print me-1"></i> Print / PDF</button>
-                    <a href="mailto:chellamhemanth@gmail.com" class="btn-primary" style="padding: 0.35rem 0.9rem; font-size: 0.85rem;"><i class="fas fa-envelope me-1"></i> Contact</a>
-                    <button onclick="closeResumeModal()" class="btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.85rem;"><i class="fas fa-times"></i> Close</button>
+                <div class="resume-header-actions">
+                    <button onclick="printResume()" class="btn-outline btn-resume-print" title="Print or Save as Clean ATS PDF"><i class="fas fa-print me-1"></i> <span class="btn-text">Print / PDF</span></button>
+                    <a href="mailto:chellamhemanth@gmail.com" class="btn-primary btn-resume-contact"><i class="fas fa-envelope me-1"></i> <span class="btn-text">Contact</span></a>
+                    <button onclick="closeResumeModal()" class="btn-outline btn-resume-close" title="Close"><i class="fas fa-times"></i> <span class="btn-text">Close</span></button>
                 </div>
             </div>
             <div class="resume-modal-body" style="padding: 2.2rem; overflow-y: auto; color: var(--text-main); font-family: var(--font-body); line-height: 1.6;">
                 
+
                 <!-- Resume Header -->
                 <div style="border-bottom: 2px solid var(--accent-blue); padding-bottom: 1.2rem; margin-bottom: 1.5rem;">
                     <h2 style="font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 0.2rem;">Hemanth Chellam</h2>
@@ -1071,6 +1068,6 @@
 
 
     <!-- Interactive Script -->
-    <script src="app.js?v=10"></script>
+    <script src="app.js?v=15"></script>
 </body>
 </html>
