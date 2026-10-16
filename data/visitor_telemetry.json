@@ -1111,5 +1111,19 @@
     },
     "created_at": "2026-10-16T16:20:08.800Z",
     "id": 81
+  },
+  {
+    "event_type": "page_view",
+    "session_id": "sess_mv92hl9v_p6gyvt",
+    "path": "/",
+    "referrer": "direct",
+    "device_type": "mobile",
+    "browser": "Chrome",
+    "meta": {
+      "title": "Hemanth Chellam | Data & AI Systems Engineer Portfolio",
+      "screen_size": "500x569"
+    },
+    "created_at": "2026-10-16T16:23:10.366Z",
+    "id": 82
   }
 ]

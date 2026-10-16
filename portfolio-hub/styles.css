@@ -1158,29 +1158,49 @@ footer {
         padding: 0.65rem 0.85rem;
     }
     .resume-modal-header {
-        padding: 0.65rem 0.85rem;
+        padding: 0.6rem 0.75rem;
         gap: 0.5rem;
     }
     .resume-header-title-wrap {
         gap: 0.35rem;
+        min-width: 0;
+        flex: 1 1 auto;
     }
     .resume-header-title {
         font-size: 0.88rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .resume-header-sub {
         display: none !important; /* Hide secondary "| Hemanth Chellam" text on mobile to avoid overcrowding */
     }
     .resume-header-actions {
-        gap: 0.35rem;
+        gap: 0.4rem;
+        flex-shrink: 0;
+    }
+    .resume-header-actions .btn-text {
+        display: none !important; /* On mobile / iPhone screens, show icons only to prevent overlapping */
     }
     .resume-header-actions .btn-outline,
     .resume-header-actions .btn-primary {
-        padding: 0.35rem 0.6rem !important;
-        font-size: 0.78rem !important;
+        padding: 0.4rem 0.55rem !important;
+        font-size: 0.82rem !important;
+        min-width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 6px;
     }
+    .resume-header-actions .btn-outline i,
+    .resume-header-actions .btn-primary i {
+        margin: 0 !important;
+    }
     .btn-resume-close {
-        padding: 0.35rem 0.55rem !important;
+        padding: 0.4rem 0.55rem !important;
+        min-width: 32px;
+        height: 32px;
     }
     .resume-modal-body {
         padding: 1.1rem 0.85rem !important;
