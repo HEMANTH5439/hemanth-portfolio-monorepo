@@ -259,10 +259,15 @@ Senior Analytics & Data Engineer with <b>9+ years of enterprise experience</b> d
 };
 
 // Centralized AI Knowledge Engine (Option 3 - Unified Hybrid Engine)
+let lastFallbackIndex = 0;
 function getAIResponse(query) {
     const q = query.toLowerCase().trim();
 
-    if (q.includes("netflix") || q.includes("squid game") || q.includes("gameplay")) {
+    if (q.includes("relocat") || q.includes("seattle") || q.includes("bay area") || q.includes("austin") || q.includes("new york") || q.includes("move")) {
+        return "Yes, Hemanth is currently based in Dallas, TX and is open to Remote, Hybrid, or relocating to major tech hubs (including Seattle, the Bay Area, Austin, or NYC) for the right Senior, Lead, or Principal opportunity.";
+    } else if (q.includes("chief") || q.includes("lead") || q.includes("principal") || q.includes("staff") || q.includes("director") || q.includes("architect role") || q.includes("fit")) {
+        return "Hemanth is an strong fit for Staff, Principal, Lead, or Architectural leadership roles—backed by 9+ years designing petabyte-scale Lakehouse and streaming architectures at Google, Netflix, Microsoft, and Databricks, plus an MS in Information Systems (Claremont Graduate University) and an MBA.";
+    } else if (q.includes("netflix") || q.includes("squid game") || q.includes("gameplay")) {
         return "At Netflix, I engineered real-time gameplay and cloud infrastructure telemetry pipelines for 'Squid Game: Unleashed' and mobile games. I integrated LLM-driven query assistants translating natural language to SQL/telemetry and modernized AWS big data infrastructure (10B+ daily events).";
     } else if (q.includes("microsoft") || q.includes("xbox") || q.includes("activision") || q.includes("call of duty") || q.includes("cod")) {
         return "At Microsoft (Activision / Xbox Division), I built end-to-end player telemetry pipelines for 'Call of Duty', orchestrating BigQuery and Databricks workflows via automated Airflow DAGs to track live engagement and telemetry for millions of active players.";
@@ -274,7 +279,7 @@ function getAIResponse(query) {
         return "At State Auto Insurance (Columbus, OH), I worked as a Data Analyst, mining and analyzing agent network datasets to identify key factors driving policy sales performance using SQL Server, Python, Tableau, and SAS.";
     } else if (q.includes("hcl") || q.includes("technologies") || q.includes("bangalore")) {
         return "At HCL Technologies (Bangalore, India), I started my career as a Business Analyst, collecting, cleaning, and modeling structured and unstructured data for major enterprise client initiatives using Tableau, SAS, SQL, and Excel.";
-    } else if (q.includes("cert") || q.includes("gcp") || q.includes("architect") || q.includes("tableau")) {
+    } else if (q.includes("cert") || q.includes("gcp") || q.includes("tableau")) {
         return "Hemanth holds multiple verified industry credentials: Dual Google Cloud Certified (Professional Cloud Architect & Professional Data Engineer), Google Associate Cloud Engineer, and Tableau Desktop Specialist.";
     } else if (q.includes("education") || q.includes("degree") || q.includes("university") || q.includes("college") || q.includes("masters") || q.includes("mba") || q.includes("academic") || q.includes("claremont")) {
         return "Academic Degrees: 🎓 MS in Information Systems & Technology from Claremont Graduate University (California), 🎓 Master of Business Administration (MBA) from Alliance University, and 🎓 B.E. in Mechanical Engineering from BMS College of Engineering.";
@@ -289,11 +294,36 @@ function getAIResponse(query) {
     } else if (q.includes("skill") || q.includes("stack") || q.includes("technolog") || q.includes("language") || q.includes("python") || q.includes("sql")) {
         return "Core Competencies: Spark Structured Streaming, Databricks Delta Lake, Apache Beam, Cloud Dataflow, Kafka, dbt, Airflow, GCP, AWS, BigQuery, Snowflake, Unity Catalog, Python, SQL, Next.js / React, Plotly Dash, and local LLMs (Ollama).";
     } else if (q.includes("available") || q.includes("hire") || q.includes("role") || q.includes("job") || q.includes("salary") || q.includes("location") || q.includes("contact") || q.includes("email") || q.includes("phone")) {
-        return "Hemanth is open to full-time Senior Data & AI Systems Engineer roles and technical advisory engagements (Dallas, TX / Hybrid / Remote). Contact him directly at chellamhemanth@gmail.com or (408) 896-8641.";
-    } else if (q.includes("who is") || q.includes("about") || q.includes("bio") || q.includes("summary") || q.includes("hemanth")) {
+        return "Hemanth is open to full-time Senior/Staff/Lead Data & AI Systems Engineer roles and technical advisory engagements (Dallas, TX / Hybrid / Remote / Open to Relocation). Contact him directly at chellamhemanth@gmail.com or (408) 896-8641.";
+    } else if (q.includes("hemanth") || q.includes("about") || q.includes("bio") || q.includes("summary")) {
         return "Hemanth Chellam is a Senior Analytics & Data Engineer with 9+ years of experience delivering high-throughput ETL pipelines, big data architectures, and enterprise AI solutions at scale for Google, Microsoft, Netflix, and Databricks.";
     } else {
-        return "Hemanth specializes in real-time telemetry, Lakehouse pipelines (Spark/Databricks), and cloud/local AI systems. You can ask about his roles at Netflix, Databricks, Microsoft, Google, State Auto, or HCL, or inquire about certifications, education, skills, and current availability.";
+        const variedFallbacks = [
+            "I'm Hemanth's AI portfolio assistant! Ask me about his engineering work at Netflix, Databricks, Microsoft, or Google, his 4 production AI apps, or his availability for Senior/Lead roles.",
+            "Hemanth specializes in real-time telemetry (10B+ daily events at Netflix), Databricks Lakehouse streaming (<15m SLA), and enterprise AI systems. Which project or role would you like to explore?",
+            "You can ask me specific questions about Hemanth's tech stack (Spark, Beam, BigQuery, Delta Lake, Gemini AI), his dual GCP Architect/Data Engineer certifications, or how to connect with him directly at chellamhemanth@gmail.com."
+        ];
+        const chosen = variedFallbacks[lastFallbackIndex % variedFallbacks.length];
+        lastFallbackIndex++;
+        return chosen;
+    }
+}
+
+const chatConversationHistory = [];
+
+function recordChatTurn(userQuery, botReply, modelName) {
+    chatConversationHistory.push(
+        { role: 'user', parts: [{ text: userQuery }] },
+        { role: 'model', parts: [{ text: botReply }] }
+    );
+    if (chatConversationHistory.length > 12) {
+        chatConversationHistory.splice(0, chatConversationHistory.length - 12);
+    }
+    if (modelName) {
+        const statusEl = document.querySelector('.ai-drawer-status');
+        if (statusEl) {
+            statusEl.innerHTML = `<span class="ai-dot-green"></span> Online • Powered by ${escapeHTML(modelName)}`;
+        }
     }
 }
 
@@ -302,19 +332,26 @@ async function fetchGeminiChatResponse(query) {
         const res = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: query })
+            body: JSON.stringify({
+                message: query,
+                history: chatConversationHistory.slice(-10)
+            })
         });
         if (res.ok) {
             const data = await res.json();
             if (data && data.reply) {
+                recordChatTurn(query, data.reply, data.model || 'Gemini AI');
                 return { text: data.reply, source: 'gemini', model: data.model };
             }
         }
     } catch (err) {
         console.warn('Backend /api/chat unreachable, falling back to local knowledge engine:', err);
     }
+
     // Fallback to local verified knowledge base
-    return { text: getAIResponse(query), source: 'local' };
+    const localReply = getAIResponse(query);
+    recordChatTurn(query, localReply, null);
+    return { text: localReply, source: 'local' };
 }
 
 async function answerAIQuery(query, container) {

@@ -117,7 +117,8 @@ def get_active_gemini_models(api_key):
 
 
 SYSTEM_INSTRUCTION = """You are the executive AI Assistant for Hemanth Chellam, a Senior Analytics & Data Engineer with 9+ years of experience delivering high-throughput ETL pipelines, big data architectures, and enterprise AI solutions at scale.
-Speak in a professional, technical, direct, yet friendly tone as Hemanth's representative. Keep responses concise (typically 2 to 4 punchy sentences or clear bullet points) unless specifically asked for a deep dive.
+Speak in a professional, technical, direct, yet friendly and conversational tone as Hemanth's representative. Keep responses concise (typically 2 to 4 punchy sentences or clear bullet points) unless specifically asked for a deep dive.
+Answer the user's exact question directly and naturally first (including general knowledge, leadership/relocation inquiries, or follow-up questions), and relate back to Hemanth's expertise when relevant. Never repeat canned boilerplate.
 
 Verified Background:
 • Current / Recent Roles:
@@ -145,12 +146,11 @@ Verified Background:
   - Languages & Frameworks: Python, SQL, Next.js / React, Plotly Dash, TypeScript, FastAPI, WebSockets.
   - AI & ML: Google Gemini AI, Ollama Local LLMs, Vector Embeddings, Prompt Engineering.
 
-• Contact & Availability:
-  - Open to full-time Senior Data & AI Systems Engineer roles and technical advisory engagements (Dallas, TX / Hybrid / Remote).
-  - Email: chellamhemanth@gmail.com
-  - Phone: (408) 896-8641
-  - LinkedIn: linkedin.com/in/hemanth-chellam-b9285a8a/
-  - GitHub: github.com/HEMANTH5439"""
+• Contact, Leadership & Relocation Availability:
+  - Open to full-time Senior/Staff/Lead/Principal Data & AI Systems Engineer roles, architectural leadership roles, and technical advisory engagements.
+  - Based in Dallas, TX; open to Remote, Hybrid, and relocation to major tech hubs (including Seattle, Bay Area, Austin, NYC) for the right opportunity.
+  - Email: chellamhemanth@gmail.com | Phone: (408) 896-8641
+  - LinkedIn: linkedin.com/in/hemanth-chellam-b9285a8a/ | GitHub: github.com/HEMANTH5439"""
 
 
 
@@ -411,12 +411,19 @@ class PortfolioHandler(SimpleHTTPRequestHandler):
             # Discover active models dynamically (The Way Back self-healing pattern)
             candidate_models = get_active_gemini_models(GEMINI_API_KEY)
 
+            raw_history = data.get("history", [])
+            valid_history = []
+            if isinstance(raw_history, list):
+                for h in raw_history[-10:]:
+                    if isinstance(h, dict) and h.get("role") in ("user", "model") and isinstance(h.get("parts"), list):
+                        valid_history.append(h)
+
             gemini_payload = {
                 "system_instruction": {
                     "parts": [{"text": SYSTEM_INSTRUCTION}]
                 },
-                "contents": [
-                    {"parts": [{"text": message}]}
+                "contents": valid_history + [
+                    {"role": "user", "parts": [{"text": message}]}
                 ],
                 "generationConfig": {
                     "temperature": 0.7,

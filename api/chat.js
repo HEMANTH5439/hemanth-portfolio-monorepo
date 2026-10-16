@@ -82,7 +82,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
 
-  const { message } = req.body || {};
+  const { message, history } = req.body || {};
   if (!message || typeof message !== 'string') {
     return res.status(400).json({ error: 'Valid "message" string is required' });
   }
@@ -93,7 +93,8 @@ export default async function handler(req, res) {
   }
 
   const systemInstruction = `You are the executive AI Assistant for Hemanth Chellam, a Senior Analytics & Data Engineer with 9+ years of experience delivering high-throughput ETL pipelines, big data architectures, and AI solutions at scale.
-Speak in a professional, technical, direct, yet friendly tone as Hemanth's representative. Keep responses concise (typically 2 to 4 punchy sentences or clear bullet points) unless specifically asked for a deep dive.
+Speak in a professional, technical, direct, yet friendly and conversational tone as Hemanth's representative. Keep responses concise (typically 2 to 4 punchy sentences or clear bullet points) unless specifically asked for a deep dive.
+Answer the user's exact question directly and naturally first (including general knowledge, leadership/relocation inquiries, or follow-up questions), and relate back to Hemanth's expertise when relevant. Never repeat canned boilerplate.
 
 Verified Background:
 • Current / Recent Roles:
@@ -121,19 +122,25 @@ Verified Background:
   - Languages & Frameworks: Python, SQL, Next.js / React, Plotly Dash, TypeScript, FastAPI, WebSockets.
   - AI & ML: Google Gemini AI, Ollama Local LLMs, Vector Embeddings, Prompt Engineering.
 
-• Contact & Availability:
-  - Open to full-time Senior Data & AI Systems Engineer roles and technical advisory engagements (Dallas, TX / Hybrid / Remote).
-  - Email: chellamhemanth@gmail.com
-  - Phone: (408) 896-8641
-  - LinkedIn: linkedin.com/in/hemanth-chellam-b9285a8a/
-  - GitHub: github.com/HEMANTH5439`;
+• Contact, Leadership & Relocation Availability:
+  - Open to full-time Senior/Staff/Lead/Principal Data & AI Systems Engineer roles, architectural leadership roles, and technical advisory engagements.
+  - Based in Dallas, TX; open to Remote, Hybrid, and relocation to major tech hubs (including Seattle, Bay Area, Austin, NYC) for the right opportunity.
+  - Email: chellamhemanth@gmail.com | Phone: (408) 896-8641
+  - LinkedIn: linkedin.com/in/hemanth-chellam-b9285a8a/ | GitHub: github.com/HEMANTH5439`;
+
+  const validHistory = Array.isArray(history)
+    ? history
+        .filter(h => h && (h.role === 'user' || h.role === 'model') && Array.isArray(h.parts))
+        .slice(-10)
+    : [];
 
   const payload = {
     system_instruction: {
       parts: [{ text: systemInstruction }]
     },
     contents: [
-      { parts: [{ text: message }] }
+      ...validHistory,
+      { role: 'user', parts: [{ text: message }] }
     ],
     generationConfig: {
       temperature: 0.7,
