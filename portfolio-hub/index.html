@@ -31,7 +31,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css?v=9">
+    <link rel="stylesheet" href="styles.css?v=13">
 </head>
 <body>
 
@@ -142,7 +142,7 @@
         <section id="about" class="hero">
             <div class="hero-content">
                 <p class="hero-subtitle">⚡ Hello, I'm Hemanth Chellam</p>
-                <h1 class="hero-title">Senior Data & AI Systems Engineer</h1>
+                <h1 class="hero-title"><span id="hero-title-cycler" class="hero-title-cycler">Senior Data & AI Systems Engineer</span></h1>
                 
                 <p class="hero-bio">
                     Senior Analytics & Data Engineer with <b>9+ years of experience</b> delivering high-throughput ETL pipelines, big data architectures, and AI solutions at scale for industry leaders including <b>Google</b>, <b>Microsoft</b>, <b>Netflix</b>, and <b>Databricks</b>.
@@ -181,7 +181,7 @@
         </section>
 
         <!-- Enterprise Company Trust Bar (Credibility Showcase with Infinite Marquee) -->
-        <div class="company-trust-bar">
+        <div class="company-trust-bar scroll-reveal">
             <p class="trust-bar-label">PROVEN IMPACT & BIG DATA TELEMETRY AT SCALE FOR INDUSTRY LEADERS</p>
             <div class="company-logos-track">
                 <!-- Primary Set -->
@@ -274,31 +274,31 @@
         </div>
 
         <!-- Executive Impact Metrics Strip -->
-        <div class="metrics-impact-strip">
+        <div class="metrics-impact-strip scroll-reveal">
             <div class="metric-card">
-                <div class="metric-value">9+</div>
+                <div class="metric-value" data-target="9" data-suffix="+">9+</div>
                 <div class="metric-label">Years Enterprise Architecture</div>
                 <div class="metric-sub">Google • Microsoft • Netflix • Databricks</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value">10B+</div>
+                <div class="metric-value" data-target="10" data-suffix="B+">10B+</div>
                 <div class="metric-label">Peak Events Streamed Daily</div>
                 <div class="metric-sub">Squid Game & Call of Duty Telemetry</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value">4</div>
+                <div class="metric-value" data-target="4" data-suffix="">4</div>
                 <div class="metric-label">Tier-1 Tech Leaders</div>
                 <div class="metric-sub">Enterprise Scale & Production Systems</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value">2x</div>
+                <div class="metric-value" data-target="2" data-suffix="x">2x</div>
                 <div class="metric-label">GCP Certified Professional</div>
                 <div class="metric-sub">Cloud Architect & Data Engineer</div>
             </div>
         </div>
 
         <!-- Career & Enterprise Experience Section -->
-        <section id="experience">
+        <section id="experience" class="scroll-reveal">
             <div class="section-header">
                 <p class="section-tag">Career History</p>
                 <h2 class="section-title">Enterprise Experience</h2>
@@ -447,7 +447,7 @@
         </section>
 
         <!-- Featured Projects Showcase (Option A: 2x2 Responsive Grid) -->
-        <section id="projects">
+        <section id="projects" class="scroll-reveal">
             <div class="section-header">
                 <p class="section-tag">Portfolio Showcase</p>
                 <h2 class="section-title">Featured Systems & Live Apps</h2>
@@ -610,7 +610,7 @@
         </section>
 
         <!-- Technical Skills Matrix -->
-        <section id="skills">
+        <section id="skills" class="scroll-reveal">
             <div class="section-header">
                 <p class="section-tag">Competencies</p>
                 <h2 class="section-title">Technical Expertise</h2>
@@ -700,7 +700,7 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" style="text-align: center; padding: 4rem 0;">
+        <section id="contact" class="scroll-reveal" style="text-align: center; padding: 4rem 0;">
             <div class="section-header">
                 <p class="section-tag">Connect</p>
                 <h2 class="section-title">Let's Build Together</h2>
@@ -726,7 +726,7 @@
                     <span class="terminal-dot dot-green"></span>
                 </div>
                 <div class="terminal-title">hemanth@hub:~ (bash)</div>
-                <div></div>
+                <button type="button" class="terminal-close-btn" onclick="document.getElementById('terminal-modal').classList.remove('active')" title="Close Terminal"><i class="fas fa-times"></i></button>
             </div>
             <div id="terminal-body" class="terminal-body">
                 <div>Type '<b style="color:#00d2ff">help</b>' to list available commands.</div>
@@ -1012,7 +1012,7 @@
                     </div>
                     <div>
                         <div class="ai-drawer-title">Hemanth AI Assistant</div>
-                        <div class="ai-drawer-status"><span class="ai-dot-green"></span> Online • Powered by Gemini AI</div>
+                        <div class="ai-drawer-status"><span class="ai-dot-green"></span> Online • Powered by Gemini</div>
                     </div>
                 </div>
                 <div class="ai-drawer-actions">
@@ -1071,6 +1071,6 @@
 
 
     <!-- Interactive Script -->
-    <script src="app.js?v=7"></script>
+    <script src="app.js?v=10"></script>
 </body>
 </html>

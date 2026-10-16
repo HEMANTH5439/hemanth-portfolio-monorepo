@@ -319,11 +319,9 @@ function recordChatTurn(userQuery, botReply, modelName) {
     if (chatConversationHistory.length > 12) {
         chatConversationHistory.splice(0, chatConversationHistory.length - 12);
     }
-    if (modelName) {
-        const statusEl = document.querySelector('.ai-drawer-status');
-        if (statusEl) {
-            statusEl.innerHTML = `<span class="ai-dot-green"></span> Online • Powered by ${escapeHTML(modelName)}`;
-        }
+    const statusEl = document.querySelector('.ai-drawer-status');
+    if (statusEl) {
+        statusEl.innerHTML = `<span class="ai-dot-green"></span> Online • Powered by Gemini`;
     }
 }
 
@@ -1216,6 +1214,162 @@ function inspectArchNode(el) {
     const nodeTitle = el.querySelector('h4')?.innerText || 'Architecture Node';
     showToast(`⚡ Inspected: ${nodeTitle} • 99.99% Lakehouse SLA`, 3000);
 }
+
+/* ==========================================================
+   Harmonized Animation Suite Handlers
+   ========================================================== */
+
+// 1. Dynamic Hero Specialization Title Cycler
+function initHeroTitleCycler() {
+    const cyclerEl = document.getElementById('hero-title-cycler');
+    if (!cyclerEl) return;
+
+    const titles = [
+        "Senior Data & AI Systems Engineer",
+        "Lakehouse & Streaming Architect",
+        "Real-Time Telemetry Specialist"
+    ];
+
+    let currentIndex = 0;
+
+    setInterval(() => {
+        cyclerEl.classList.add('switching-out');
+        setTimeout(() => {
+            currentIndex = (currentIndex + 1) % titles.length;
+            cyclerEl.innerText = titles[currentIndex];
+            cyclerEl.classList.remove('switching-out');
+            cyclerEl.classList.add('switching-in');
+            
+            // Force reflow and transition in
+            void cyclerEl.offsetWidth;
+            cyclerEl.classList.remove('switching-in');
+        }, 400);
+    }, 3800);
+}
+
+// 2. Executive Impact Scroll Counters
+function initMetricCounters() {
+    const metricElements = document.querySelectorAll('.metric-value[data-target]');
+    if (!metricElements.length) return;
+
+    let hasCounted = false;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasCounted) {
+                hasCounted = true;
+                metricElements.forEach(el => {
+                    const target = parseInt(el.getAttribute('data-target'), 10);
+                    const suffix = el.getAttribute('data-suffix') || '';
+                    if (isNaN(target)) return;
+
+                    let current = 0;
+                    const duration = 1600; // ms
+                    const stepTime = Math.max(Math.floor(duration / target), 35);
+                    const increment = target > 50 ? Math.ceil(target / 40) : 1;
+
+                    el.classList.add('counting');
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                            el.innerText = `${current}${suffix}`;
+                            setTimeout(() => el.classList.remove('counting'), 400);
+                        } else {
+                            el.innerText = `${current}${suffix}`;
+                        }
+                    }, stepTime);
+                });
+            }
+        });
+    }, { threshold: 0.35 });
+
+    const impactStrip = document.querySelector('.metrics-impact-strip');
+    if (impactStrip) {
+        observer.observe(impactStrip);
+    }
+}
+
+// 3. Apple-Style Viewport Scroll Reveals
+function initScrollReveals() {
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    if (!revealElements.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+}
+
+// 4. 3D Project Card Tilt & Dynamic Glare (Desktop only)
+function initProjectCard3DTilt() {
+    // Only enable on desktop with true hover pointer
+    if (!window.matchMedia('(hover: hover) and (min-width: 992px)').matches) return;
+
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        // Create glare element if not present
+        let glare = card.querySelector('.card-glare');
+        if (!glare) {
+            glare = document.createElement('div');
+            glare.className = 'card-glare';
+            card.appendChild(glare);
+        }
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -7;
+            const rotateY = ((x - centerX) / centerX) * 7;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-6px)`;
+
+            // Position glare
+            const percentX = (x / rect.width) * 100;
+            const percentY = (y / rect.height) * 100;
+            glare.style.opacity = '1';
+            glare.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(255, 255, 255, 0.18), transparent 60%)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+            if (glare) {
+                glare.style.opacity = '0';
+            }
+        });
+    });
+}
+
+// Global invocation when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initHeroTitleCycler();
+        initMetricCounters();
+        initScrollReveals();
+        initProjectCard3DTilt();
+    });
+} else {
+    initHeroTitleCycler();
+    initMetricCounters();
+    initScrollReveals();
+    initProjectCard3DTilt();
+}
+
 
 
 
