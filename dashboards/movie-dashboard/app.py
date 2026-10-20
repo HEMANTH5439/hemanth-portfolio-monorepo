@@ -39,6 +39,10 @@ app.layout = html.Div(id="main-theme-container", children=[
         dbc.Row([
             dbc.Col([
                 html.Div([
+                    html.Span("Engineered by ", className="text-secondary small text-uppercase"),
+                    html.B("Hemanth Chellam", className="text-primary small text-uppercase ms-1")
+                ], className="mb-1 d-flex align-items-center tracking-wider", style={"fontSize": "0.76rem"}),
+                html.Div([
                     html.Span(html.I(className="fas fa-film text-warning me-2 fs-2")),
                     html.Span("CINEMETRICS", className="fw-bold fs-3 tracking-wide", id="header-brand"),
                     html.Span(" | Top Movies & Box Office Intelligence (1972–2026)", className="text-secondary ms-2 fs-6 d-none d-md-inline")
@@ -355,10 +359,7 @@ def update_dashboard(search_query, selected_genres, year_range, min_rating, acti
         ], className="py-2"),
 
         html.Div([
-            html.Img(src=spotlight_movie["poster_url"], className="w-100", style={"height": "320px", "objectFit": "cover"}),
-            html.Div([
-                dbc.Badge("Auto-rotating", color="dark" if not is_light else "light", className="opacity-75 small")
-            ], style={"position": "absolute", "top": "10px", "right": "10px"})
+            html.Img(src=spotlight_movie["poster_url"], className="w-100", style={"height": "320px", "objectFit": "cover"})
         ], style={"position": "relative", "backgroundColor": "#0f172a" if not is_light else "#e2e8f0"}),
 
         dbc.CardBody([
@@ -418,7 +419,42 @@ def update_dashboard(search_query, selected_genres, year_range, min_rating, acti
     )
 
     if active_tab == "tab-market":
-        # 1. Bubble Chart with custom_data
+        # 1. Bubble Chart with custom_data and Pin-Point SVG Callout Annotations (Approach A)
+        def is_market_milestone(row):
+            return (
+                row["imdb_rating"] >= 9.0 or
+                row["box_office_m"] >= 1800 or
+                row["box_office_m"] >= 950 or
+                row["roi_multiplier"] >= 40.0
+            )
+
+        market_annotations = []
+        for _, row in dff.iterrows():
+            if is_market_milestone(row):
+                ax, ay = 30, -20
+                if row["imdb_rating"] >= 9.2: ax, ay = 0, -28
+                elif row["box_office_m"] >= 2000: ax, ay = -45, 25
+                elif row["box_office_m"] >= 900: ax, ay = -40, -22
+                elif row["roi_multiplier"] >= 40.0: ax, ay = 35, 15
+
+                short_t = row["title"] if len(row["title"]) <= 20 else row["title"][:18] + "…"
+                market_annotations.append(dict(
+                    x=row["box_office_m"],
+                    y=row["imdb_rating"],
+                    text=short_t,
+                    showarrow=True,
+                    arrowhead=0,
+                    arrowwidth=1,
+                    arrowcolor="rgba(71, 85, 105, 0.45)" if is_light else "rgba(255, 255, 255, 0.35)",
+                    ax=ax,
+                    ay=ay,
+                    font=dict(size=9, family="Inter, sans-serif", color="#0f172a" if is_light else "#f8fafc"),
+                    bgcolor="rgba(255, 255, 255, 0.88)" if is_light else "rgba(15, 23, 42, 0.8)",
+                    bordercolor="rgba(0, 0, 0, 0.12)" if is_light else "rgba(255, 255, 255, 0.15)",
+                    borderwidth=1,
+                    borderpad=2
+                ))
+
         fig_scatter = px.scatter(
             dff,
             x="box_office_m",
@@ -430,8 +466,13 @@ def update_dashboard(search_query, selected_genres, year_range, min_rating, acti
             labels={"box_office_m": "Worldwide Box Office ($ Millions)", "imdb_rating": "IMDb Rating", "budget_m": "Budget ($M)"},
             title="Rating vs. Box Office (Bubble Size = Budget, Color = Rating)"
         )
-        fig_scatter.update_traces(hoverinfo="none", hovertemplate=None)
-        fig_scatter.update_layout(plotly_layout_theme, height=CHART_HEIGHT, coloraxis_showscale=False)
+        fig_scatter.update_traces(
+            mode="markers",
+            hoverinfo="none",
+            hovertemplate=None
+        )
+        market_layout = {**plotly_layout_theme, "height": CHART_HEIGHT, "coloraxis_showscale": False, "annotations": market_annotations}
+        fig_scatter.update_layout(market_layout)
 
         # 2. Horizontal Budget vs Gross
         top_by_gross = dff.sort_values(by="box_office_m", ascending=False).head(5)
@@ -540,7 +581,40 @@ def update_dashboard(search_query, selected_genres, year_range, min_rating, acti
         ])
 
     elif active_tab == "tab-trends":
-        # 1. Critic vs Audience Scatter with custom_data for Hover Poster Preview
+        # 1. Critic vs Audience Scatter with Pin-Point SVG Callout Annotations (Approach A)
+        def is_critics_milestone(row):
+            return (
+                row["metascore"] >= 96 or
+                row["oscars_won"] >= 6 or
+                row["imdb_rating"] >= 9.2
+            )
+
+        critics_annotations = []
+        for _, row in dff.iterrows():
+            if is_critics_milestone(row):
+                ax, ay = 32, -20
+                if row["metascore"] >= 96: ax, ay = -40, -18
+                elif row["imdb_rating"] >= 9.2: ax, ay = 0, -28
+                elif row["oscars_won"] >= 6: ax, ay = 35, 20
+
+                short_t = row["title"] if len(row["title"]) <= 20 else row["title"][:18] + "…"
+                critics_annotations.append(dict(
+                    x=row["metascore"],
+                    y=row["imdb_rating"],
+                    text=short_t,
+                    showarrow=True,
+                    arrowhead=0,
+                    arrowwidth=1,
+                    arrowcolor="rgba(71, 85, 105, 0.45)" if is_light else "rgba(255, 255, 255, 0.35)",
+                    ax=ax,
+                    ay=ay,
+                    font=dict(size=9, family="Inter, sans-serif", color="#0f172a" if is_light else "#f8fafc"),
+                    bgcolor="rgba(255, 255, 255, 0.88)" if is_light else "rgba(15, 23, 42, 0.8)",
+                    bordercolor="rgba(0, 0, 0, 0.12)" if is_light else "rgba(255, 255, 255, 0.15)",
+                    borderwidth=1,
+                    borderpad=2
+                ))
+
         fig_critics = px.scatter(
             dff,
             x="metascore",
@@ -552,8 +626,13 @@ def update_dashboard(search_query, selected_genres, year_range, min_rating, acti
             labels={"metascore": "Critic Metascore (out of 100)", "imdb_rating": "Audience IMDb Rating (out of 10)", "oscars_won": "Oscars Won"},
             title="Critic Metascore vs. Audience IMDb Rating (Hover for poster, click to spotlight)"
         )
-        fig_critics.update_traces(hoverinfo="none", hovertemplate=None)
-        fig_critics.update_layout(plotly_layout_theme, height=CHART_HEIGHT, coloraxis_showscale=False)
+        fig_critics.update_traces(
+            mode="markers",
+            hoverinfo="none",
+            hovertemplate=None
+        )
+        critics_layout = {**plotly_layout_theme, "height": CHART_HEIGHT, "coloraxis_showscale": False, "annotations": critics_annotations}
+        fig_critics.update_layout(critics_layout)
 
         # 2. Academy Awards
         top_oscars = dff.sort_values(by="oscar_noms", ascending=False).head(5)

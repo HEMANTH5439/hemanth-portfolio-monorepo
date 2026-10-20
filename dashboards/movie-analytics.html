@@ -326,6 +326,10 @@
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom" style="border-color: var(--card-border) !important;">
         <div>
+            <div style="font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+                <i class="fas fa-video" style="color: var(--accent-gold); font-size: 0.72rem;"></i>
+                <span>Engineered by <b style="color: var(--text-primary); font-weight: 600;">Hemanth Chellam</b></span>
+            </div>
             <div class="d-flex align-items-center gap-2 mb-1">
                 <a href="../index.html#projects" class="btn btn-sm btn-outline-secondary me-2" style="border-radius: 8px;"><i class="fas fa-arrow-left me-1"></i> Portfolio</a>
                 <h2 class="m-0 fw-bold d-flex align-items-center gap-2">
@@ -430,7 +434,6 @@
                     </div>
                     <div style="position: relative; height: 320px; background: #0f172a;">
                         <img id="spotlight-poster" src="" alt="Spotlight Poster" style="width: 100%; height: 320px; object-fit: cover;">
-                        <span class="badge bg-dark opacity-75" style="position: absolute; top: 10px; right: 10px; font-size: 0.7rem;">Auto-rotating</span>
                     </div>
                     <div class="p-3">
                         <h5 class="fw-bold mb-1" id="spotlight-title">-</h5>
@@ -579,6 +582,8 @@
         let filteredMovies = [...ALL_MOVIES];
         let spotlightIndex = 0;
         let spotlightTimer = null;
+        let spotlightFreezeTimeout = null;
+        let isSpotlightFrozen = false;
         let currentTab = 'market';
         let isLightMode = false;
 
@@ -713,14 +718,28 @@
             document.getElementById('spotlight-stream').innerText = m.streaming;
         }
 
+        function freezeSpotlight(durationMs = 10000) {
+            isSpotlightFrozen = true;
+
+            if (spotlightFreezeTimeout) {
+                clearTimeout(spotlightFreezeTimeout);
+            }
+
+            spotlightFreezeTimeout = setTimeout(() => {
+                isSpotlightFrozen = false;
+                spotlightFreezeTimeout = null;
+            }, durationMs);
+        }
+
         function nextSpotlight() {
-            if (filteredMovies.length === 0) return;
+            if (filteredMovies.length === 0 || isSpotlightFrozen) return;
             spotlightIndex = (spotlightIndex + 1) % filteredMovies.length;
             updateSpotlight();
         }
 
         function prevSpotlight() {
             if (filteredMovies.length === 0) return;
+            freezeSpotlight(10000);
             spotlightIndex = (spotlightIndex - 1 + filteredMovies.length) % filteredMovies.length;
             updateSpotlight();
         }
@@ -729,7 +748,7 @@
             const tbody = document.getElementById('financial-table-body');
             document.getElementById('table-count-badge').innerText = `${filteredMovies.length} Films`;
             tbody.innerHTML = filteredMovies.map(m => `
-                <tr onclick="setSpotlightMovie('${m.title.replace(/'/g, "\\'")}')" style="cursor: pointer;">
+                <tr onclick="setSpotlightMovie('${m.title.replace(/'/g, "\\'")}', true)" style="cursor: pointer;">
                     <td class="fw-bold text-truncate" style="max-width: 180px;">${m.title}</td>
                     <td><span class="badge bg-secondary">${m.year}</span></td>
                     <td>$${m.budget_m.toFixed(1)}M</td>
@@ -740,11 +759,14 @@
             `).join('');
         }
 
-        function setSpotlightMovie(title) {
+        function setSpotlightMovie(title, freeze = true) {
             const idx = filteredMovies.findIndex(m => m.title === title);
             if (idx !== -1) {
                 spotlightIndex = idx;
-                updateSpotlight();
+                updateSpotlight(); // Immediately render clicked movie, poster, and metadata
+                if (freeze) {
+                    freezeSpotlight(10000);
+                }
             }
         }
 
@@ -758,7 +780,7 @@
                 plot_bgcolor: 'rgba(0,0,0,0)',
                 font: { color: fontColor, size: 11, family: 'Inter, sans-serif' },
                 margin: { l: 55, r: 25, t: 45, b: 45 },
-                dragmode: false, // Disables accidental mobile touch zoom/pan
+                dragmode: 'pan', // Keeps click & tap responsive while fixedrange blocks zooming
                 xaxis: { gridcolor: gridColor, zerolinecolor: zeroColor, tickfont: { color: fontColor }, fixedrange: true },
                 yaxis: { gridcolor: gridColor, zerolinecolor: zeroColor, tickfont: { color: fontColor }, fixedrange: true },
                 legend: { orientation: 'h', y: 1.05, x: 1, xanchor: 'right', font: { size: 10, color: fontColor } }
@@ -770,11 +792,53 @@
             const d = filteredMovies;
 
             if (currentTab === 'market') {
-                // 1. Bubble Scatter Chart
+                // 1. Bubble Scatter Chart (Approach A: Pin-Point SVG Callout Annotations)
+                const isMilestoneMarket = (m) => {
+                    return (
+                        m.imdb_rating >= 9.0 ||             // Top rated all-time (Shawshank, Godfather, Dark Knight)
+                        m.box_office_m >= 1800 ||           // Multi-billion box office giants (Avatar, Avatar 3)
+                        m.box_office_m >= 950 ||            // Mega hits (Oppenheimer, The Batman II)
+                        m.roi_multiplier >= 40.0            // Extreme ROI outliers (Get Out)
+                    );
+                };
+
+                // Generate Pin-Point Annotations anchored directly to bubble center coordinates
+                const marketAnnotations = [];
+                d.forEach(m => {
+                    if (isMilestoneMarket(m)) {
+                        let ax = 30, ay = -20;
+                        if (m.imdb_rating >= 9.2) { ax = 0; ay = -28; }
+                        else if (m.box_office_m >= 2000) { ax = -45; ay = 25; }
+                        else if (m.box_office_m >= 900) { ax = -40; ay = -22; }
+                        else if (m.roi_multiplier >= 40.0) { ax = 35; ay = 15; }
+
+                        marketAnnotations.push({
+                            x: m.box_office_m,
+                            y: m.imdb_rating,
+                            text: m.title.length > 20 ? m.title.substring(0, 18) + '…' : m.title,
+                            showarrow: true,
+                            arrowhead: 0,
+                            arrowwidth: 1,
+                            arrowcolor: isLightMode ? 'rgba(71, 85, 105, 0.45)' : 'rgba(255, 255, 255, 0.35)',
+                            ax: ax,
+                            ay: ay,
+                            font: {
+                                size: 9,
+                                family: 'Inter, sans-serif',
+                                color: isLightMode ? '#0f172a' : '#f8fafc',
+                                weight: 600
+                            },
+                            bgcolor: isLightMode ? 'rgba(255, 255, 255, 0.88)' : 'rgba(15, 23, 42, 0.8)',
+                            bordercolor: isLightMode ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.15)',
+                            borderwidth: 1,
+                            borderpad: 2
+                        });
+                    }
+                });
+
                 const scatterTrace = {
                     x: d.map(m => m.box_office_m),
                     y: d.map(m => m.imdb_rating),
-                    text: d.map(m => m.title),
                     customdata: d.map(m => [m.title, m.year, m.director, m.budget_m, m.box_office_m, m.imdb_rating, m.poster_url]),
                     mode: 'markers',
                     marker: {
@@ -791,7 +855,8 @@
                     ...theme,
                     title: { text: 'Rating vs. Box Office (Bubble Size = Budget, Color = Rating)', font: { size: 13 } },
                     xaxis: { ...theme.xaxis, title: 'Worldwide Box Office ($ Millions)' },
-                    yaxis: { ...theme.yaxis, title: 'IMDb Rating' }
+                    yaxis: { ...theme.yaxis, title: 'IMDb Rating' },
+                    annotations: marketAnnotations
                 }, { responsive: true, displayModeBar: false });
 
                 attachHoverListener('chart-scatter-market');
@@ -844,10 +909,50 @@
             } else {
                 // Tab 2: Critics & Awards
                 // 1. Critic vs Audience Scatter
+                // 1. Critic vs Audience Scatter (Approach A: Pin-Point SVG Callout Annotations)
+                const isMilestoneCritics = (m) => {
+                    return (
+                        m.metascore >= 96 ||               // Perfect consensus (Godfather, Parasite, Spirited Away)
+                        m.oscars_won >= 6 ||               // Oscar sweeps (Everything Everywhere, Oppenheimer, Mad Max, La La Land)
+                        m.imdb_rating >= 9.2               // Absolute audience peak (Shawshank)
+                    );
+                };
+
+                const criticsAnnotations = [];
+                d.forEach(m => {
+                    if (isMilestoneCritics(m)) {
+                        let ax = 32, ay = -20;
+                        if (m.metascore >= 96) { ax = -40; ay = -18; }
+                        else if (m.imdb_rating >= 9.2) { ax = 0; ay = -28; }
+                        else if (m.oscars_won >= 6) { ax = 35; ay = 20; }
+
+                        criticsAnnotations.push({
+                            x: m.metascore,
+                            y: m.imdb_rating,
+                            text: m.title.length > 20 ? m.title.substring(0, 18) + '…' : m.title,
+                            showarrow: true,
+                            arrowhead: 0,
+                            arrowwidth: 1,
+                            arrowcolor: isLightMode ? 'rgba(71, 85, 105, 0.45)' : 'rgba(255, 255, 255, 0.35)',
+                            ax: ax,
+                            ay: ay,
+                            font: {
+                                size: 9,
+                                family: 'Inter, sans-serif',
+                                color: isLightMode ? '#0f172a' : '#f8fafc',
+                                weight: 600
+                            },
+                            bgcolor: isLightMode ? 'rgba(255, 255, 255, 0.88)' : 'rgba(15, 23, 42, 0.8)',
+                            bordercolor: isLightMode ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.15)',
+                            borderwidth: 1,
+                            borderpad: 2
+                        });
+                    }
+                });
+
                 const criticsTrace = {
                     x: d.map(m => m.metascore),
                     y: d.map(m => m.imdb_rating),
-                    text: d.map(m => m.title),
                     customdata: d.map(m => [m.title, m.year, m.director, m.budget_m, m.box_office_m, m.imdb_rating, m.poster_url]),
                     mode: 'markers',
                     marker: {
@@ -864,7 +969,8 @@
                     ...theme,
                     title: { text: 'Critic Metascore vs. Audience IMDb Rating (Size = Oscars)', font: { size: 13 } },
                     xaxis: { ...theme.xaxis, title: 'Critic Metascore (out of 100)' },
-                    yaxis: { ...theme.yaxis, title: 'Audience IMDb Rating (out of 10)' }
+                    yaxis: { ...theme.yaxis, title: 'Audience IMDb Rating (out of 10)' },
+                    annotations: criticsAnnotations
                 }, { responsive: true, displayModeBar: false });
 
                 attachHoverListener('chart-scatter-critics');
