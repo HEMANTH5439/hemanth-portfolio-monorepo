@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 CineMetrics: Top Movies & Box Office Intelligence | Hemanth Chellam</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Plotly.js CDN -->
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --card-bg: rgba(22, 28, 45, 0.85);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-gold: #f5c518;
+            --accent-cyan: #00d2ff;
+            --accent-purple: #9d4edd;
+            --text-muted: #94a3b8;
+            --text-primary: #f1f5f9;
+        }
+
+        [data-theme="light"] {
+            --bg-main: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --accent-gold: #d97706;
+            --accent-cyan: #0284c7;
+            --accent-purple: #7c3aed;
+            --text-muted: #64748b;
+            --text-primary: #0f172a;
+        }
+
+        body {
+            background-color: var(--bg-main) !important;
+            color: var(--text-primary) !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 1.5rem 2rem 3rem 2rem;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        h1, h2, h3, h4, h5 { font-family: 'Outfit', sans-serif; }
+
+        .dash-card {
+            background: var(--card-bg) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border) !important;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            color: var(--text-primary) !important;
+            transition: all 0.25s ease;
+        }
+
+        [data-theme="light"] .dash-card {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .kpi-card { border-left: 4px solid var(--accent-gold) !important; padding: 16px; }
+        .kpi-card-cyan { border-left: 4px solid var(--accent-cyan) !important; padding: 16px; }
+        .kpi-card-green { border-left: 4px solid #10b981 !important; padding: 16px; }
+        .kpi-card-purple { border-left: 4px solid var(--accent-purple) !important; padding: 16px; }
+
+        /* High Contrast Muted & Form Labels across Dark/Light themes */
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        .form-label {
+            color: #94a3b8 !important;
+            font-weight: 500;
+        }
+
+        [data-theme="light"] .form-label {
+            color: #475569 !important;
+        }
+
+        .filter-label-title {
+            color: #cbd5e1 !important;
+            font-weight: 500;
+        }
+
+        [data-theme="light"] .filter-label-title {
+            color: #334155 !important;
+        }
+
+        .form-control::placeholder {
+            color: #64748b !important;
+            opacity: 0.85;
+        }
+
+        [data-theme="light"] .form-control::placeholder {
+            color: #94a3b8 !important;
+        }
+
+        .kpi-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted) !important;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .kpi-value {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .kpi-subtext {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* Tabs */
+        .nav-tabs {
+            border-bottom: 1px solid var(--card-border) !important;
+        }
+        .nav-tabs .nav-link {
+            color: var(--text-muted) !important;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none !important;
+            border-bottom: 3px solid transparent !important;
+            padding: 12px 20px;
+            background: transparent !important;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .nav-tabs .nav-link.active {
+            color: var(--accent-gold) !important;
+            border-bottom: 3px solid var(--accent-gold) !important;
+            background: transparent !important;
+        }
+
+        /* Sidebar & Filters */
+        .sidebar-container {
+            position: sticky;
+            top: 20px;
+        }
+        .form-control, .form-select {
+            background-color: rgba(15, 23, 42, 0.6) !important;
+            border: 1px solid var(--card-border) !important;
+            color: var(--text-primary) !important;
+            border-radius: 8px;
+        }
+        [data-theme="light"] .form-control, [data-theme="light"] .form-select {
+            background-color: #ffffff !important;
+            border-color: rgba(0, 0, 0, 0.15) !important;
+        }
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 2px rgba(245, 197, 24, 0.4) !important;
+            border-color: var(--accent-gold) !important;
+        }
+
+        /* Hover Tooltip Card (Zero default styling / unclipped) */
+        #poster-tooltip {
+            position: fixed;
+            display: none;
+            z-index: 99999;
+            pointer-events: none;
+            background: rgba(11, 15, 25, 0.95);
+            border: 1px solid rgba(245, 197, 24, 0.4);
+            border-radius: 12px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 10px;
+            max-width: 260px;
+            transition: opacity 0.15s ease;
+        }
+        [data-theme="light"] #poster-tooltip {
+            background: rgba(255, 255, 255, 0.96);
+            border-color: rgba(217, 119, 6, 0.4);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            color: #0f172a;
+        }
+
+        /* Table Styling */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+        .custom-table th {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        .custom-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+        }
+        [data-theme="light"] .custom-table td {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .custom-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        [data-theme="light"] .custom-table tr:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Dual Mode Toggle Button */
+        .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            padding: 0.45rem 0.95rem;
+            border-radius: 20px;
+            font-size: 0.86rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .theme-toggle-btn:hover {
+            background: rgba(245, 197, 24, 0.15);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Poster Hover Tooltip -->
+    <div id="poster-tooltip">
+        <div style="position: relative; border-radius: 8px; overflow: hidden; margin-bottom: 8px;">
+            <img id="tt-poster" src="" alt="Movie Poster" style="width: 100%; height: 160px; object-fit: cover; display: block;">
+            <div id="tt-rating" style="position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.75); color: #f5c518; font-weight: 700; font-size: 0.78rem; padding: 2px 6px; border-radius: 4px;"></div>
+        </div>
+        <div id="tt-title" style="font-weight: 700; font-size: 0.95rem; line-height: 1.25; margin-bottom: 4px;"></div>
+        <div id="tt-sub" style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px;"></div>
+        <div id="tt-financials" style="font-size: 0.78rem; display: flex; justify-content: space-between; border-top: 1px solid var(--card-border); padding-top: 4px;"></div>
+    </div>
+
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom" style="border-color: var(--card-border) !important;">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <a href="../index.html#projects" class="btn btn-sm btn-outline-secondary me-2" style="border-radius: 8px;"><i class="fas fa-arrow-left me-1"></i> Portfolio</a>
+                <h2 class="m-0 fw-bold d-flex align-items-center gap-2">
+                    <i class="fas fa-film text-warning"></i>
+                    <span>CineMetrics</span>
+                </h2>
+                <span class="badge bg-danger ms-2" style="font-size: 0.72rem;">1972–2026 Archive</span>
+            </div>
+            <p class="text-muted m-0 small">Cinematic Intelligence & Box Office Analytics Suite | Verified TMDB CDN Data</p>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()">
+                <i class="fas fa-sun text-warning" id="theme-icon"></i>
+                <span id="theme-label">Light Mode</span>
+            </button>
+            <a href="https://github.com/HEMANTH5439/hemanth-portfolio-monorepo" target="_blank" class="btn btn-sm btn-outline-secondary" style="border-radius: 8px;">
+                <i class="fab fa-github me-1"></i> Source
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Row -->
+    <div class="row g-4">
+        <!-- Left Sidebar: Controls & Spotlight -->
+        <div class="col-12 col-lg-3">
+            <div class="sidebar-container d-flex flex-column gap-3">
+                <!-- Filter Controls Card -->
+                <div class="dash-card p-3">
+                    <h6 class="fw-bold mb-3 d-flex align-items-center"><i class="fas fa-sliders-h text-warning me-2"></i> Filters & Search</h6>
+                    
+                    <div class="mb-3">
+                        <label class="form-label small">Search Film or Director</label>
+                        <input type="text" class="form-control form-control-sm" id="search-input" placeholder="e.g. Nolan, Batman, Godfather..." oninput="applyFilters()">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small">Genre Selection</label>
+                        <select class="form-select form-select-sm" id="genre-select" onchange="applyFilters()">
+                            <option value="ALL">All Genres (Action, Sci-Fi, Drama...)</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Crime">Crime</option>
+                            <option value="Action">Action</option>
+                            <option value="Sci-Fi">Sci-Fi</option>
+                            <option value="Adventure">Adventure</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span class="filter-label-title">Year Range</span>
+                            <span id="year-range-label" class="badge bg-secondary">1972 – 2026</span>
+                        </div>
+                        <input type="range" class="form-range" id="year-min-slider" min="1972" max="2026" value="1972" oninput="applyFilters()">
+                    </div>
+
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span class="filter-label-title">Min IMDb Rating</span>
+                            <span id="rating-label" class="badge bg-warning text-dark">★ 7.0+</span>
+                        </div>
+                        <input type="range" class="form-range" id="rating-slider" min="7.0" max="9.5" step="0.1" value="7.0" oninput="applyFilters()">
+                    </div>
+                </div>
+
+                <!-- Spotlight Carousel Card -->
+                <div class="dash-card overflow-hidden" id="spotlight-card">
+                    <div class="p-3 border-bottom d-flex justify-content-between align-items-center" style="border-color: var(--card-border) !important;">
+                        <span class="fw-bold small d-flex align-items-center"><i class="fas fa-play-circle text-warning me-2"></i> Movie Spotlight</span>
+                        <div class="d-flex align-items-center gap-1">
+                            <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="prevSpotlight()"><i class="fas fa-chevron-left"></i></button>
+                            <span id="spotlight-index-counter" class="small text-muted px-1">1 / 25</span>
+                            <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="nextSpotlight()"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div style="position: relative; height: 320px; background: #0f172a;">
+                        <img id="spotlight-poster" src="" alt="Spotlight Poster" style="width: 100%; height: 320px; object-fit: cover;">
+                        <span class="badge bg-dark opacity-75" style="position: absolute; top: 10px; right: 10px; font-size: 0.7rem;">Auto-rotating</span>
+                    </div>
+                    <div class="p-3">
+                        <h5 class="fw-bold mb-1" id="spotlight-title">-</h5>
+                        <div class="d-flex gap-1 mb-2 flex-wrap">
+                            <span class="badge bg-warning text-dark" id="spotlight-rating">★ 9.3</span>
+                            <span class="badge bg-info text-dark" id="spotlight-meta">Meta: 82%</span>
+                            <span class="badge bg-secondary" id="spotlight-year">1994</span>
+                            <span class="badge bg-dark" id="spotlight-runtime">142m</span>
+                        </div>
+                        <p class="small text-muted mb-2" id="spotlight-synopsis">-</p>
+                        <hr class="my-2" style="border-color: var(--card-border);">
+                        <div class="small"><span class="text-muted fw-bold">Director:</span> <span id="spotlight-director">-</span></div>
+                        <div class="small"><span class="text-muted fw-bold">Stars:</span> <span id="spotlight-cast">-</span></div>
+                        <div class="small mt-1"><span class="text-muted fw-bold">Watch on:</span> <span class="text-info fw-bold" id="spotlight-stream">-</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Main View: KPIs + Tabs + Charts -->
+        <div class="col-12 col-lg-9">
+            <!-- KPI Metrics Strip -->
+            <div class="row g-3 mb-4" id="kpi-strip">
+                <div class="col-6 col-md-3">
+                    <div class="dash-card kpi-card h-100">
+                        <div class="kpi-label">Top Rated Movie</div>
+                        <div class="kpi-value fs-5 text-truncate" id="kpi-top-title">-</div>
+                        <div class="kpi-subtext text-warning" id="kpi-top-sub">-</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="dash-card kpi-card-cyan h-100">
+                        <div class="kpi-label">Box Office Leader</div>
+                        <div class="kpi-value fs-5 text-truncate" id="kpi-bo-title">-</div>
+                        <div class="kpi-subtext text-info" id="kpi-bo-sub">-</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="dash-card kpi-card-green h-100">
+                        <div class="kpi-label">Average ROI Multiple</div>
+                        <div class="kpi-value" id="kpi-roi-val">-</div>
+                        <div class="kpi-subtext text-success">Gross-to-Budget Ratio</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="dash-card kpi-card-purple h-100">
+                        <div class="kpi-label">Total Pool Gross</div>
+                        <div class="kpi-value" id="kpi-gross-val">-</div>
+                        <div class="kpi-subtext text-secondary" id="kpi-gross-sub">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation Strip -->
+            <ul class="nav nav-tabs mb-4" id="analytics-tabs">
+                <li class="nav-item">
+                    <button class="nav-link active" id="tab-btn-market" onclick="switchTab('market')"><i class="fas fa-chart-line me-2"></i> Market & Financials</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="tab-btn-trends" onclick="switchTab('trends')"><i class="fas fa-award me-2"></i> Critical Acclaim & Awards</button>
+                </li>
+            </ul>
+
+            <!-- Tab Content Area -->
+            <!-- Tab 1: Market & Financials -->
+            <div id="tab-view-market">
+                <div class="row g-4 mb-4">
+                    <div class="col-12 col-xl-7">
+                        <div class="dash-card p-3 h-100" style="position: relative;">
+                            <div id="chart-scatter-market" style="height: 380px;"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-5">
+                        <div class="dash-card p-3 h-100">
+                            <div id="chart-bar-compare" style="height: 380px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-12 col-xl-5">
+                        <div class="dash-card p-3 h-100">
+                            <div id="chart-bar-roi" style="height: 360px;"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-7">
+                        <div class="dash-card h-100 overflow-hidden d-flex flex-column">
+                            <div class="p-3 border-bottom d-flex align-items-center justify-content-between" style="border-color: var(--card-border) !important;">
+                                <h6 class="m-0 fw-bold small text-info"><i class="fas fa-table me-2"></i> Financial Breakdown Data Table</h6>
+                                <span class="badge bg-secondary" id="table-count-badge">25 Films</span>
+                            </div>
+                            <div class="p-0 flex-grow-1 overflow-auto" style="max-height: 310px;">
+                                <table class="custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Movie Title</th>
+                                            <th>Year</th>
+                                            <th>Budget</th>
+                                            <th>Worldwide Gross</th>
+                                            <th>ROI</th>
+                                            <th>Stream</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="financial-table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Critical Acclaim & Awards -->
+            <div id="tab-view-trends" style="display: none;">
+                <div class="row g-4 mb-4">
+                    <div class="col-12 col-xl-7">
+                        <div class="dash-card p-3 h-100" style="position: relative;">
+                            <div id="chart-scatter-critics" style="height: 380px;"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-5">
+                        <div class="dash-card p-3 h-100">
+                            <div id="chart-bar-oscars" style="height: 380px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-12 col-xl-7">
+                        <div class="dash-card p-3 h-100">
+                            <div id="chart-timeline" style="height: 360px;"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-5">
+                        <div class="dash-card p-3 h-100">
+                            <div id="chart-genre-donut" style="height: 360px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Movie Data & Logic Engine -->
+    <script>
+        const ALL_MOVIES = [{"id": 1, "title": "The Shawshank Redemption", "year": 1994, "genre": "Drama", "director": "Frank Darabont", "cast": "Tim Robbins, Morgan Freeman", "imdb_rating": 9.3, "metascore": 82, "runtime_min": 142, "budget_m": 25.0, "box_office_m": 58.8, "oscars_won": 0, "oscar_noms": 7, "streaming": "Max, Prime", "synopsis": "A banker convicted of uxoricide forms a friendship over a quarter of a century with a hardened convict, while maintaining his innocence.", "poster_url": "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg", "roi_multiplier": 2.35}, {"id": 2, "title": "The Godfather", "year": 1972, "genre": "Crime, Drama", "director": "Francis Ford Coppola", "cast": "Marlon Brando, Al Pacino, James Caan", "imdb_rating": 9.2, "metascore": 100, "runtime_min": 175, "budget_m": 6.0, "box_office_m": 246.0, "oscars_won": 3, "oscar_noms": 11, "streaming": "Paramount+, Apple TV", "synopsis": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant youngest son.", "poster_url": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg", "roi_multiplier": 41.0}, {"id": 3, "title": "The Dark Knight", "year": 2008, "genre": "Action, Crime, Drama", "director": "Christopher Nolan", "cast": "Christian Bale, Heath Ledger, Aaron Eckhart", "imdb_rating": 9.0, "metascore": 84, "runtime_min": 152, "budget_m": 185.0, "box_office_m": 1006.0, "oscars_won": 2, "oscar_noms": 8, "streaming": "Max, Apple TV", "synopsis": "When the menace known as the Joker wreaks havoc and chaos on Gotham, Batman must accept one of the greatest psychological tests of his ability.", "poster_url": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg", "roi_multiplier": 5.44}, {"id": 4, "title": "Pulp Fiction", "year": 1994, "genre": "Crime, Drama", "director": "Quentin Tarantino", "cast": "John Travolta, Uma Thurman, Samuel L. Jackson", "imdb_rating": 8.9, "metascore": 95, "runtime_min": 154, "budget_m": 8.0, "box_office_m": 213.9, "oscars_won": 1, "oscar_noms": 7, "streaming": "Netflix, Paramount+", "synopsis": "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.", "poster_url": "https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg", "roi_multiplier": 26.74}, {"id": 5, "title": "Inception", "year": 2010, "genre": "Action, Sci-Fi", "director": "Christopher Nolan", "cast": "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page", "imdb_rating": 8.8, "metascore": 74, "runtime_min": 148, "budget_m": 160.0, "box_office_m": 836.8, "oscars_won": 4, "oscar_noms": 8, "streaming": "Max, Prime", "synopsis": "A thief who steals corporate secrets through dream-sharing tech is given the inverse task of planting an idea into the mind of a C.E.O.", "poster_url": "https://image.tmdb.org/t/p/w500/edv5CZvWj09upOsy2Y6IwDhK8bt.jpg", "roi_multiplier": 5.23}, {"id": 6, "title": "Interstellar", "year": 2014, "genre": "Sci-Fi, Adventure, Drama", "director": "Christopher Nolan", "cast": "Matthew McConaughey, Anne Hathaway, Jessica Chastain", "imdb_rating": 8.7, "metascore": 74, "runtime_min": 169, "budget_m": 165.0, "box_office_m": 773.4, "oscars_won": 1, "oscar_noms": 5, "streaming": "Prime, Paramount+", "synopsis": "When Earth becomes uninhabitable, a team of explorers undertakes the most important mission in human history: traveling beyond this galaxy.", "poster_url": "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg", "roi_multiplier": 4.69}, {"id": 7, "title": "Spirited Away", "year": 2001, "genre": "Animation, Adventure, Fantasy", "director": "Hayao Miyazaki", "cast": "Rumi Hiiragi, Miyu Irino, Mari Natsuki", "imdb_rating": 8.6, "metascore": 96, "runtime_min": 125, "budget_m": 19.2, "box_office_m": 395.8, "oscars_won": 1, "oscar_noms": 1, "streaming": "Max", "synopsis": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits.", "poster_url": "https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg", "roi_multiplier": 20.61}, {"id": 8, "title": "Parasite", "year": 2019, "genre": "Drama, Thriller", "director": "Bong Joon Ho", "cast": "Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong", "imdb_rating": 8.5, "metascore": 96, "runtime_min": 132, "budget_m": 11.4, "box_office_m": 263.1, "oscars_won": 4, "oscar_noms": 6, "streaming": "Max, Hulu", "synopsis": "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.", "poster_url": "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg", "roi_multiplier": 23.08}, {"id": 9, "title": "Avatar", "year": 2009, "genre": "Sci-Fi, Action, Adventure", "director": "James Cameron", "cast": "Sam Worthington, Zoe Saldana, Sigourney Weaver", "imdb_rating": 7.9, "metascore": 83, "runtime_min": 162, "budget_m": 237.0, "box_office_m": 2923.7, "oscars_won": 3, "oscar_noms": 9, "streaming": "Disney+, Max", "synopsis": "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.", "poster_url": "https://image.tmdb.org/t/p/w500/gKY6q7SjCkAU6FqvqWybDYgUKIF.jpg", "roi_multiplier": 12.34}, {"id": 10, "title": "Everything Everywhere All at Once", "year": 2022, "genre": "Sci-Fi, Adventure, Comedy", "director": "Daniel Kwan, Daniel Scheinert", "cast": "Michelle Yeoh, Stephanie Hsu, Ke Huy Quan", "imdb_rating": 7.8, "metascore": 81, "runtime_min": 139, "budget_m": 14.3, "box_office_m": 143.4, "oscars_won": 7, "oscar_noms": 11, "streaming": "Paramount+, Apple TV", "synopsis": "A middle-aged Chinese immigrant is swept up into an insane adventure in which she alone can save existence by exploring other universes.", "poster_url": "https://image.tmdb.org/t/p/w500/u68AjlvlutfEIcpmbYpKcdi09ut.jpg", "roi_multiplier": 10.03}, {"id": 11, "title": "Whiplash", "year": 2014, "genre": "Drama, Music", "director": "Damien Chazelle", "cast": "Miles Teller, J.K. Simmons, Paul Reiser", "imdb_rating": 8.5, "metascore": 88, "runtime_min": 106, "budget_m": 3.3, "box_office_m": 49.0, "oscars_won": 3, "oscar_noms": 5, "streaming": "Netflix, Apple TV", "synopsis": "A promising young drummer enrolls at a cut-throat music conservatory where his dreams of greatness are mentored by an instructor who will stop at nothing.", "poster_url": "https://image.tmdb.org/t/p/w500/fRGxZuo7jJUWQsVg9PREb98Aclp.jpg", "roi_multiplier": 14.85}, {"id": 12, "title": "Mad Max: Fury Road", "year": 2015, "genre": "Action, Sci-Fi, Adventure", "director": "George Miller", "cast": "Tom Hardy, Charlize Theron, Nicholas Hoult", "imdb_rating": 8.1, "metascore": 90, "runtime_min": 120, "budget_m": 150.0, "box_office_m": 380.4, "oscars_won": 6, "oscar_noms": 10, "streaming": "Max, Apple TV", "synopsis": "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search for her homeland with the aid of a group of female prisoners.", "poster_url": "https://image.tmdb.org/t/p/w500/ulcAi4dKpAjHwYGS08vNyx9H6I9.jpg", "roi_multiplier": 2.54}, {"id": 13, "title": "Oppenheimer", "year": 2023, "genre": "Biography, Drama, History", "director": "Christopher Nolan", "cast": "Cillian Murphy, Emily Blunt, Matt Damon", "imdb_rating": 8.9, "metascore": 90, "runtime_min": 180, "budget_m": 100.0, "box_office_m": 977.0, "oscars_won": 7, "oscar_noms": 13, "streaming": "Prime, Apple TV", "synopsis": "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb during World War II.", "poster_url": "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg", "roi_multiplier": 9.77}, {"id": 14, "title": "Spider-Man: Into the Spider-Verse", "year": 2018, "genre": "Animation, Action, Adventure", "director": "Bob Persichetti, Peter Ramsey, Rodney Rothman", "cast": "Shameik Moore, Jake Johnson, Hailee Steinfeld", "imdb_rating": 8.4, "metascore": 87, "runtime_min": 117, "budget_m": 90.0, "box_office_m": 384.3, "oscars_won": 1, "oscar_noms": 1, "streaming": "Netflix, Apple TV", "synopsis": "Teen Miles Morales becomes the new Spider-Man and joins other Spider-Heroes from parallel universes to stop a threat to all reality.", "poster_url": "https://image.tmdb.org/t/p/w500/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg", "roi_multiplier": 4.27}, {"id": 15, "title": "Goodfellas", "year": 1990, "genre": "Biography, Crime, Drama", "director": "Martin Scorsese", "cast": "Robert De Niro, Ray Liotta, Joe Pesci", "imdb_rating": 8.7, "metascore": 92, "runtime_min": 145, "budget_m": 25.0, "box_office_m": 47.1, "oscars_won": 1, "oscar_noms": 6, "streaming": "Max, Apple TV", "synopsis": "The story of Henry Hill and his life in the mafia, covering his relationship with his wife Karen and his mob partners Jimmy Conway and Tommy DeVito.", "poster_url": "https://image.tmdb.org/t/p/w500/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg", "roi_multiplier": 1.88}, {"id": 16, "title": "Alien", "year": 1979, "genre": "Horror, Sci-Fi", "director": "Ridley Scott", "cast": "Sigourney Weaver, Tom Skerritt, John Hurt", "imdb_rating": 8.5, "metascore": 89, "runtime_min": 117, "budget_m": 11.0, "box_office_m": 106.3, "oscars_won": 1, "oscar_noms": 2, "streaming": "Hulu, Apple TV", "synopsis": "The crew of a commercial spacecraft encounters a deadly lifeform after investigating a mysterious transmission of unknown origin.", "poster_url": "https://image.tmdb.org/t/p/w500/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg", "roi_multiplier": 9.66}, {"id": 17, "title": "The Matrix", "year": 1999, "genre": "Action, Sci-Fi", "director": "Lana Wachowski, Lilly Wachowski", "cast": "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss", "imdb_rating": 8.7, "metascore": 73, "runtime_min": 136, "budget_m": 63.0, "box_office_m": 467.2, "oscars_won": 4, "oscar_noms": 4, "streaming": "Max, Apple TV", "synopsis": "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is an elaborate deception.", "poster_url": "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg", "roi_multiplier": 7.42}, {"id": 18, "title": "Get Out", "year": 2017, "genre": "Horror, Mystery, Thriller", "director": "Jordan Peele", "cast": "Daniel Kaluuya, Allison Williams, Bradley Whitford", "imdb_rating": 7.8, "metascore": 85, "runtime_min": 104, "budget_m": 4.5, "box_office_m": 255.4, "oscars_won": 1, "oscar_noms": 4, "streaming": "Prime, Apple TV", "synopsis": "A young African-American visits his white girlfriend's parents for the weekend, where his simmering uneasiness about their reception reaches a boiling point.", "poster_url": "https://image.tmdb.org/t/p/w500/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg", "roi_multiplier": 56.76}, {"id": 19, "title": "Dune: Part Two", "year": 2024, "genre": "Action, Adventure, Sci-Fi", "director": "Denis Villeneuve", "cast": "Timoth\u00e9e Chalamet, Zendaya, Rebecca Ferguson", "imdb_rating": 8.6, "metascore": 79, "runtime_min": 166, "budget_m": 190.0, "box_office_m": 714.4, "oscars_won": 0, "oscar_noms": 0, "streaming": "Max, Apple TV", "synopsis": "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.", "poster_url": "https://image.tmdb.org/t/p/w500/6izwz7rsy95ARzTR3poZ8H6c5pp.jpg", "roi_multiplier": 3.76}, {"id": 20, "title": "La La Land", "year": 2016, "genre": "Comedy, Drama, Music", "director": "Damien Chazelle", "cast": "Ryan Gosling, Emma Stone, Rosemarie DeWitt", "imdb_rating": 8.0, "metascore": 94, "runtime_min": 128, "budget_m": 30.0, "box_office_m": 472.0, "oscars_won": 6, "oscar_noms": 14, "streaming": "Netflix, Apple TV", "synopsis": "While navigating their careers in Los Angeles, a pianist and an actress fall in love while attempting to reconcile their aspirations for the future.", "poster_url": "https://image.tmdb.org/t/p/w500/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg", "roi_multiplier": 15.73}, {"id": 21, "title": "Avatar: Fire and Ash", "year": 2025, "genre": "Sci-Fi, Action, Adventure", "director": "James Cameron", "cast": "Sam Worthington, Zoe Saldana, Sigourney Weaver", "imdb_rating": 8.2, "metascore": 85, "runtime_min": 190, "budget_m": 250.0, "box_office_m": 2150.0, "oscars_won": 3, "oscar_noms": 8, "streaming": "Disney+, Apple TV", "synopsis": "Jake Sully and Neytiri encounter a new, aggressive tribe of Na'vi known as the Ash People who inhabit volcanic regions of Pandora.", "poster_url": "https://image.tmdb.org/t/p/w500/bRBeSHfGHwkEpImlhxPmOcUsaeg.jpg", "roi_multiplier": 8.6}, {"id": 22, "title": "Superman", "year": 2025, "genre": "Action, Sci-Fi, Adventure", "director": "James Gunn", "cast": "David Corenswet, Rachel Brosnahan, Nicholas Hoult", "imdb_rating": 8.3, "metascore": 84, "runtime_min": 140, "budget_m": 190.0, "box_office_m": 820.5, "oscars_won": 1, "oscar_noms": 4, "streaming": "Max, Apple TV", "synopsis": "Superman embarks on a journey to reconcile his Kryptonian heritage with his human upbringing as Clark Kent of Smallville, Kansas.", "poster_url": "https://image.tmdb.org/t/p/w500/ldyfo0BKmz5rWtJJKCvwaNS4cJT.jpg", "roi_multiplier": 4.32}, {"id": 23, "title": "Mickey 17", "year": 2025, "genre": "Sci-Fi, Comedy, Adventure", "director": "Bong Joon Ho", "cast": "Robert Pattinson, Steven Yeun, Toni Collette", "imdb_rating": 8.1, "metascore": 86, "runtime_min": 139, "budget_m": 150.0, "box_office_m": 315.0, "oscars_won": 2, "oscar_noms": 6, "streaming": "Max, Prime", "synopsis": "An expendable employee sent on a human expedition to colonize an ice world refuses to let his clone replacement take his place.", "poster_url": "https://image.tmdb.org/t/p/w500/edKpE9B5qN3e559OuMCLZdW1iBZ.jpg", "roi_multiplier": 2.1}, {"id": 24, "title": "The Batman: Part II", "year": 2026, "genre": "Action, Crime, Drama", "director": "Matt Reeves", "cast": "Robert Pattinson, Zo\u00eb Kravitz, Colin Farrell", "imdb_rating": 8.6, "metascore": 87, "runtime_min": 165, "budget_m": 200.0, "box_office_m": 980.0, "oscars_won": 2, "oscar_noms": 7, "streaming": "Max, Apple TV", "synopsis": "Batman delves deeper into the web of Gotham's corrupt underworld as a new conspiratorial syndicate threatens to plunge the city into anarchy.", "poster_url": "https://image.tmdb.org/t/p/w500/4uaHnYDDpUTj0nCg6YqBKab50YW.jpg", "roi_multiplier": 4.9}, {"id": 25, "title": "Project Hail Mary", "year": 2026, "genre": "Sci-Fi, Adventure, Drama", "director": "Phil Lord, Christopher Miller", "cast": "Ryan Gosling, Sandra H\u00fcller", "imdb_rating": 8.5, "metascore": 89, "runtime_min": 148, "budget_m": 160.0, "box_office_m": 640.0, "oscars_won": 2, "oscar_noms": 5, "streaming": "Prime, Apple TV", "synopsis": "Ryland Grace is the sole survivor on a desperate last-chance mission to save humanity from an extinction-level solar crisis.", "poster_url": "https://image.tmdb.org/t/p/w500/iOb2fjXLbpJgyQXe46n1WtGCnaa.jpg", "roi_multiplier": 4.0}];
+
+        let filteredMovies = [...ALL_MOVIES];
+        let spotlightIndex = 0;
+        let spotlightTimer = null;
+        let currentTab = 'market';
+        let isLightMode = false;
+
+        // Tooltip Element
+        const tooltipEl = document.getElementById('poster-tooltip');
+        const ttPoster = document.getElementById('tt-poster');
+        const ttTitle = document.getElementById('tt-title');
+        const ttSub = document.getElementById('tt-sub');
+        const ttRating = document.getElementById('tt-rating');
+        const ttFinancials = document.getElementById('tt-financials');
+
+        function toggleTheme() {
+            isLightMode = !isLightMode;
+            document.documentElement.setAttribute('data-theme', isLightMode ? 'light' : 'dark');
+            document.getElementById('theme-icon').className = isLightMode ? 'fas fa-moon text-info' : 'fas fa-sun text-warning';
+            document.getElementById('theme-label').innerText = isLightMode ? 'Dark Mode' : 'Light Mode';
+            renderAllCharts();
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById('tab-btn-market').classList.toggle('active', tab === 'market');
+            document.getElementById('tab-btn-trends').classList.toggle('active', tab === 'trends');
+            document.getElementById('tab-view-market').style.display = tab === 'market' ? 'block' : 'none';
+            document.getElementById('tab-view-trends').style.display = tab === 'trends' ? 'block' : 'none';
+            renderAllCharts();
+        }
+
+        function applyFilters() {
+            const query = (document.getElementById('search-input').value || '').toLowerCase().trim();
+            const genre = document.getElementById('genre-select').value;
+            const minYear = parseInt(document.getElementById('year-min-slider').value);
+            const minRating = parseFloat(document.getElementById('rating-slider').value);
+
+            document.getElementById('year-range-label').innerText = `${minYear} – 2026`;
+            document.getElementById('rating-label').innerText = `★ ${minRating.toFixed(1)}+`;
+
+            filteredMovies = ALL_MOVIES.filter(m => {
+                const matchesQuery = !query || m.title.toLowerCase().includes(query) || m.director.toLowerCase().includes(query);
+                const matchesGenre = genre === 'ALL' || m.genre.includes(genre);
+                const matchesYear = m.year >= minYear;
+                const matchesRating = m.imdb_rating >= minRating;
+                return matchesQuery && matchesGenre && matchesYear && matchesRating;
+            });
+
+            spotlightIndex = 0;
+            updateKPIs();
+            updateSpotlight();
+            renderAllCharts();
+            renderTable();
+        }
+
+        function updateKPIs() {
+            if (filteredMovies.length === 0) {
+                document.getElementById('kpi-top-title').innerText = 'N/A';
+                document.getElementById('kpi-bo-title').innerText = 'N/A';
+                document.getElementById('kpi-roi-val').innerText = '0.0x';
+                document.getElementById('kpi-gross-val').innerText = '$0B';
+                return;
+            }
+
+            const topRated = [...filteredMovies].sort((a, b) => b.imdb_rating - a.imdb_rating)[0];
+            const boChamp = [...filteredMovies].sort((a, b) => b.box_office_m - a.box_office_m)[0];
+            const avgRoi = filteredMovies.reduce((acc, m) => acc + m.roi_multiplier, 0) / filteredMovies.length;
+            const totalGross = filteredMovies.reduce((acc, m) => acc + m.box_office_m, 0);
+
+            document.getElementById('kpi-top-title').innerText = topRated.title;
+            document.getElementById('kpi-top-sub').innerText = `⭐ ${topRated.imdb_rating}/10 (${topRated.year})`;
+
+            document.getElementById('kpi-bo-title').innerText = boChamp.title;
+            document.getElementById('kpi-bo-sub').innerText = `$${boChamp.box_office_m.toLocaleString()}M Worldwide`;
+
+            document.getElementById('kpi-roi-val').innerText = `${avgRoi.toFixed(1)}x`;
+            document.getElementById('kpi-gross-val').innerText = `$${(totalGross / 1000).toFixed(2)}B`;
+            document.getElementById('kpi-gross-sub').innerText = `${filteredMovies.length} Qualifying Films`;
+        }
+
+        function updateSpotlight() {
+            if (filteredMovies.length === 0) return;
+            const m = filteredMovies[spotlightIndex % filteredMovies.length];
+            document.getElementById('spotlight-index-counter').innerText = `${(spotlightIndex % filteredMovies.length) + 1} / ${filteredMovies.length}`;
+            document.getElementById('spotlight-poster').src = m.poster_url;
+            document.getElementById('spotlight-title').innerText = m.title;
+            document.getElementById('spotlight-rating').innerText = `★ ${m.imdb_rating}`;
+            document.getElementById('spotlight-meta').innerText = `Meta: ${m.metascore}%`;
+            document.getElementById('spotlight-year').innerText = m.year;
+            document.getElementById('spotlight-runtime').innerText = `${m.runtime_min}m`;
+            document.getElementById('spotlight-synopsis').innerText = m.synopsis;
+            document.getElementById('spotlight-director').innerText = m.director;
+            document.getElementById('spotlight-cast').innerText = m.cast;
+            document.getElementById('spotlight-stream').innerText = m.streaming;
+        }
+
+        function nextSpotlight() {
+            if (filteredMovies.length === 0) return;
+            spotlightIndex = (spotlightIndex + 1) % filteredMovies.length;
+            updateSpotlight();
+        }
+
+        function prevSpotlight() {
+            if (filteredMovies.length === 0) return;
+            spotlightIndex = (spotlightIndex - 1 + filteredMovies.length) % filteredMovies.length;
+            updateSpotlight();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('financial-table-body');
+            document.getElementById('table-count-badge').innerText = `${filteredMovies.length} Films`;
+            tbody.innerHTML = filteredMovies.map(m => `
+                <tr onclick="setSpotlightMovie('${m.title.replace(/'/g, "\\'")}')" style="cursor: pointer;">
+                    <td class="fw-bold text-truncate" style="max-width: 180px;">${m.title}</td>
+                    <td><span class="badge bg-secondary">${m.year}</span></td>
+                    <td>$${m.budget_m.toFixed(1)}M</td>
+                    <td class="text-info fw-bold">$${m.box_office_m.toLocaleString()}M</td>
+                    <td><span class="badge bg-success">${m.roi_multiplier.toFixed(1)}x</span></td>
+                    <td class="small text-muted text-truncate" style="max-width: 120px;">${m.streaming}</td>
+                </tr>
+            `).join('');
+        }
+
+        function setSpotlightMovie(title) {
+            const idx = filteredMovies.findIndex(m => m.title === title);
+            if (idx !== -1) {
+                spotlightIndex = idx;
+                updateSpotlight();
+            }
+        }
+
+        function getPlotlyTheme() {
+            const fontColor = isLightMode ? '#1e293b' : '#cbd5e1';
+            const gridColor = isLightMode ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.05)';
+            const zeroColor = isLightMode ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.1)';
+
+            return {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: fontColor, size: 11, family: 'Inter, sans-serif' },
+                margin: { l: 55, r: 25, t: 45, b: 45 },
+                xaxis: { gridcolor: gridColor, zerolinecolor: zeroColor, tickfont: { color: fontColor } },
+                yaxis: { gridcolor: gridColor, zerolinecolor: zeroColor, tickfont: { color: fontColor } },
+                legend: { orientation: 'h', y: 1.05, x: 1, xanchor: 'right', font: { size: 10, color: fontColor } }
+            };
+        }
+
+        function renderAllCharts() {
+            const theme = getPlotlyTheme();
+            const d = filteredMovies;
+
+            if (currentTab === 'market') {
+                // 1. Bubble Scatter Chart
+                const scatterTrace = {
+                    x: d.map(m => m.box_office_m),
+                    y: d.map(m => m.imdb_rating),
+                    text: d.map(m => m.title),
+                    customdata: d.map(m => [m.title, m.year, m.director, m.budget_m, m.box_office_m, m.imdb_rating, m.poster_url]),
+                    mode: 'markers',
+                    marker: {
+                        size: d.map(m => Math.max(12, Math.min(48, Math.sqrt(m.budget_m) * 3.4))),
+                        color: d.map(m => m.imdb_rating),
+                        colorscale: 'Viridis',
+                        showscale: false,
+                        line: { color: isLightMode ? '#ffffff' : '#0f172a', width: 1.5 }
+                    },
+                    hoverinfo: 'none'
+                };
+
+                Plotly.newPlot('chart-scatter-market', [scatterTrace], {
+                    ...theme,
+                    title: { text: 'Rating vs. Box Office (Bubble Size = Budget, Color = Rating)', font: { size: 13 } },
+                    xaxis: { ...theme.xaxis, title: 'Worldwide Box Office ($ Millions)' },
+                    yaxis: { ...theme.yaxis, title: 'IMDb Rating' }
+                }, { responsive: true, displayModeBar: false });
+
+                attachHoverListener('chart-scatter-market');
+
+                // 2. Top 5 Grossing Budget vs Gross
+                const top5 = [...d].sort((a, b) => b.box_office_m - a.box_office_m).slice(0, 5).reverse();
+                const traceBudget = {
+                    x: top5.map(m => m.budget_m),
+                    y: top5.map(m => m.title),
+                    name: 'Budget ($M)',
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: { color: isLightMode ? '#d97706' : '#f59e0b' }
+                };
+                const traceGross = {
+                    x: top5.map(m => m.box_office_m),
+                    y: top5.map(m => m.title),
+                    name: 'Gross ($M)',
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: { color: isLightMode ? '#0284c7' : '#00d2ff' }
+                };
+
+                Plotly.newPlot('chart-bar-compare', [traceBudget, traceGross], {
+                    ...theme,
+                    barmode: 'group',
+                    title: { text: 'Top 5 Grossing: Budget vs. Global Gross', font: { size: 13 } }
+                }, { responsive: true, displayModeBar: false });
+
+                // 3. Top ROI Multipliers
+                const topRoi = [...d].sort((a, b) => b.roi_multiplier - a.roi_multiplier).slice(0, 6).reverse();
+                const traceRoi = {
+                    x: topRoi.map(m => m.roi_multiplier),
+                    y: topRoi.map(m => m.title),
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: {
+                        color: topRoi.map(m => m.roi_multiplier),
+                        colorscale: 'Purples',
+                        showscale: false
+                    }
+                };
+
+                Plotly.newPlot('chart-bar-roi', [traceRoi], {
+                    ...theme,
+                    title: { text: 'Top Profit Multipliers (ROI Multiple)', font: { size: 13 } },
+                    xaxis: { ...theme.xaxis, title: 'ROI Multiple (Gross / Budget)' }
+                }, { responsive: true, displayModeBar: false });
+
+            } else {
+                // Tab 2: Critics & Awards
+                // 1. Critic vs Audience Scatter
+                const criticsTrace = {
+                    x: d.map(m => m.metascore),
+                    y: d.map(m => m.imdb_rating),
+                    text: d.map(m => m.title),
+                    customdata: d.map(m => [m.title, m.year, m.director, m.budget_m, m.box_office_m, m.imdb_rating, m.poster_url]),
+                    mode: 'markers',
+                    marker: {
+                        size: d.map(m => Math.max(12, m.oscars_won * 5 + 10)),
+                        color: d.map(m => m.oscars_won),
+                        colorscale: 'Plasma',
+                        showscale: false,
+                        line: { color: isLightMode ? '#ffffff' : '#0f172a', width: 1.5 }
+                    },
+                    hoverinfo: 'none'
+                };
+
+                Plotly.newPlot('chart-scatter-critics', [criticsTrace], {
+                    ...theme,
+                    title: { text: 'Critic Metascore vs. Audience IMDb Rating (Size = Oscars)', font: { size: 13 } },
+                    xaxis: { ...theme.xaxis, title: 'Critic Metascore (out of 100)' },
+                    yaxis: { ...theme.yaxis, title: 'Audience IMDb Rating (out of 10)' }
+                }, { responsive: true, displayModeBar: false });
+
+                attachHoverListener('chart-scatter-critics');
+
+                // 2. Academy Awards
+                const topOscars = [...d].sort((a, b) => b.oscar_noms - a.oscar_noms).slice(0, 5).reverse();
+                const traceNoms = {
+                    x: topOscars.map(m => m.oscar_noms),
+                    y: topOscars.map(m => m.title),
+                    name: 'Nominations',
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: { color: isLightMode ? '#64748b' : '#94a3b8' }
+                };
+                const traceWins = {
+                    x: topOscars.map(m => m.oscars_won),
+                    y: topOscars.map(m => m.title),
+                    name: 'Wins',
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: { color: isLightMode ? '#d97706' : '#f5c518' }
+                };
+
+                Plotly.newPlot('chart-bar-oscars', [traceNoms, traceWins], {
+                    ...theme,
+                    barmode: 'group',
+                    title: { text: 'Academy Awards (Oscars) Leaderboard', font: { size: 13 } }
+                }, { responsive: true, displayModeBar: false });
+
+                // 3. Temporal Box Office Trend Line
+                const chronological = [...d].sort((a, b) => a.year - b.year);
+                const traceTimeline = {
+                    x: chronological.map(m => m.year),
+                    y: chronological.map(m => m.box_office_m),
+                    text: chronological.map(m => m.title),
+                    mode: 'lines+markers',
+                    line: { color: '#00d2ff', width: 2.5 },
+                    marker: { size: 8, color: '#f5c518' }
+                };
+
+                Plotly.newPlot('chart-timeline', [traceTimeline], {
+                    ...theme,
+                    title: { text: 'Box Office Yield Over Decades (1972–2026)', font: { size: 13 } },
+                    xaxis: { ...theme.xaxis, title: 'Release Year' },
+                    yaxis: { ...theme.yaxis, title: 'Worldwide Gross ($M)' }
+                }, { responsive: true, displayModeBar: false });
+
+                // 4. Genre Donut Share
+                const genreCounts = {};
+                d.forEach(m => {
+                    const primaryGenre = m.genre.split(',')[0].trim();
+                    genreCounts[primaryGenre] = (genreCounts[primaryGenre] || 0) + 1;
+                });
+
+                const traceDonut = {
+                    labels: Object.keys(genreCounts),
+                    values: Object.values(genreCounts),
+                    type: 'pie',
+                    hole: 0.55,
+                    textinfo: 'label+percent',
+                    marker: {
+                        colors: ['#00d2ff', '#f5c518', '#9d4edd', '#10b981', '#f43f5e', '#64748b']
+                    }
+                };
+
+                Plotly.newPlot('chart-genre-donut', [traceDonut], {
+                    ...theme,
+                    title: { text: 'Primary Genre Distribution', font: { size: 13 } },
+                    showlegend: false
+                }, { responsive: true, displayModeBar: false });
+            }
+        }
+
+        // Adaptive Directional Tooltip Function
+        function attachHoverListener(chartId) {
+            const el = document.getElementById(chartId);
+            if (!el) return;
+
+            el.on('plotly_hover', function(data) {
+                if (!data.points || data.points.length === 0) return;
+                const pt = data.points[0];
+                const [title, year, director, budget, gross, rating, poster] = pt.customdata;
+
+                ttPoster.src = poster;
+                ttTitle.innerText = title;
+                ttSub.innerText = `${year} • Directed by ${director}`;
+                ttRating.innerText = `★ ${rating}`;
+                ttFinancials.innerHTML = `
+                    <span>Budget: <b>$${budget.toFixed(1)}M</b></span>
+                    <span class="text-info">Gross: <b>$${gross.toLocaleString()}M</b></span>
+                `;
+
+                // Smart positioning: Keep inside screen bounds
+                const x = data.event.clientX;
+                const y = data.event.clientY;
+                const tooltipWidth = 260;
+                const tooltipHeight = 240;
+
+                let left = x + 15;
+                let top = y - 30;
+
+                if (left + tooltipWidth > window.innerWidth) {
+                    left = x - tooltipWidth - 15;
+                }
+                if (top + tooltipHeight > window.innerHeight) {
+                    top = window.innerHeight - tooltipHeight - 15;
+                }
+                if (top < 10) top = 10;
+
+                tooltipEl.style.left = `${left}px`;
+                tooltipEl.style.top = `${top}px`;
+                tooltipEl.style.display = 'block';
+                tooltipEl.style.opacity = '1';
+            });
+
+            el.on('plotly_unhover', function() {
+                tooltipEl.style.display = 'none';
+                tooltipEl.style.opacity = '0';
+            });
+
+            el.on('plotly_click', function(data) {
+                if (data.points && data.points.length > 0) {
+                    const title = data.points[0].customdata[0];
+                    setSpotlightMovie(title);
+                }
+            });
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            applyFilters();
+            // Auto rotate spotlight every 5s
+            spotlightTimer = setInterval(nextSpotlight, 5000);
+        });
+    </script>
+</body>
+</html>

@@ -536,13 +536,23 @@
 
             <!-- Interactive Category Filter Chips -->
             <div class="project-filters">
-                <button class="filter-btn active" onclick="filterProjects('all')">All Systems (4)</button>
+                <button class="filter-btn active" onclick="filterProjects('all')">All Systems (5)</button>
                 <button class="filter-btn" onclick="filterProjects('telemetry')"><i class="fas fa-satellite-dish"></i> Real-Time Telemetry & Data</button>
                 <button class="filter-btn" onclick="filterProjects('ai')"><i class="fas fa-brain"></i> Generative AI & LLMs</button>
-                <button class="filter-btn" onclick="filterProjects('fintech')"><i class="fas fa-chart-line"></i> FinTech & Security</button>
+                <button class="filter-btn" onclick="filterProjects('fintech')"><i class="fas fa-chart-line"></i> FinTech & Analytics</button>
             </div>
 
-            <div class="projects-grid">
+            <!-- Projects Carousel Outer Container -->
+            <div class="projects-carousel-container">
+                <button class="carousel-nav-btn prev-btn" id="projects-carousel-prev" aria-label="Previous Projects" title="Previous Slide">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-nav-btn next-btn" id="projects-carousel-next" aria-label="Next Projects" title="Next Slide">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <div class="projects-carousel-wrapper" id="projects-carousel-wrapper">
+                    <div class="projects-grid" id="projects-grid">
 
                 <!-- Project 1: Algo Trader AI App -->
                 <div class="project-card card-algo-trader" data-category="ai fintech">
@@ -687,6 +697,51 @@
                     </div>
                 </div>
 
+                <!-- Project 5: CineMetrics - Top Movies & Box Office Intelligence -->
+                <div class="project-card card-cinemetrics" data-category="telemetry fintech">
+                    <div>
+                        <div class="project-card-header">
+                            <span class="project-badge badge-live" style="background: rgba(229, 9, 20, 0.15); color: #ff5252; border-color: rgba(229, 9, 20, 0.4);"><i class="fas fa-film me-1"></i> Box Office Intelligence</span>
+                            <a href="./dashboards/movie-analytics.html" target="_blank" class="project-repo-link" title="Open Dedicated CineMetrics Dashboard Page">
+                                <i class="fas fa-video"></i>
+                            </a>
+                        </div>
+                        <h3 class="project-title">🎬 CineMetrics: Top Movies & Box Office Intelligence</h3>
+                        
+                        <div class="project-metrics-strip">
+                            <span class="metric-pill"><i class="fas fa-ticket-alt text-danger"></i> 1972–2026 Archive</span>
+                            <span class="metric-pill"><i class="fas fa-chart-line text-success"></i> $33.8B Gross Tracked</span>
+                            <span class="metric-pill"><i class="fas fa-sun text-warning"></i> Dark & Light Adaptive</span>
+                        </div>
+
+                        <p class="project-desc">
+                            High-density cinematic analytics intelligence hub analyzing box office yield, critic consensus, genre ROI, and temporal release trends across 5+ decades (1972–2026). Features verified TMDB poster tooltips, interactive scatter quadrants, and dual-theme mode.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag" data-tooltip="Plotly Dash 4.x: Reactive web dashboard with dual theme toggling">Plotly / Dash 4.x</span>
+                            <span class="tech-tag" data-tooltip="Python Pandas: Statistical box office modeling, ROI & percentile normalization">Python / Pandas</span>
+                            <span class="tech-tag" data-tooltip="TMDB API: Verified high-resolution movie poster CDN integration">TMDB Movie CDN</span>
+                            <span class="tech-tag" data-tooltip="Smart Hover Tooltips: Floating unclipped poster cards with adaptive direction">Interactive Tooltips</span>
+                            <span class="tech-tag" data-tooltip="Dual Theme: Seamless dark/light palette switcher with dynamic contrast">Dark & Light Modes</span>
+                        </div>
+                    </div>
+                    <div class="project-card-actions">
+                        <button onclick="openEmbedModal('./dashboards/movie-analytics.html', 'movie-analytics')" class="btn-primary" style="flex: 1; text-align: center; justify-content: center;"><i class="fas fa-play-circle me-1"></i> Live Interactive Preview</button>
+                        <button onclick="openArchModal('cinemetrics')" class="btn-outline" style="padding: 0.6rem 1rem;" title="View CineMetrics Architecture Blueprint"><i class="fas fa-sitemap me-1"></i> Blueprint</button>
+                        <a href="./dashboards/movie-analytics.html" target="_blank" class="btn-outline btn-icon" title="Open Full Screen in New Tab"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                    </div>
+                </div>
+
+                <!-- Carousel Pagination Dots & Status Indicator -->
+                <div class="carousel-controls-bottom">
+                    <div class="carousel-indicators" id="carousel-indicators"></div>
+                    <div class="carousel-pause-badge" id="carousel-pause-badge" style="display: none;">
+                        <i class="fas fa-pause-circle me-1"></i> Paused (10s)
+                    </div>
+                </div>
             </div>
         </section>
 

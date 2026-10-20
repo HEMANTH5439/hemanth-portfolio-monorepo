@@ -1,0 +1,265 @@
+:root {
+  --bg-main: #0b0f19;
+  --card-bg: rgba(22, 28, 45, 0.85);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --accent-gold: #f5c518;
+  --accent-cyan: #00d2ff;
+  --accent-purple: #9d4edd;
+  --text-muted: #94a3b8;
+  --text-primary: #f1f5f9;
+}
+
+[data-theme="light"] {
+  --bg-main: #f8fafc;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --accent-gold: #d97706;
+  --accent-cyan: #0284c7;
+  --accent-purple: #7c3aed;
+  --text-muted: #64748b;
+  --text-primary: #0f172a;
+}
+
+body {
+  background-color: var(--bg-main) !important;
+  color: var(--text-primary) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* High Contrast Muted & Form Labels across Dark/Light themes */
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.form-label, label {
+  color: #94a3b8 !important;
+  font-weight: 500;
+}
+
+[data-theme="light"] .form-label, [data-theme="light"] label {
+  color: #475569 !important;
+}
+
+.form-control::placeholder {
+  color: #64748b !important;
+  opacity: 0.85;
+}
+
+[data-theme="light"] .form-control::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Glassmorphism Cards */
+.dash-card {
+  background: var(--card-bg) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border) !important;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .dash-card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.kpi-card {
+  border-left: 4px solid var(--accent-gold) !important;
+  padding: 16px;
+}
+
+.kpi-card-cyan {
+  border-left: 4px solid var(--accent-cyan) !important;
+  padding: 16px;
+}
+
+.kpi-card-purple {
+  border-left: 4px solid var(--accent-purple) !important;
+  padding: 16px;
+}
+
+.kpi-card-green {
+  border-left: 4px solid #10b981 !important;
+  padding: 16px;
+}
+
+.kpi-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.kpi-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.kpi-subtext {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Tab Styling */
+.nav-tabs {
+  border-bottom: 1px solid var(--card-border) !important;
+}
+
+.nav-tabs .nav-link {
+  color: var(--text-muted) !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none !important;
+  border-bottom: 3px solid transparent !important;
+  padding: 12px 20px;
+  background: transparent !important;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--accent-gold) !important;
+  background: transparent !important;
+  border-bottom: 3px solid var(--accent-gold) !important;
+}
+
+.nav-tabs .nav-link:hover {
+  color: var(--text-primary) !important;
+}
+
+/* ==========================================================================
+   DCC SLIDER & RANGESLIDER STYLING (THEMED)
+   ========================================================================== */
+.dash-slider-container {
+  padding: 12px 4px 24px 4px !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dash-slider-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 8px 0;
+}
+
+.dash-slider-root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+  width: 100%;
+  height: 24px;
+}
+
+.dash-slider-track {
+  position: relative;
+  flex-grow: 1;
+  background-color: rgba(148, 163, 184, 0.25) !important;
+  height: 6px !important;
+  border-radius: 4px !important;
+}
+
+.dash-slider-range {
+  position: absolute;
+  background: linear-gradient(90deg, #f5c518, #f59e0b) !important;
+  height: 100% !important;
+  border-radius: 4px !important;
+}
+
+[data-theme="light"] .dash-slider-range {
+  background: linear-gradient(90deg, #d97706, #b45309) !important;
+}
+
+.dash-slider-thumb {
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+  background-color: #ffffff !important;
+  border: 2px solid var(--accent-gold) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 8px rgba(245, 197, 24, 0.8), 0 2px 4px rgba(0,0,0,0.3) !important;
+  cursor: grab !important;
+  transition: transform 0.15s ease, background-color 0.15s ease !important;
+  outline: none !important;
+}
+
+.dash-slider-thumb:hover {
+  transform: scale(1.25) !important;
+  background-color: #fef08a !important;
+}
+
+.dash-slider-thumb:focus,
+.dash-slider-thumb:active {
+  cursor: grabbing !important;
+  box-shadow: 0 0 0 4px rgba(245, 197, 24, 0.4) !important;
+}
+
+.dash-slider-mark {
+  position: absolute;
+  top: 14px;
+  font-size: 0.75rem !important;
+  color: var(--text-muted) !important;
+  font-weight: 500;
+  user-select: none;
+}
+
+.dash-slider-dot {
+  position: absolute;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background-color: #64748b !important;
+  top: -1px;
+}
+
+/* ==========================================================================
+   DCC TOOLTIP TRANSPARENT WRAPPER
+   ========================================================================== */
+.dash-tooltip .hover-content,
+.dcc-tooltip-bounding-box .hover-content {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.dash-tooltip .hover::after {
+  display: none !important;
+}
+
+/* Data Table Theming */
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
+  background-color: #151a2e !important;
+  color: #cbd5e1 !important;
+  font-weight: 600 !important;
+  border-bottom: 2px solid #334155 !important;
+  font-size: 0.85rem;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner td {
+  background-color: #0f1423 !important;
+  color: #e2e8f0 !important;
+  border-bottom: 1px solid #1e293b !important;
+  font-size: 0.85rem;
+}
+
+[data-theme="light"] .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
+  background-color: #e2e8f0 !important;
+  color: #1e293b !important;
+  border-bottom: 2px solid #cbd5e1 !important;
+}
+
+[data-theme="light"] .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner td {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}

@@ -669,6 +669,10 @@ function openEmbedModal(url, systemId) {
         'the-way-back': {
             url: 'https://thewayback.vercel.app/',
             title: '| The Way Back App'
+        },
+        'movie-analytics': {
+            url: './dashboards/movie-analytics.html',
+            title: '| CineMetrics Box Office Intelligence'
         }
     };
 
@@ -796,6 +800,33 @@ function openArchModal(type) {
                 <i class="fas fa-cloud text-success"></i>
                 <h4>4. Vercel Edge & Supabase</h4>
                 <p>Continuous edge delivery via Vercel Speed Insights, telemetry analytics & optional Supabase cloud sync.</p>
+            </div>
+        `;
+    } else if (type === 'cinemetrics') {
+        titleEl.innerText = '| CineMetrics Box Office Analytics Pipeline';
+        flowEl.innerHTML = `
+            <div class="arch-node">
+                <i class="fas fa-database text-info"></i>
+                <h4>1. Box Office Ingestion</h4>
+                <p>Standardizes 1972–2026 worldwide gross, budget, ROI multipliers & release dates into Pandas dataframes.</p>
+            </div>
+            <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="arch-node">
+                <i class="fas fa-images text-purple"></i>
+                <h4>2. TMDB Asset CDN</h4>
+                <p>Integrates verified high-res poster media URLs & movie metadata with fallback cache handling.</p>
+            </div>
+            <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="arch-node">
+                <i class="fas fa-chart-line text-warning"></i>
+                <h4>3. Plotly Statistical Quadrants</h4>
+                <p>Visualizes critic vs box office quadrants, genre efficiency violin/box models & inflation-adjusted trends.</p>
+            </div>
+            <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="arch-node">
+                <i class="fas fa-adjust text-success"></i>
+                <h4>4. Adaptive Dual Theme UI</h4>
+                <p>Dynamically inverts layout contrast between Cinema Dark & Clean Light modes with directional hover tooltips.</p>
             </div>
         `;
     } else if (type === 'security') {
@@ -989,6 +1020,205 @@ function filterProjects(cat) {
             }
         }
     });
+
+    if (window.projectsCarousel) {
+        window.projectsCarousel.updateVisibleSlides();
+    }
+}
+
+// ==========================================
+// Projects Interactive Slide Carousel Controller (Option 1)
+// ==========================================
+class ProjectsCarousel {
+    constructor() {
+        this.grid = document.getElementById('projects-grid');
+        this.wrapper = document.getElementById('projects-carousel-wrapper');
+        this.prevBtn = document.getElementById('projects-carousel-prev');
+        this.nextBtn = document.getElementById('projects-carousel-next');
+        this.indicatorsContainer = document.getElementById('carousel-indicators');
+        this.pauseBadge = document.getElementById('carousel-pause-badge');
+
+        if (!this.grid || !this.wrapper) return;
+
+        this.currentIndex = 0;
+        this.autoRotateInterval = null;
+        this.pauseTimeout = null;
+        this.isPaused = false;
+        this.autoRotateDelay = 7000; // 7 seconds per slide
+        this.pauseDuration = 10000;  // 10 seconds pause on project interaction
+
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.updateVisibleSlides();
+        this.startAutoRotate();
+    }
+
+    getVisibleCards() {
+        return Array.from(this.grid.querySelectorAll('.project-card:not(.filter-hidden)'));
+    }
+
+    getCardsPerView() {
+        return window.innerWidth <= 900 ? 1 : 2;
+    }
+
+    getMaxIndex() {
+        const visibleCount = this.getVisibleCards().length;
+        const perView = this.getCardsPerView();
+        return Math.max(0, visibleCount - perView);
+    }
+
+    updateVisibleSlides() {
+        this.currentIndex = 0;
+        this.renderIndicators();
+        this.moveToIndex(0, false);
+    }
+
+    renderIndicators() {
+        if (!this.indicatorsContainer) return;
+        this.indicatorsContainer.innerHTML = '';
+        const visibleCards = this.getVisibleCards();
+        const perView = this.getCardsPerView();
+        const totalPages = Math.max(1, visibleCards.length - perView + 1);
+
+        for (let i = 0; i < totalPages; i++) {
+            const dot = document.createElement('button');
+            dot.className = `carousel-dot ${i === this.currentIndex ? 'active' : ''}`;
+            dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+            dot.addEventListener('click', () => {
+                this.pause(this.pauseDuration);
+                this.moveToIndex(i);
+            });
+            this.indicatorsContainer.appendChild(dot);
+        }
+    }
+
+    moveToIndex(index, animate = true) {
+        const maxIdx = this.getMaxIndex();
+        if (index < 0) {
+            index = maxIdx;
+        } else if (index > maxIdx) {
+            index = 0;
+        }
+
+        this.currentIndex = index;
+
+        const visibleCards = this.getVisibleCards();
+        if (visibleCards.length === 0) {
+            this.grid.style.transform = `translateX(0px)`;
+            return;
+        }
+
+        const targetCard = visibleCards[this.currentIndex];
+        if (targetCard) {
+            const offsetLeft = targetCard.offsetLeft;
+            this.grid.style.transition = animate ? 'transform 0.65s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+            this.grid.style.transform = `translateX(-${offsetLeft}px)`;
+        }
+
+        // Update indicator dots
+        const dots = this.indicatorsContainer ? this.indicatorsContainer.querySelectorAll('.carousel-dot') : [];
+        dots.forEach((dot, idx) => {
+            if (idx === this.currentIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    prev() {
+        this.moveToIndex(this.currentIndex - 1);
+    }
+
+    next() {
+        this.moveToIndex(this.currentIndex + 1);
+    }
+
+    startAutoRotate() {
+        this.stopAutoRotate();
+        this.autoRotateInterval = setInterval(() => {
+            if (!this.isPaused) {
+                this.next();
+            }
+        }, this.autoRotateDelay);
+    }
+
+    stopAutoRotate() {
+        if (this.autoRotateInterval) {
+            clearInterval(this.autoRotateInterval);
+            this.autoRotateInterval = null;
+        }
+    }
+
+    pause(durationMs = 10000) {
+        this.isPaused = true;
+        if (this.pauseBadge) {
+            this.pauseBadge.style.display = 'inline-flex';
+        }
+
+        if (this.pauseTimeout) {
+            clearTimeout(this.pauseTimeout);
+        }
+
+        this.pauseTimeout = setTimeout(() => {
+            this.resume();
+        }, durationMs);
+    }
+
+    resume() {
+        this.isPaused = false;
+        if (this.pauseBadge) {
+            this.pauseBadge.style.display = 'none';
+        }
+        if (this.pauseTimeout) {
+            clearTimeout(this.pauseTimeout);
+            this.pauseTimeout = null;
+        }
+    }
+
+    setupEventListeners() {
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', () => {
+                this.pause(this.pauseDuration);
+                this.prev();
+            });
+        }
+
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', () => {
+                this.pause(this.pauseDuration);
+                this.next();
+            });
+        }
+
+        // Pause for 10s on any click inside cards or interactive links
+        this.grid.addEventListener('click', (e) => {
+            const interactiveEl = e.target.closest('a, button, .project-card');
+            if (interactiveEl) {
+                this.pause(this.pauseDuration);
+            }
+        });
+
+        // Pause on mouse hover
+        this.wrapper.addEventListener('mouseenter', () => {
+            this.isPaused = true;
+        });
+
+        this.wrapper.addEventListener('mouseleave', () => {
+            if (!this.pauseTimeout) {
+                this.isPaused = false;
+            }
+        });
+
+        // Responsive resize
+        window.addEventListener('resize', () => {
+            this.renderIndicators();
+            this.moveToIndex(this.currentIndex, false);
+        });
+    }
 }
 
 // Architecture Pipeline Simulation Function (Interactive Burst Telemetry)
@@ -1290,6 +1520,8 @@ function handleHashRouting() {
         openEmbedModal('', 'algo-trader');
     } else if (hash === '#preview/the-way-back') {
         openEmbedModal('', 'the-way-back');
+    } else if (hash === '#preview/movie-analytics') {
+        openEmbedModal('', 'movie-analytics');
     } else if (hash && !hash.startsWith('#preview')) {
         // Strip section hash (#projects, #experience, etc.) so URL stays clean
         history.replaceState(null, document.title, window.location.pathname + window.location.search);
@@ -1464,12 +1696,14 @@ if (document.readyState === 'loading') {
         initMetricCounters();
         initScrollReveals();
         initSoundFX();
+        window.projectsCarousel = new ProjectsCarousel();
     });
 } else {
     initHeroTitleCycler();
     initMetricCounters();
     initScrollReveals();
     initSoundFX();
+    window.projectsCarousel = new ProjectsCarousel();
 }
 
 /* ==========================================================
