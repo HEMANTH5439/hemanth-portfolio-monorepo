@@ -142,10 +142,83 @@
             background: transparent !important;
         }
 
-        /* Sidebar & Filters */
-        .sidebar-container {
-            position: sticky;
-            top: 20px;
+        /* Multi-Point Themed Dual Sliders with Real Marks */
+        .slider-control-block {
+            padding: 4px 4px 14px 4px;
+        }
+
+        .range-slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .range-slider-track {
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            background-color: rgba(148, 163, 184, 0.25);
+            border-radius: 4px;
+        }
+
+        .range-slider-fill {
+            position: absolute;
+            height: 6px;
+            background: linear-gradient(90deg, #f5c518, #f59e0b);
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        [data-theme="light"] .range-slider-fill {
+            background: linear-gradient(90deg, #d97706, #b45309);
+        }
+
+        .range-input {
+            position: absolute;
+            width: 100%;
+            pointer-events: none;
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            z-index: 3;
+            margin: 0;
+            outline: none;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            pointer-events: auto;
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 8px rgba(245, 197, 24, 0.8), 0 2px 4px rgba(0,0,0,0.3);
+            cursor: grab;
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+
+        .range-input::-webkit-slider-thumb:hover {
+            transform: scale(1.25);
+            background-color: #fef08a;
+        }
+
+        .range-input::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            box-shadow: 0 0 0 4px rgba(245, 197, 24, 0.4);
+        }
+
+        .slider-marks-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            padding: 4px 2px 0 2px;
+            user-select: none;
         }
         .form-control, .form-select {
             background-color: rgba(15, 23, 42, 0.6) !important;
@@ -300,20 +373,48 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <div class="d-flex justify-content-between small mb-1">
-                            <span class="filter-label-title">Year Range</span>
-                            <span id="year-range-label" class="badge bg-secondary">1972 – 2026</span>
+                    <!-- Release Year Range Filter (Dual RangeSlider with Marks) -->
+                    <div class="mb-3 slider-control-block">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="filter-label-title small fw-bold">Release Year Range:</span>
+                            <span id="year-range-label" class="badge bg-secondary ms-2">1972 – 2026</span>
                         </div>
-                        <input type="range" class="form-range" id="year-min-slider" min="1972" max="2026" value="1972" oninput="applyFilters()">
+                        <div class="range-slider-wrapper">
+                            <div class="range-slider-track"></div>
+                            <div class="range-slider-fill" id="year-slider-fill"></div>
+                            <input type="range" class="range-input" id="year-min-slider" min="1970" max="2026" value="1972" oninput="onYearSliderChange('min')">
+                            <input type="range" class="range-input" id="year-max-slider" min="1970" max="2026" value="2026" oninput="onYearSliderChange('max')">
+                        </div>
+                        <div class="slider-marks-row">
+                            <span>'70</span>
+                            <span>'80</span>
+                            <span>'90</span>
+                            <span>'00</span>
+                            <span>'10</span>
+                            <span>'20</span>
+                            <span>'26</span>
+                        </div>
                     </div>
 
-                    <div class="mb-2">
-                        <div class="d-flex justify-content-between small mb-1">
-                            <span class="filter-label-title">Min IMDb Rating</span>
-                            <span id="rating-label" class="badge bg-warning text-dark">★ 7.0+</span>
+                    <!-- Minimum IMDb Rating Filter (Slider with Marks) -->
+                    <div class="mb-2 slider-control-block">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="filter-label-title small fw-bold">Minimum IMDb Rating:</span>
+                            <span id="rating-label" class="badge bg-warning text-dark ms-2">★ 7.5+</span>
                         </div>
-                        <input type="range" class="form-range" id="rating-slider" min="7.0" max="9.5" step="0.1" value="7.0" oninput="applyFilters()">
+                        <div class="range-slider-wrapper">
+                            <div class="range-slider-track"></div>
+                            <div class="range-slider-fill" id="rating-slider-fill"></div>
+                            <input type="range" class="range-input" id="rating-slider" min="7.0" max="9.5" step="0.1" value="7.5" oninput="onRatingSliderChange()">
+                        </div>
+                        <div class="slider-marks-row">
+                            <span>7.0</span>
+                            <span>7.5</span>
+                            <span>8.0</span>
+                            <span>8.5</span>
+                            <span>9.0</span>
+                            <span>9.5</span>
+                        </div>
                     </div>
                 </div>
 
@@ -506,19 +607,60 @@
             renderAllCharts();
         }
 
+        function onYearSliderChange(changedHandle) {
+            const minEl = document.getElementById('year-min-slider');
+            const maxEl = document.getElementById('year-max-slider');
+            let minVal = parseInt(minEl.value);
+            let maxVal = parseInt(maxEl.value);
+
+            if (minVal > maxVal) {
+                if (changedHandle === 'min') {
+                    minEl.value = maxVal;
+                    minVal = maxVal;
+                } else {
+                    maxEl.value = minVal;
+                    maxVal = minVal;
+                }
+            }
+
+            // Update fill track width & position
+            const totalRange = 2026 - 1970;
+            const leftPercent = ((minVal - 1970) / totalRange) * 100;
+            const rightPercent = ((maxVal - 1970) / totalRange) * 100;
+
+            const fillEl = document.getElementById('year-slider-fill');
+            fillEl.style.left = `${leftPercent}%`;
+            fillEl.style.width = `${rightPercent - leftPercent}%`;
+
+            document.getElementById('year-range-label').innerText = `${minVal} – ${maxVal}`;
+            applyFilters();
+        }
+
+        function onRatingSliderChange() {
+            const rEl = document.getElementById('rating-slider');
+            const val = parseFloat(rEl.value);
+            const totalRange = 9.5 - 7.0;
+            const widthPercent = ((val - 7.0) / totalRange) * 100;
+
+            const fillEl = document.getElementById('rating-slider-fill');
+            fillEl.style.left = '0%';
+            fillEl.style.width = `${widthPercent}%`;
+
+            document.getElementById('rating-label').innerText = `★ ${val.toFixed(1)}+`;
+            applyFilters();
+        }
+
         function applyFilters() {
             const query = (document.getElementById('search-input').value || '').toLowerCase().trim();
             const genre = document.getElementById('genre-select').value;
             const minYear = parseInt(document.getElementById('year-min-slider').value);
+            const maxYear = parseInt(document.getElementById('year-max-slider').value);
             const minRating = parseFloat(document.getElementById('rating-slider').value);
-
-            document.getElementById('year-range-label').innerText = `${minYear} – 2026`;
-            document.getElementById('rating-label').innerText = `★ ${minRating.toFixed(1)}+`;
 
             filteredMovies = ALL_MOVIES.filter(m => {
                 const matchesQuery = !query || m.title.toLowerCase().includes(query) || m.director.toLowerCase().includes(query);
                 const matchesGenre = genre === 'ALL' || m.genre.includes(genre);
-                const matchesYear = m.year >= minYear;
+                const matchesYear = m.year >= minYear && m.year <= maxYear;
                 const matchesRating = m.imdb_rating >= minRating;
                 return matchesQuery && matchesGenre && matchesYear && matchesRating;
             });
@@ -616,8 +758,9 @@
                 plot_bgcolor: 'rgba(0,0,0,0)',
                 font: { color: fontColor, size: 11, family: 'Inter, sans-serif' },
                 margin: { l: 55, r: 25, t: 45, b: 45 },
-                xaxis: { gridcolor: gridColor, zerolinecolor: zeroColor, tickfont: { color: fontColor } },
-                yaxis: { gridcolor: gridColor, zerolinecolor: zeroColor, tickfont: { color: fontColor } },
+                dragmode: false, // Disables accidental mobile touch zoom/pan
+                xaxis: { gridcolor: gridColor, zerolinecolor: zeroColor, tickfont: { color: fontColor }, fixedrange: true },
+                yaxis: { gridcolor: gridColor, zerolinecolor: zeroColor, tickfont: { color: fontColor }, fixedrange: true },
                 legend: { orientation: 'h', y: 1.05, x: 1, xanchor: 'right', font: { size: 10, color: fontColor } }
             };
         }
@@ -795,63 +938,92 @@
             }
         }
 
-        // Adaptive Directional Tooltip Function
+        // Adaptive Directional Tooltip Function (Desktop Mouse + Mobile Touchscreen)
+        function showPosterTooltip(customdata, clientX, clientY) {
+            const [title, year, director, budget, gross, rating, poster] = customdata;
+
+            ttPoster.src = poster;
+            ttTitle.innerText = title;
+            ttSub.innerText = `${year} • Directed by ${director}`;
+            ttRating.innerText = `★ ${rating}`;
+            ttFinancials.innerHTML = `
+                <span>Budget: <b>$${budget.toFixed(1)}M</b></span>
+                <span class="text-info">Gross: <b>$${gross.toLocaleString()}M</b></span>
+            `;
+
+            const tooltipWidth = 260;
+            const tooltipHeight = 240;
+
+            let left = clientX + 15;
+            let top = clientY - 30;
+
+            if (left + tooltipWidth > window.innerWidth) {
+                left = clientX - tooltipWidth - 15;
+            }
+            if (top + tooltipHeight > window.innerHeight) {
+                top = window.innerHeight - tooltipHeight - 15;
+            }
+            if (top < 10) top = 10;
+            if (left < 10) left = 10;
+
+            tooltipEl.style.left = `${left}px`;
+            tooltipEl.style.top = `${top}px`;
+            tooltipEl.style.display = 'block';
+            tooltipEl.style.opacity = '1';
+        }
+
+        function hidePosterTooltip() {
+            tooltipEl.style.display = 'none';
+            tooltipEl.style.opacity = '0';
+        }
+
         function attachHoverListener(chartId) {
             const el = document.getElementById(chartId);
             if (!el) return;
 
+            // Desktop Mouse Hover
             el.on('plotly_hover', function(data) {
                 if (!data.points || data.points.length === 0) return;
                 const pt = data.points[0];
-                const [title, year, director, budget, gross, rating, poster] = pt.customdata;
-
-                ttPoster.src = poster;
-                ttTitle.innerText = title;
-                ttSub.innerText = `${year} • Directed by ${director}`;
-                ttRating.innerText = `★ ${rating}`;
-                ttFinancials.innerHTML = `
-                    <span>Budget: <b>$${budget.toFixed(1)}M</b></span>
-                    <span class="text-info">Gross: <b>$${gross.toLocaleString()}M</b></span>
-                `;
-
-                // Smart positioning: Keep inside screen bounds
-                const x = data.event.clientX;
-                const y = data.event.clientY;
-                const tooltipWidth = 260;
-                const tooltipHeight = 240;
-
-                let left = x + 15;
-                let top = y - 30;
-
-                if (left + tooltipWidth > window.innerWidth) {
-                    left = x - tooltipWidth - 15;
-                }
-                if (top + tooltipHeight > window.innerHeight) {
-                    top = window.innerHeight - tooltipHeight - 15;
-                }
-                if (top < 10) top = 10;
-
-                tooltipEl.style.left = `${left}px`;
-                tooltipEl.style.top = `${top}px`;
-                tooltipEl.style.display = 'block';
-                tooltipEl.style.opacity = '1';
+                const x = data.event ? data.event.clientX : 100;
+                const y = data.event ? data.event.clientY : 100;
+                showPosterTooltip(pt.customdata, x, y);
             });
 
             el.on('plotly_unhover', function() {
-                tooltipEl.style.display = 'none';
-                tooltipEl.style.opacity = '0';
+                hidePosterTooltip();
             });
 
+            // Touch Screen Tap / Mouse Click
             el.on('plotly_click', function(data) {
                 if (data.points && data.points.length > 0) {
-                    const title = data.points[0].customdata[0];
+                    const pt = data.points[0];
+                    const title = pt.customdata[0];
                     setSpotlightMovie(title);
+
+                    // On touch screens, show poster tooltip near point
+                    let x = window.innerWidth / 2 - 130;
+                    let y = 140;
+                    if (data.event) {
+                        x = data.event.clientX || (data.event.touches && data.event.touches[0] ? data.event.touches[0].clientX : x);
+                        y = data.event.clientY || (data.event.touches && data.event.touches[0] ? data.event.touches[0].clientY : y);
+                    }
+                    showPosterTooltip(pt.customdata, x, y);
                 }
             });
         }
 
+        // Tap outside to dismiss tooltip on mobile
+        document.addEventListener('touchstart', function(e) {
+            if (!e.target.closest('#poster-tooltip') && !e.target.closest('#chart-scatter-market') && !e.target.closest('#chart-scatter-critics')) {
+                hidePosterTooltip();
+            }
+        });
+
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
+            onYearSliderChange('max');
+            onRatingSliderChange();
             applyFilters();
             // Auto rotate spotlight every 5s
             spotlightTimer = setInterval(nextSpotlight, 5000);

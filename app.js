@@ -1061,7 +1061,7 @@ class ProjectsCarousel {
     }
 
     getCardsPerView() {
-        return window.innerWidth <= 900 ? 1 : 2;
+        return window.innerWidth <= 992 ? 1 : 2;
     }
 
     getMaxIndex() {

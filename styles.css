@@ -639,17 +639,22 @@ body.drawer-open .ai-widget-wrapper {
     50% { opacity: 1; transform: scale(1.03); }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 992px) {
     .projects-grid .project-card {
         flex: 0 0 100%;
         width: 100%;
         min-width: 100%;
     }
+    .carousel-nav-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+    }
     .carousel-nav-btn.prev-btn {
-        left: -10px;
+        left: -6px;
     }
     .carousel-nav-btn.next-btn {
-        right: -10px;
+        right: -6px;
     }
 }
 
@@ -948,8 +953,8 @@ footer {
    Comprehensive Mobile Responsiveness Suite
    ========================================================================== */
 
-/* Tablet & Landscape Phones (<= 768px) */
-@media (max-width: 768px) {
+/* Tablet & Landscape Devices Responsive Suite (<= 1024px) */
+@media (max-width: 1024px) {
     .navbar {
         padding: 0.85rem 4%;
         max-width: 100vw;
@@ -978,6 +983,10 @@ footer {
         padding: 0.45rem 0.85rem;
         font-size: 0.85rem;
     }
+}
+
+/* Tablet & Landscape Phones (<= 768px) */
+@media (max-width: 768px) {
     .hero {
         grid-template-columns: 1fr;
         text-align: center;
